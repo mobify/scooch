@@ -2,12 +2,12 @@
   Carousel control base styling 
 */
 
-.m-carousel-controls {
+.m-scooch-controls {
     padding-top: 10px;
     text-align: center;
 }
 
-.m-carousel-controls a {
+.m-scooch-controls a {
     padding: 5px;
     -webkit-user-select: none;
     -moz-user-select: -moz-none;
@@ -20,7 +20,7 @@
 
    
 /* Carousel controls: Bulleted */
-.m-carousel-bulleted a {
+.m-scooch-bulleted a {
     line-height: 0;
     text-decoration: none;
     text-indent: -999px;
@@ -43,11 +43,11 @@
     -moz-border-radius: 6px;
     border-radius: 6px;
 }
-.m-carousel-bulleted a:hover, .m-carousel-bulleted a:focus {
+.m-scooch-bulleted a:hover, .m-scooch-bulleted a:focus {
     text-decoration: none;
     background-color: rgba(255,255,255,0.6);
 }
-.m-carousel-bulleted a.m-active {
+.m-scooch-bulleted a.m-active {
     background-color: rgba(255,255,255,1);
     -webkit-box-shadow: rgba(0,0,0,0.25) 0 1px 2px;
     -moz-box-shadow: rgba(0,0,0,0.25) 0 1px 2px;
@@ -57,10 +57,10 @@
 
 
 /* Carousel controls: Pagination */
-.m-carousel-pagination {
+.m-scooch-pagination {
     padding-top: 10px;
 }
-.m-carousel-pagination a {
+.m-scooch-pagination a {
     text-decoration: none;
     display: inline-block;
     padding: 3px 10px;
@@ -75,19 +75,19 @@
     -moz-border-radius: 2px;
     border-radius: 2px;
 }
-.m-carousel-pagination a:hover, .m-carousel-pagination a:focus {
+.m-scooch-pagination a:hover, .m-scooch-pagination a:focus {
     text-decoration: none;
     background-color: rgba(255,255,255,0.6);
 }
-.m-carousel-pagination a.m-active {
+.m-scooch-pagination a.m-active {
     background-color: rgba(255,255,255,1);
 }
 
 /* Carousel controls: HUD */
-.m-carousel-hud {
+.m-scooch-hud {
   padding-top: 0;
 }
-.m-carousel-hud a {
+.m-scooch-hud a {
     z-index: 2;
     opacity: 0;
     display: block;
@@ -110,13 +110,13 @@
     -moz-border-radius: 25px;
     border-radius: 25px;
 }
-.m-carousel:hover .m-carousel-hud a {
+.m-scooch:hover .m-scooch-hud a {
     opacity: 0.3;
 }
-.m-carousel .m-carousel-hud a:hover, .m-carousel .m-carousel-hud a:focus {
+.m-scooch .m-scooch-hud a:hover, .m-scooch .m-scooch-hud a:focus {
     opacity: 1;
 }
-.m-carousel-hud a:after {
+.m-scooch-hud a:after {
     color: rgba(255,255,255,0.85);
     content: "\25c0";
     font-size: 25px;
@@ -131,13 +131,13 @@
     height: 50px;
     z-index: 9;
 }
-.m-carousel-hud .m-carousel-prev {
+.m-scooch-hud .m-scooch-prev {
     left: 10px;
 }
-.m-carousel-hud .m-carousel-next {
+.m-scooch-hud .m-scooch-next {
     right: 10px;
 }
-.m-carousel-hud .m-carousel-next:after {
+.m-scooch-hud .m-scooch-next:after {
     left: auto;
     right: 0;
     content: "\25b6";
@@ -196,15 +196,15 @@
 }
 
 /* Fluid Width Photo Carousel
- * .m-carousel.m-fluid.m-carousel-photos
+ * .m-scooch.m-fluid.m-scooch-photos
  */
 
-.m-carousel-photos {
+.m-scooch-photos {
     margin: 0 -10px;
     padding: 0 10px;
 }
 
-.m-carousel-photos .m-item  > img {
+.m-scooch-photos .m-item  > img {
     margin: 0;
     padding: 0;
     max-width: none;
@@ -218,7 +218,7 @@
     box-shadow: rgba(0,0,0,0.5) 0 5px 10px;
 }
 
-.m-carousel-photos .m-caption {
+.m-scooch-photos .m-caption {
     background: rgba(0,0,0,0.7);
     bottom: 0;
     position: absolute;

@@ -97,7 +97,7 @@ Mobify.UI.Utils = (function($) {
         } else {
             element.style[durationProperty] = '0s';
         }
-    }
+    };
 
 
     // Request Animation Frame
@@ -123,14 +123,14 @@ Mobify.UI.Utils = (function($) {
 
 })(Mobify.$);
 
-Mobify.UI.Carousel = (function($, Utils) {
+Mobify.UI.Scooch = (function($, Utils) {
     var defaults = {
             dragRadius: 10
           , moveRadius: 20
           , classPrefix: undefined
           , classNames: {
-                outer: 'carousel'
-              , inner: 'carousel-inner'
+                outer: 'scooch'
+              , inner: 'scooch-inner'
               , item: 'item'
               , center: 'center'
               , touch: 'has-touch'
@@ -142,7 +142,7 @@ Mobify.UI.Carousel = (function($, Utils) {
        , has = $.support;
 
     // Constructor
-    var Carousel = function(element, options) {
+    var Scooch = function(element, options) {
         this.setOptions(options);
         this.initElements(element);
         this.initOffsets();
@@ -151,29 +151,28 @@ Mobify.UI.Carousel = (function($, Utils) {
     };
 
     // Expose Dfaults
-    Carousel.defaults = defaults;
-    
-    Carousel.prototype.setOptions = function(opts) {
+    Scooch.defaults = defaults;
+
+    Scooch.prototype.setOptions = function(opts) {
         var options = this.options || $.extend({}, defaults, opts);
-        
+
         /* classNames requires a deep copy */
         options.classNames = $.extend({}, options.classNames, opts.classNames || {});
 
         /* By default, classPrefix is `undefined`, which means to use the Mobify-wide level prefix */
         options.classPrefix = options.classPrefix || Mobify.UI.classPrefix;
 
-        
         this.options = options;
     };
 
-    Carousel.prototype.initElements = function(element) {
+    Scooch.prototype.initElements = function(element) {
         this._index = 1;  // 1-based index
-        
+
         this.element = element;
         this.$element = $(element);
         this.$inner = this.$element.find('.' + this._getClass('inner'));
         this.$items = this.$inner.children();
-        
+
         this.$start = this.$items.eq(0);
         this.$sec = this.$items.eq(1);
         this.$current = this.$items.eq(this._index - 1);  // convert to 0-based index
@@ -184,11 +183,11 @@ Mobify.UI.Carousel = (function($, Utils) {
         this._isFluid = this.$element.hasClass(this._getClass('fluid'));
     };
 
-    Carousel.prototype.initOffsets = function() {
+    Scooch.prototype.initOffsets = function() {
         this._offsetDrag = 0;
     };
 
-    Carousel.prototype.initAnimation = function() {
+    Scooch.prototype.initAnimation = function() {
         this.animating = false;
         this.dragging = false;
         this._needsUpdate = false;
@@ -196,12 +195,12 @@ Mobify.UI.Carousel = (function($, Utils) {
     };
 
 
-    Carousel.prototype._getClass = function(id) {
+    Scooch.prototype._getClass = function(id) {
         return this.options.classPrefix + this.options.classNames[id];
     };
 
 
-    Carousel.prototype._enableAnimation = function() {
+    Scooch.prototype._enableAnimation = function() {
         if (this.animating) {
             return;
         }
@@ -211,7 +210,7 @@ Mobify.UI.Carousel = (function($, Utils) {
         this.animating = true;
     };
 
-    Carousel.prototype._disableAnimation = function() {
+    Scooch.prototype._disableAnimation = function() {
         if (!this.animating) {
             return;
         }
@@ -221,7 +220,7 @@ Mobify.UI.Carousel = (function($, Utils) {
         this.animating = false;
     };
 
-    Carousel.prototype.update = function() {
+    Scooch.prototype.update = function() {
         /* We throttle calls to the real `_update` for efficiency */
         if (this._needsUpdate) {
             return;
@@ -234,7 +233,7 @@ Mobify.UI.Carousel = (function($, Utils) {
         });
     };
 
-    Carousel.prototype._update = function() {
+    Scooch.prototype._update = function() {
         if (!this._needsUpdate) {
             return;
         }
@@ -250,7 +249,7 @@ Mobify.UI.Carousel = (function($, Utils) {
         this._needsUpdate = false;
     };
 
-    Carousel.prototype.bind = function() {
+    Scooch.prototype.bind = function() {
         var abs = Math.abs
             , dragging = false
             , canceled = false
@@ -296,7 +295,7 @@ Mobify.UI.Carousel = (function($, Utils) {
             if (dragThresholdMet || abs(dx) > abs(dy) && (abs(dx) > dragRadius)) {
                 dragThresholdMet = true;
                 e.preventDefault();
-                
+
                 if (lockLeft && (dx < 0)) {
                     dx = dx * (-dragLimit)/(dx - dragLimit);
                 } else if (lockRight && (dx > 0)) {
@@ -315,7 +314,7 @@ Mobify.UI.Carousel = (function($, Utils) {
             }
 
             dragging = false;
-            
+
             self._enableAnimation();
 
             if (!canceled && abs(dx) > opts.moveRadius) {
@@ -338,11 +337,11 @@ Mobify.UI.Carousel = (function($, Utils) {
         }
 
         $inner
-            .on(Utils.events.down + '.carousel', start)
-            .on(Utils.events.move + '.carousel', drag)
-            .on(Utils.events.up + '.carousel', end)
-            .on('click.carousel', click)
-            .on('mouseout.carousel', end);
+            .on(Utils.events.down + '.scooch', start)
+            .on(Utils.events.move + '.scooch', drag)
+            .on(Utils.events.up + '.scooch', end)
+            .on('click.scooch', click)
+            .on('mouseout.scooch', end);
 
         $element.on('click', '[data-slide]', function(e){
             e.preventDefault();
@@ -384,15 +383,15 @@ Mobify.UI.Carousel = (function($, Utils) {
 
     };
 
-    Carousel.prototype.unbind = function() {
+    Scooch.prototype.unbind = function() {
         this.$inner.off();
-    }
+    };
 
-    Carousel.prototype.destroy = function() {
+    Scooch.prototype.destroy = function() {
         this.unbind();
         this.$element.trigger('destroy');
         this.$element.remove();
-        
+
         // Cleanup
         this.$element = null;
         this.$inner = null;
@@ -400,7 +399,7 @@ Mobify.UI.Carousel = (function($, Utils) {
         this.$current = null;
     }
 
-    Carousel.prototype.move = function(newIndex, opts) {
+    Scooch.prototype.move = function(newIndex, opts) {
         var $element = this.$element
             , $inner = this.$inner
             , $items = this.$items
@@ -440,15 +439,15 @@ Mobify.UI.Carousel = (function($, Utils) {
         $element.trigger('afterSlide', [index, newIndex]);
     };
 
-    Carousel.prototype.next = function() {
+    Scooch.prototype.next = function() {
         this.move(this._index + 1);
     };
     
-    Carousel.prototype.prev = function() {
+    Scooch.prototype.prev = function() {
         this.move(this._index - 1);
     };
 
-    return Carousel;
+    return Scooch;
 
 })(Mobify.$, Mobify.UI.Utils);
 
@@ -456,13 +455,13 @@ Mobify.UI.Carousel = (function($, Utils) {
 
 (function($) {
     /**
-        jQuery interface to set up a carousel
+        jQuery interface to set up a scooch carousel
 
 
         @param {String} [action] Action to perform. When no action is passed, the carousel is simply initialized.
         @param {Object} [options] Options passed to the action.
     */
-    $.fn.carousel = function (action, options) {
+    $.fn.scooch = function (action, options) {
         var initOptions = $.extend({}, $.fn.carousel.defaults);
 
         // Handle different calling conventions
@@ -474,27 +473,27 @@ Mobify.UI.Carousel = (function($, Utils) {
 
         this.each(function () {
             var $this = $(this)
-              , carousel = this._carousel;
+              , scouch = this._scooch;
 
             
-            if (!carousel) {
-                carousel = new Mobify.UI.Carousel(this, initOptions);
+            if (!scooch) {
+                scooch = new Mobify.UI.Scooch(this, initOptions);
             }
 
             if (action) {
-                carousel[action](options);
+                scooch[action](options);
 
                 if (action === 'destroy') {
-                    carousel = null;
+                    scooch = null;
                 }
             }
             
-            this._carousel = carousel;
+            this._scooch = scooch;
         })
 
         return this;
     };
 
-    $.fn.carousel.defaults = {};
+    $.fn.scooch.defaults = {};
 
 })(Mobify.$);

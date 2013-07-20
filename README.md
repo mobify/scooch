@@ -1,17 +1,17 @@
-# Mobify Carousel
+# Scooch
 
 A mobile-first content and image carousel.
 
 ## Usage
 
-    <!-- include carousel.css -->
-    <link rel="stylesheet" href="carousel.css">
-    <link rel="stylesheet" href="carousel-style.css">
+    <!-- include scooch.css -->
+    <link rel="stylesheet" href="scooch.css">
+    <link rel="stylesheet" href="scooch-style.css">
 
     <!-- the viewport -->
-    <div class="m-carousel m-fluid m-carousel-photos">
+    <div class="m-scooch m-fluid m-scooch-photos">
       <!-- the slider -->
-      <div class="m-carousel-inner">
+      <div class="m-scooch-inner">
         <!-- the items -->
         <div class="m-item m-active">
           <img src="image1.jpg">
@@ -24,7 +24,7 @@ A mobile-first content and image carousel.
         </div>
       </div>
       <!-- the controls -->
-      <div class="m-carousel-controls m-carousel-bulleted">
+      <div class="m-scooch-controls m-scooch-bulleted">
         <a href="#" data-slide="prev">Previous</a>
         <a href="#" data-slide="1" class="m-active">1</a>
         <a href="#" data-slide="2">2</a>
@@ -35,10 +35,10 @@ A mobile-first content and image carousel.
 
     <!-- include zepto.js or jquery.js -->
     <script src="zepto.js"></script>
-    <!-- include carousel.js -->
-    <script src="carousel.js"></script>
+    <!-- include scooch.js -->
+    <script src="scooch.js"></script>
     <!-- construct the carousel -->
-    <script>$('.m-carousel').carousel()</script>
+    <script>$('.m-scooch').scooch()</script>
 
 
 ## Classes
@@ -60,11 +60,11 @@ viewport:
 
 ## Methods
 
-### .carousel(options)
+### .scooch(options)
 
 Constructs the carousel with options.
 
-    $('.m-carousel').carousel({
+    $('.m-scooch').scooch({
           dragRadius: 10
         , moveRadius: 20
         , classPrefix: undefined
@@ -79,41 +79,41 @@ Constructs the carousel with options.
         }
     });
 
-### .carousel('next')
+### .scooch('next')
 
 Moves the carousel one item to the right.
 
-    $('.m-carousel').carousel('next');
+    $('.m-scooch').scooch('next');
 
-### .carousel('prev')
+### .scooch('prev')
 
 Moves the carousel one item to the left.
 
-    $('.m-carousel').carousel('prev');
+    $('.m-scooch').scooch('prev');
 
-### .carousel('move', x)
+### .scooch('move', x)
 
 Moves the carousel to a index `x` (1-based).
 
-    $('.m-carousel').carousel('move', 1);
+    $('.m-scooch').scooch('move', 1);
 
-### .carousel('unbind')
+### .scooch('unbind')
 
 Removes event handlers bound on the carousel.
 
-    $('.m-carousel').carousel('unbind');
+    $('.m-scooch').scooch('unbind');
 
-### .carousel('bind')
+### .scooch('bind')
 
 Binds the event handlers on the carousel.
 
-    $('.m-carousel').carousel('bind');
+    $('.m-scooch').scooch('bind');
 
-### .carousel('destroy')
+### .scooch('destroy')
 
 Removes the carousel and its event handlers from the DOM.
 
-    $('.m-carousel').carousel('destroy');
+    $('.m-scooch').scooch('destroy');
 
 
 ## Events

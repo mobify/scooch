@@ -3,9 +3,9 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        localConfig: (function(){ 
-                        try { 
-                            return grunt.file.readJSON('localConfig.json') 
+        localConfig: (function(){
+                        try {
+                            return grunt.file.readJSON('localConfig.json');
                         } catch(e) {
                             return {};
                         }
@@ -15,23 +15,36 @@ module.exports = function(grunt) {
         clean: {
             buildProducts: "build/"
         },
+        connect: {
+            server: {
+                options: {
+                    hostname: '0.0.0.0',
+                    port: 3000,
+                    base: '.'
+                }
+            }
+        },
+        watch: {
+            files: ["src/**/*"],
+            tasks: ['build']
+        },
         uglify: {
             options: {
                 banner: '/*! <%= pkg.name %> <%= pkg.version %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
             },
             build: {
-                src: 'src/carousel.js',
-                dest: 'build/carousel.min.js'
+                src: 'src/scooch.js',
+                dest: 'build/scooch.min.js'
             }
         },
         cssmin: {
             core: {
-                src: 'src/carousel.css',
-                dest: 'build/carousel.min.css'
+                src: 'src/scooch.css',
+                dest: 'build/scooch.min.css'
             },
             style: {
-                src: 'src/carousel-style.css',
-                dest: 'build/carousel-style.min.css'
+                src: 'src/scooch-style.css',
+                dest: 'build/scooch-style.min.css'
             }
         },
         shell: {
@@ -41,8 +54,8 @@ module.exports = function(grunt) {
             }
         },
         zip: {
-            "build/carousel.zip": ["src/carousel.js", "src/carousel.css", 
-            "src/carousel-style.css"]
+            "build/scooch.zip": ["src/scooch.js", "src/scooch.css",
+            "src/scooch-style.css"]
         },
         s3: {
             key: '<%= localConfig.aws.key %>',
@@ -53,7 +66,7 @@ module.exports = function(grunt) {
             upload: [
                 { // build
                     src: "build/*",
-                    dest: "modules/carousel/<%= pkg.version %>/",
+                    dest: "modules/scooch/<%= pkg.version %>/",
                     rel: "build"
                 }
             ]
@@ -63,6 +76,8 @@ module.exports = function(grunt) {
 
     // Load the task plugins
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-css');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-zip');
