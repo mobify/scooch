@@ -397,7 +397,7 @@ Mobify.UI.Scooch = (function($, Utils) {
         this.$inner = null;
         this.$start = null;
         this.$current = null;
-    }
+    };
 
     Scooch.prototype.move = function(newIndex, opts) {
         var $element = this.$element
@@ -462,7 +462,7 @@ Mobify.UI.Scooch = (function($, Utils) {
         @param {Object} [options] Options passed to the action.
     */
     $.fn.scooch = function (action, options) {
-        var initOptions = $.extend({}, $.fn.carousel.defaults);
+        var initOptions = $.extend({}, $.fn.scooch.defaults);
 
         // Handle different calling conventions
         if (typeof action == 'object') {
@@ -473,7 +473,7 @@ Mobify.UI.Scooch = (function($, Utils) {
 
         this.each(function () {
             var $this = $(this)
-              , scouch = this._scooch;
+              , scooch = this._scooch;
 
             
             if (!scooch) {

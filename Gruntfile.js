@@ -85,6 +85,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-clean');
 
     // Default task(s).
+    grunt.registerTask('serve', ['connect', 'watch']);
     grunt.registerTask('build', ['uglify', 'cssmin', 'zip']);
     grunt.registerTask('release', ['build', 'shell:tagRelease', 's3'])
     grunt.registerTask('default', 'build')
