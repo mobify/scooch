@@ -408,7 +408,7 @@ Mobify.UI.Scooch = (function($, Utils) {
             , length = this._length
             , index = this._index;
                 
-        opts = opts || {};
+        opts = opts || {animate: true};
 
         // Bound Values between [1, length];
         if (newIndex < 1) {
@@ -422,8 +422,12 @@ Mobify.UI.Scooch = (function($, Utils) {
             //return; // Return Type?
         }
 
-        // Making sure that animation is enabled before moving
-        this._enableAnimation();
+        // Check if we should animate
+        if (opts.animate) {
+            this._enableAnimation();
+        } else {
+            this._disableAnimation();
+        }
 
         // Trigger beforeSlide event
         $element.trigger('beforeSlide', [index, newIndex]);
