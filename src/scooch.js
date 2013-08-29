@@ -149,6 +149,8 @@ Mobify.UI.Scooch = (function($, Utils) {
         this.initOffsets();
         this.initAnimation();
         this.bind();
+
+        this._updateCallbacks = [];
     };
 
     // Expose Dfaults
@@ -221,16 +223,28 @@ Mobify.UI.Scooch = (function($, Utils) {
         this.animating = false;
     };
 
-    Scooch.prototype.update = function() {
+    Scooch.prototype.update = function(callback) {
+        if (typeof callback != 'undefined') {
+            this._updateCallbacks.push(callback);
+        }
+
         /* We throttle calls to the real `_update` for efficiency */
         if (this._needsUpdate) {
             return;
         }
 
-        var self = this;
         this._needsUpdate = true;
+        
+        var self = this;
         Utils.requestAnimationFrame(function() {
             self._update();
+
+            setTimeout(function() {
+                for (var i=0, _len = self._updateCallbacks.length; i < _len; i++) {
+                    self._updateCallbacks[i].call(self);
+                }
+                self._updateCallbacks = [];
+            }, 10)
         });
     };
 
@@ -409,14 +423,7 @@ Mobify.UI.Scooch = (function($, Utils) {
             , length = this._length
             , index = this._index;
                 
-        opts = opts || {};
-
-        // Merge default opts
-        for (prop in defaults){
-            if (!opts.hasOwnProperty(prop)){
-                opts[prop] = defaults[prop];
-            }
-        }
+        opts = $.extend({}, this.options, opts);
 
         // Bound Values between [1, length];
         if (newIndex < 1) {
@@ -446,7 +453,15 @@ Mobify.UI.Scooch = (function($, Utils) {
 
         this._offsetDrag = 0;
         this._index = newIndex;
-        this.update();
+
+        // Update, re-enable animation if necessary
+        if (opts.animate) {
+            this.update();
+        } else {
+            this.update(function() {    
+                this._enableAnimation();
+            });
+        }
         // Trigger afterSlide event
         $element.trigger('afterSlide', [index, newIndex]);
     };
