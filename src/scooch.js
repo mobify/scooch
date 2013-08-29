@@ -127,6 +127,7 @@ Mobify.UI.Scooch = (function($, Utils) {
     var defaults = {
             dragRadius: 10
           , moveRadius: 20
+          , animate: true
           , classPrefix: undefined
           , classNames: {
                 outer: 'scooch'
@@ -408,7 +409,14 @@ Mobify.UI.Scooch = (function($, Utils) {
             , length = this._length
             , index = this._index;
                 
-        opts = opts || {animate: true};
+        opts = opts || {};
+
+        // Merge default opts
+        for (prop in defaults){
+            if (!opts.hasOwnProperty(prop)){
+                opts[prop] = defaults[prop];
+            }
+        }
 
         // Bound Values between [1, length];
         if (newIndex < 1) {
@@ -475,6 +483,8 @@ Mobify.UI.Scooch = (function($, Utils) {
             action = null;
         }
 
+        var options = Array.prototype.slice.apply(arguments);
+
         this.each(function () {
             var $this = $(this)
               , scooch = this._scooch;
@@ -485,7 +495,7 @@ Mobify.UI.Scooch = (function($, Utils) {
             }
 
             if (action) {
-                scooch[action](options);
+                scooch[action].apply(scooch, options.slice(1));
 
                 if (action === 'destroy') {
                     scooch = null;
