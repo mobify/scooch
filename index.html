@@ -268,6 +268,51 @@
             </div>
         </div>
 
+        <h2>Animations disabled</h2>
+        <p>Doesn't animate when we move between items.  Can use this to
+            initialize scooch to a different item than the first.  Either
+            initializes scooch with <code>{animate:false}</code> or call move
+            <code>$('.m-scooch').scooch('move', 8, {animate:false})</code></p>
+
+        <div class="m-scooch m-center m-fade-out" id="m-scooch-no-animate">
+             <div class="m-scooch-inner">
+                <div class="m-item">
+                    <div class="m-card-light">
+                        <img src="http://lorempixel.com/300/300/animals/">
+                        <p class="m-caption">Blossoms</p>
+                    </div>
+                </div>
+                <div class="m-item">
+                    <div class="m-card-light">
+                        <img src="http://lorempixel.com/300/300/animals/">
+                        <p class="m-caption">Glacier</p>
+                    </div>
+                </div>
+                <div class="m-item">
+                    <div class="m-card-light">
+                        <img src="http://lorempixel.com/300/300/animals/">
+                        <p class="m-caption">Helmets</p>
+                    </div>
+                </div>
+                <div class="m-item">
+                    <div class="m-card-light">
+                        <img src="http://lorempixel.com/300/300/animals/">
+                        <p class="m-caption">Parliament</p>
+                    </div>
+                </div>
+                <div class="m-item">
+                    <div class="m-card-light">
+                        <img src="http://lorempixel.com/300/300/animals/">
+                        <p class="m-caption">Pods</p>
+                    </div>
+                </div>
+            </div>
+            <div class="m-scooch-controls">
+                <a href="#" data-slide="prev">&lsaquo; Previous</a>
+                <a href="#" data-slide="next">Next &rsaquo;</a>
+            </div>
+        </div>
+
         <h2>Arbitrary Content</h2>
         <p>Arbitrary content carousel with simple Previous / Next controls to advance between items.
         We used the included class <code>.m-card-dark</code> to give each element a background.
@@ -317,6 +362,7 @@
         <!-- <script src="http://zeptojs.com/zepto.js"></script> -->
         <script src="http://code.jquery.com/jquery-1.10.1.js"></script>
         <script src="src/scooch.js"></script>
+        <script>$('#m-scooch-no-animate').scooch({animate:false});</script>
         <script>$('.m-scooch').scooch();</script>
     </body>
 </html>
