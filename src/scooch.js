@@ -127,6 +127,7 @@ Mobify.UI.Scooch = (function($, Utils) {
     var defaults = {
             dragRadius: 10
           , moveRadius: 20
+          , animate: true
           , classPrefix: undefined
           , classNames: {
                 outer: 'scooch'
@@ -148,6 +149,8 @@ Mobify.UI.Scooch = (function($, Utils) {
         this.initOffsets();
         this.initAnimation();
         this.bind();
+
+        this._updateCallbacks = [];
     };
 
     // Expose Dfaults
@@ -220,16 +223,28 @@ Mobify.UI.Scooch = (function($, Utils) {
         this.animating = false;
     };
 
-    Scooch.prototype.update = function() {
+    Scooch.prototype.update = function(callback) {
+        if (typeof callback != 'undefined') {
+            this._updateCallbacks.push(callback);
+        }
+
         /* We throttle calls to the real `_update` for efficiency */
         if (this._needsUpdate) {
             return;
         }
 
-        var self = this;
         this._needsUpdate = true;
+        
+        var self = this;
         Utils.requestAnimationFrame(function() {
             self._update();
+
+            setTimeout(function() {
+                for (var i=0, _len = self._updateCallbacks.length; i < _len; i++) {
+                    self._updateCallbacks[i].call(self);
+                }
+                self._updateCallbacks = [];
+            }, 10)
         });
     };
 
@@ -408,7 +423,7 @@ Mobify.UI.Scooch = (function($, Utils) {
             , length = this._length
             , index = this._index;
                 
-        opts = opts || {};
+        opts = $.extend({}, this.options, opts);
 
         // Bound Values between [1, length];
         if (newIndex < 1) {
@@ -422,8 +437,12 @@ Mobify.UI.Scooch = (function($, Utils) {
             //return; // Return Type?
         }
 
-        // Making sure that animation is enabled before moving
-        this._enableAnimation();
+        // Check if we should animate
+        if (opts.animate) {
+            this._enableAnimation();
+        } else {
+            this._disableAnimation();
+        }
 
         // Trigger beforeSlide event
         $element.trigger('beforeSlide', [index, newIndex]);
@@ -434,7 +453,15 @@ Mobify.UI.Scooch = (function($, Utils) {
 
         this._offsetDrag = 0;
         this._index = newIndex;
-        this.update();
+
+        // Update, re-enable animation if necessary
+        if (opts.animate) {
+            this.update();
+        } else {
+            this.update(function() {    
+                this._enableAnimation();
+            });
+        }
         // Trigger afterSlide event
         $element.trigger('afterSlide', [index, newIndex]);
     };
@@ -471,6 +498,8 @@ Mobify.UI.Scooch = (function($, Utils) {
             action = null;
         }
 
+        var options = Array.prototype.slice.apply(arguments);
+
         this.each(function () {
             var $this = $(this)
               , scooch = this._scooch;
@@ -481,7 +510,7 @@ Mobify.UI.Scooch = (function($, Utils) {
             }
 
             if (action) {
-                scooch[action](options);
+                scooch[action].apply(scooch, options.slice(1));
 
                 if (action === 'destroy') {
                     scooch = null;
