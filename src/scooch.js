@@ -194,6 +194,7 @@ Mobify.UI.Scooch = (function($, Utils) {
         this.animating = false;
         this.dragging = false;
         this._needsUpdate = false;
+        this._orientationChange = false;
         this._enableAnimation();
     };
 
@@ -236,16 +237,15 @@ Mobify.UI.Scooch = (function($, Utils) {
         this._needsUpdate = true;
         
         var self = this;
-        Utils.requestAnimationFrame(function() {
-            self._update();
 
-            setTimeout(function() {
-                for (var i=0, _len = self._updateCallbacks.length; i < _len; i++) {
-                    self._updateCallbacks[i].call(self);
-                }
-                self._updateCallbacks = [];
-            }, 10)
-        });
+        if(this._orientationChange) { // orientation changes cannot use requestAnimationFrame because that event is only fired after orientationEnd
+            self._update();
+        }
+        else {
+            Utils.requestAnimationFrame(function() {
+                self._update();
+            });
+        }
     };
 
     Scooch.prototype._update = function() {
@@ -262,6 +262,14 @@ Mobify.UI.Scooch = (function($, Utils) {
         Utils.translateX(this.$inner[0], x);
 
         this._needsUpdate = false;
+        this._orientationChange = false;
+
+        setTimeout(function() {
+            for (var i=0, _len = self._updateCallbacks.length; i < _len; i++) {
+                self._updateCallbacks[i].call(self);
+            }
+            self._updateCallbacks = [];
+        }, 10);
     };
 
     Scooch.prototype.bind = function() {
@@ -385,6 +393,8 @@ Mobify.UI.Scooch = (function($, Utils) {
             // Don't update Carousel on window height change
             if(windowWidth == $(window).width())
                 return;
+
+            self._orientationChange = true;
 
             self._disableAnimation();
             windowWidth = $(window).width();
