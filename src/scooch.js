@@ -139,8 +139,13 @@ Mobify.UI.Scooch = (function($, Utils) {
               , active: 'active'
               , fluid: 'fluid'
             }
+          , loop : false
+          , autoStart : false
+          , interval : 5000
         }
        , has = $.support;
+
+    var timeHandler = null;
 
     // Constructor
     var Scooch = function(element, options) {
@@ -151,6 +156,24 @@ Mobify.UI.Scooch = (function($, Utils) {
         this.bind();
 
         this._updateCallbacks = [];
+
+        if (this.options.autoStart) {
+            this.startLoop();
+        }
+    };
+
+    Scooch.prototype.startLoop = function() {
+        var that = this;
+        this.timeHandler = setTimeout(function(){
+            that.next();
+            that.startLoop();
+        }, this.options.interval);
+    };
+
+    Scooch.prototype.stopLoop = function() {
+        if (this.timeHandler) {
+            clearTimeout(this.timeHandler);
+        }
     };
 
     // Expose Dfaults
@@ -294,6 +317,7 @@ Mobify.UI.Scooch = (function($, Utils) {
 
             // Disable smooth transitions
             self._disableAnimation();
+            self.stopLoop();
 
             lockLeft = self._index == 1;
             lockRight = self._index == self._length;
@@ -331,6 +355,9 @@ Mobify.UI.Scooch = (function($, Utils) {
             dragging = false;
 
             self._enableAnimation();
+            if (self.options.autoStart) {
+                self.startLoop();
+            }
 
             if (!canceled && abs(dx) > opts.moveRadius) {
                 // Move to the next slide if necessary
@@ -427,9 +454,9 @@ Mobify.UI.Scooch = (function($, Utils) {
 
         // Bound Values between [1, length];
         if (newIndex < 1) {
-            newIndex = 1;
+            newIndex = this.options.loop ? length : 1;
         } else if (newIndex > this._length) {
-            newIndex = length;
+            newIndex = this.options.loop ? 1 : length;
         }
         
         // Bail out early if no move is necessary.
