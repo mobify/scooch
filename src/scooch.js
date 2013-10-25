@@ -348,7 +348,12 @@ Mobify.UI.Scooch = (function($, Utils) {
         }
 
         function click(e) {
-            if (dragThresholdMet) e.preventDefault();
+            if (dragThresholdMet) {
+                e.preventDefault();
+            }
+            else {
+                $element.trigger('slideClick');
+            }
         }
 
         $inner
