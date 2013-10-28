@@ -358,9 +358,9 @@ Mobify.UI.Scooch = (function($, Utils) {
             .on('click.scooch', click)
             .on('mouseout.scooch', end);
 
-        $element.on('click', '[data-slide]', function(e){
+        $element.on('click', '[data-m-slide]', function(e){
             e.preventDefault();
-            var action = $(this).attr('data-slide')
+            var action = $(this).attr('data-m-slide')
               , index = parseInt(action, 10);
 
             if (isNaN(index)) {
@@ -374,8 +374,8 @@ Mobify.UI.Scooch = (function($, Utils) {
             self.$items.eq(previousSlide - 1).removeClass(self._getClass('active'));
             self.$items.eq(nextSlide - 1).addClass(self._getClass('active'));
 
-            self.$element.find('[data-slide=\'' + previousSlide + '\']').removeClass(self._getClass('active'));
-            self.$element.find('[data-slide=\'' + nextSlide + '\']').addClass(self._getClass('active'));
+            self.$element.find('[data-m-slide=\'' + previousSlide + '\']').removeClass(self._getClass('active'));
+            self.$element.find('[data-m-slide=\'' + nextSlide + '\']').addClass(self._getClass('active'));
         });
 
         $(window).on('resize orientationchange', function(e) {
