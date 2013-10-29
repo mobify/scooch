@@ -109,6 +109,12 @@ Binds the event handlers on the carousel.
 
     $('.m-scooch').scooch('bind');
 
+### .scooch('refresh')
+
+Re-initialize carousel after new slides were added or removed
+
+    $('.m-scooch').scooch('refresh');
+
 ### .scooch('destroy')
 
 Removes the carousel and its event handlers from the DOM.
