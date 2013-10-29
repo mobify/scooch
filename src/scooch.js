@@ -223,7 +223,7 @@ Mobify.UI.Scooch = (function($, Utils) {
         this.animating = false;
     };
 
-    Carousel.prototype.refresh = function() {
+    Scooch.prototype.refresh = function() {
         /* Call when number of items has changed (e.g. with AJAX) */
         this.$items = this.$inner.children( '.' + this._getClass('item'));
         this.$start = this.$items.eq(0);
