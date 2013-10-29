@@ -68,6 +68,9 @@ Constructs the carousel with options.
           dragRadius: 10
         , moveRadius: 20
         , classPrefix: undefined
+        , preventDefault: true  /* Whether to call Event.preventDefault() for all captured events.  
+                                   Set to false if you need carousel items to capture events,
+                                   but you should still call preventDefault() to ensure normal carousel behaviour. */
         , classNames: {
             outer: "carousel"
           , inner: "carousel-inner"
