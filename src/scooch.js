@@ -163,7 +163,7 @@ Mobify.UI.Scooch = (function($, Utils) {
         options.classNames = $.extend({}, options.classNames, opts.classNames || {});
 
         /* By default, classPrefix is `undefined`, which means to use the Mobify-wide level prefix */
-        if (options.classPrefix === undefined) {
+        if (typeof options.classPrefix === 'undefined') {
             options.classPrefix = Mobify.UI.classPrefix;
         }
 
