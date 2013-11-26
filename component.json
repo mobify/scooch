@@ -1,0 +1,13 @@
+{
+  "name": "scooch",
+  "repo": "component/scooch",
+  "description": "Scooch Mobile First Carousel Component",
+  "version": "0.0.1",
+  "keywords": ["carousel", "mobile", "ui"],
+  "dependencies": {
+    "component/jquery": "*"
+  },
+  "scripts": ["src/scooch.js"],
+  "styles": ["src/scooch.css", "src/scooch-style.css"],
+  "license": "MIT"
+}
