@@ -1,6 +1,6 @@
 {
   "name": "scooch",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "A mobile-first JavaScript-driven content and image carousel",
   "devDependencies": {
     "grunt": "~0.4.x",
