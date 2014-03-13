@@ -139,6 +139,8 @@ Mobify.UI.Scooch = (function($, Utils) {
               , active: 'active'
               , fluid: 'fluid'
             }
+          , next: null
+          , prev: null
         }
        , has = $.support;
 
@@ -478,11 +480,21 @@ Mobify.UI.Scooch = (function($, Utils) {
     };
 
     Scooch.prototype.next = function() {
-        this.move(this._index + 1);
+        if(this.options.next) {
+            this.options.next.apply(this, arguments);
+        }
+        else {
+            this.move(this._index + 1);
+        }
     };
     
     Scooch.prototype.prev = function() {
-        this.move(this._index - 1);
+        if(this.options.prev) {
+            this.options.prev.apply(this, arguments);
+        }
+        else {
+            this.move(this._index - 1);
+        }
     };
 
     return Scooch;
