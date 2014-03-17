@@ -137,6 +137,7 @@ Mobify.UI.Scooch = (function($, Utils) {
               , touch: 'has-touch'
               , dragging: 'dragging'
               , active: 'active'
+              , inactive: 'inactive'
               , fluid: 'fluid'
             }
           , next: null
@@ -389,6 +390,20 @@ Mobify.UI.Scooch = (function($, Utils) {
 
             self.$element.find('[data-m-slide=\'' + previousSlide + '\']').removeClass(self._getClass('active'));
             self.$element.find('[data-m-slide=\'' + nextSlide + '\']').addClass(self._getClass('active'));
+
+            if(nextSlide === 1) {
+                self.$element.find('[data-m-slide="prev"]').addClass(self._getClass('inactive'));
+            }
+            else {
+                self.$element.find('[data-m-slide="prev"]').removeClass(self._getClass('inactive'));
+            }
+
+            if(nextSlide === self._length) {
+                self.$element.find('[data-m-slide="next"]').addClass(self._getClass('inactive'));
+            }
+            else {
+                self.$element.find('[data-m-slide="next"]').removeClass(self._getClass('inactive'));
+            }
         });
 
         $(window).on('resize orientationchange', function(e) {
