@@ -389,6 +389,9 @@ Mobify.UI.Scooch = (function($, Utils) {
         });
 
         $element.on('afterSlide', function(e, previousSlide, nextSlide) {
+            var $prevSlideControl = self.$element.find('[data-m-slide="prev"]');
+            var $nextSlideControl = self.$element.find('[data-m-slide="next"]');
+
             self.$items.eq(previousSlide - 1).removeClass(self._getClass('active'));
             self.$items.eq(nextSlide - 1).addClass(self._getClass('active'));
 
@@ -396,17 +399,17 @@ Mobify.UI.Scooch = (function($, Utils) {
             self.$element.find('[data-m-slide=\'' + nextSlide + '\']').addClass(self._getClass('active'));
 
             if(nextSlide === 1) {
-                self.$element.find('[data-m-slide="prev"]').addClass(self._getClass('inactive'));
+                $prevSlideControl.addClass(self._getClass('inactive'));
             }
             else {
-                self.$element.find('[data-m-slide="prev"]').removeClass(self._getClass('inactive'));
+                $prevSlideControl.removeClass(self._getClass('inactive'));
             }
 
             if(nextSlide === self._length) {
-                self.$element.find('[data-m-slide="next"]').addClass(self._getClass('inactive'));
+                $nextSlideControl.addClass(self._getClass('inactive'));
             }
             else {
-                self.$element.find('[data-m-slide="next"]').removeClass(self._getClass('inactive'));
+                $nextSlideControl.removeClass(self._getClass('inactive'));
             }
         });
 
