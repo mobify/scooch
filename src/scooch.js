@@ -140,8 +140,12 @@ Mobify.UI.Scooch = (function($, Utils) {
               , inactive: 'inactive'
               , fluid: 'fluid'
             }
-          , next: null
-          , prev: null
+          , next: function() {
+            this.move(this._index + 1);
+          }
+          , prev: function() {
+            this.move(this._index - 1);
+          }
         }
        , has = $.support;
 
@@ -495,21 +499,11 @@ Mobify.UI.Scooch = (function($, Utils) {
     };
 
     Scooch.prototype.next = function() {
-        if(this.options.next) {
-            this.options.next.apply(this, arguments);
-        }
-        else {
-            this.move(this._index + 1);
-        }
+        this.options.next.apply(this, arguments);
     };
     
     Scooch.prototype.prev = function() {
-        if(this.options.prev) {
-            this.options.prev.apply(this, arguments);
-        }
-        else {
-            this.move(this._index - 1);
-        }
+        this.options.prev.apply(this, arguments);
     };
 
     return Scooch;
