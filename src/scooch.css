@@ -1,130 +1,50 @@
-/*  Classes  on  outer  slideshow  wrapper:
-    either  NONE  or  'fraction'  or  'fraction'  +  one  of  'fraction1'...'fraction10'.
-        fraction  sets  box-sizing:  border-box,  so  that  padding  on  the  element  is  taken  out  ;
-    either  NONE  or  'center'  or  'right'
-
-*/
-
 .scooch {
-    position:  relative;
-    overflow:  hidden;
-    font-smoothing:  antialiased;
+    position: relative;
+    overflow: hidden;
 }
 
 .scooch img {
-    interpolation-mode: bicubic; /* Microsoft Property Fix */
+    -ms-interpolation-mode: bicubic; /* Better scaling in Internet Explorer */
 }
 
 .scooch__inner {
-    position:  relative;
+    position: relative;
     
-    white-space:  nowrap;
-    text-align:  left;
+    white-space: nowrap;
+    text-align: left;
 
-    transition-property:  transform;
+    transition-property: transform;
     /*  iOS  like  slide  timings  */
-    transition-timing-function:  cubic-bezier(0.33,  0.66,  0.66,  1);
-    transition-duration:  0.5s;
+    transition-timing-function: cubic-bezier(0.33,  0.66,  0.66,  1);
+    transition-duration: 0.5s;
 }
 
 .scooch__item {
-    display:  inline-block;
+    display: inline-block;
     /*  Removes  inline-block  gaps  due  to  whitespace  */
     margin-right: -4px;
     
-    vertical-align:  top;
-    white-space:  normal;
+    vertical-align: top;
+    white-space: normal;
 }
 
-.scooch.scooch--fluid .scooch__item {
+/* .scooch--fluid scales scooch to 100% of window width */
+
+.scooch--fluid .scooch__item {
     box-sizing: border-box;
 }
 
-/* Here Be Roman Dragons */
-
-.scooch.scooch--left {
-    text-align: left;
-}
-
-.scooch.scooch--center {
-    text-align: center;
-}
-
-.scooch.scooch--fluid .scooch__item,
-.scooch.scooch--fluid .scooch__item img {
+.scooch--fluid .scooch__item,
+.scooch--fluid .scooch__item img {
     width: 100%;
 }
 
-.scooch.scooch--fluid .scooch__item:first-child {
-    margin-left: 0;
+/* .scooch--center centers individual items in the viewport instead of aligning to left */
+.scooch--center .scooch__inner {
+    position: relative;
+    left: 50%;
 }
 
-.scooch.scooch--fluid-2 .scooch__item {
-    width: 50%;
-}
-
-.scooch.scooch--fluid-2 .scooch__item:first-child {
-    margin-left: 25%;
-}
-
-.scooch.scooch--fluid-3 .scooch__item {
-    width: 33.333%;
-}
-
-.scooch.scooch--fluid-3 .scooch__item:first-child {
-    margin-left: 33.333%;
-}
-
-.scooch.scooch--fluid-4 .scooch__item {
-    width: 25%;
-}
-
-.scooch.scooch--fluid-4 .scooch__item:first-child {
-    margin-left: 37.5%;
-}
-
-.scooch.scooch--fluid-5 .scooch__item {
-    width: 2%;
-}
-
-.scooch.scooch--fluid-5 .scooch__item:first-child {
-    margin-left: 40%;
-}
-
-.scooch.scooch--fluid-6 .scooch__item {
-    width: 16.667%;
-}
-
-.scooch.scooch--fluid-6 .scooch__item:first-child {
-    margin-left: 41.667%;
-}
-
-.scooch.scooch--center:not(.scooch--fluid) .scooch__inner {
-    display:  inline-block;
-    margin-right:  -20000px;
-    margin-left:  0;
-}
-
-.scooch.scooch--center:not(.scooch--fluid) .scooch__item {
-    position:  relative;
-    left:  -20000px;
-}
-
-.scooch.scooch--center:not(.scooch--fluid) .scooch__item {
-    position:  relative;
-    left:  -20000px;
-}
-
-.scooch.scooch--center:not(.scooch--fluid) .scooch__item:first-child {
-    float:  left;
-    margin-right:  20000px;
-    left:  0;
-}
-
-.scooch.scooch--center:not(.scooch--fluid) .scooch__item:first-child:last-child {
-    margin-right:  0;
-}
-
-.scooch.scooch--center:not(.scooch--fluid) .scooch__item:last-child {
-    margin-right:  -30000px;
+.scooch--center .scooch__item {
+    transform: translateX(-50%);
 }

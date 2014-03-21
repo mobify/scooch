@@ -5,41 +5,12 @@
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
         <link rel="stylesheet" href="build/scooch.min.css">
         <link rel="stylesheet" href="build/scooch-style.min.css">
-        <style>
-            /* styling for this page */
-            .scooch {
-                padding-bottom: 30px;
-            }
-
-            .scooch__card .scooch--light {
-                width: 200px;
-                margin: 30px 10px 0 10px;
-            }
-            .scooch__card .scooch--dark h3 {
-                margin-top: 0;
-            }
-
-            .scooch__item .scooch__card.scooch--dark img, .scooch__item .scooch__card.scooch--light img {
-                width: 100%;
-                max-width: 100%;
-                height: auto;
-            }
-
-            #scooch-example-5 .scooch__caption {
-                color: #ccc;
-            }
-
-            body {
-                font-family: arial, sans-serif;
-                line-height: 1.25em;
-            }
-        </style>
     </head>
     <body>
 
         <h2>Previous / Next controls</h2>
         <p>Carousel with Previous / Next controls to advance between items.</p>
-        <div class="scooch scooch--fluid scooch--photos" id="scooch-example-1">
+        <div class="scooch scooch--center" id="scooch-example-1">
           <div class="scooch__inner">
             <div class="scooch__item">
                 <img src="http://lorempixel.com/300/300/animals/?1">
@@ -187,7 +158,7 @@
         You will have to to size the element or it's content yourself.
         </p>
 
-        <div class="scooch scooch--center scooch--fade-out" id="scooch-example-6">
+        <div class="scooch scooch--center" id="scooch-example-6">
             <div class="scooch__inner">
                 <div class="scooch__item">
                     <div class="scooch__card scooch--light">
@@ -227,9 +198,9 @@
         </div>
 
         <h2>Scaled Transitions</h2>
-        <p>Display the current item larger than the rest, and animate the transition between each with the <code>.m-scaled</code> class.</p>
+        <p>Display the current item larger than the rest, and animate the transition between each with the <code>.scooch--scaled</code> class.</p>
 
-        <div class="scooch scooch--center m-scaled scooch--fade-out" id="scooch-example-7">
+        <div class="scooch scooch--center scooch--scaled" id="scooch-example-7">
             <div class="scooch__inner">
                 <div class="scooch__item">
                     <div class="scooch__card scooch--light">
@@ -274,7 +245,7 @@
             initializes scooch with <code>{animate:false}</code> or call move
             <code>$('.scooch').scooch('move', 8, {animate:false})</code></p>
 
-        <div class="scooch scooch--center scooch--fade-out" id="scooch-no-animate">
+        <div class="scooch scooch--center" id="scooch-no-animate">
              <div class="scooch__inner">
                 <div class="scooch__item">
                     <div class="scooch__card scooch--light">
@@ -315,7 +286,7 @@
 
         <h2>Arbitrary Content</h2>
         <p>Arbitrary content carousel with simple Previous / Next controls to advance between items.
-        We used the included class <code>.scooch__card scooch--dark</code> to give each element a background.
+        We used the included class <code>.scooch__card .scooch--dark</code> to give each element a background.
         These elements are automatically sized by the <code>.scooch--fluid</code> class to be full width.</p>
 
         <div class="scooch scooch--fluid" id="scooch-example-8">
