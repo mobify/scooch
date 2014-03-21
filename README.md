@@ -9,27 +9,27 @@ A mobile-first content and image carousel.
     <link rel="stylesheet" href="scooch-style.css">
 
     <!-- the viewport -->
-    <div class="m-scooch m-fluid m-scooch-photos">
+    <div class="scooch">
       <!-- the slider -->
-      <div class="m-scooch-inner">
+      <div class="scooch__inner">
         <!-- the items -->
-        <div class="m-item m-active">
+        <div class="scooch__item scooch--active">
           <img src="image1.jpg">
         </div>
-        <div class="m-item">
+        <div class="scooch__item">
           <img src="image2.jpg">
         </div>
-        <div class="m-item">
+        <div class="scooch__item">
           <img src="image3.jpg">
         </div>
       </div>
       <!-- the controls -->
-      <div class="m-scooch-controls m-scooch-bulleted">
-        <a href="#" data-m-slide="prev">Previous</a>
-        <a href="#" data-m-slide="1" class="m-active">1</a>
-        <a href="#" data-m-slide="2">2</a>
-        <a href="#" data-m-slide="3">3</a>
-        <a href="#" data-m-slide="next">Next</a>
+      <div class="scooch__controls scooch--bulleted">
+        <a href="#" data-scooch-slide="prev" class="scooch__control scooch--prev">Previous</a>
+        <a href="#" data-scooch-slide="1" class="scooch__control scooch--bullet scooch--active">1</a>
+        <a href="#" data-scooch-slide="2" class="scooch__control scooch--bullet">2</a>
+        <a href="#" data-scooch-slide="3" class="scooch__control scooch--bullet">3</a>
+        <a href="#" data-scooch-slide="next" class="scooch__control scooch--next">Next</a>
       </div>
     </div>
 
@@ -38,22 +38,22 @@ A mobile-first content and image carousel.
     <!-- include scooch.js -->
     <script src="scooch.js"></script>
     <!-- construct the carousel -->
-    <script>$('.m-scooch').scooch()</script>
+    <script>$('.scooch').scooch()</script>
 
 
 ## Classes
 
-By default, items are center aligned and their width is determined by
+By default, items are left aligned and their width is determined by
 their content width and/or any styling that restricts their width.
 
 To change the styling of the items, add the following classes to the
-viewport:
+`.scooch` element:
 
 
 | Class       | Description                                            |
 |-------------|---------------------------------------------------------
-| `.m-fluid`  | Causes the width of items to resize to match the viewport width. |
-| `.m-center` | Causes the items to be center aligned, not left aligned (the default). |
+| `.scooch--fluid`  | Causes the width of items to resize to match the viewport width. |
+| `.scooch--center` | Causes the items to be center aligned, not left aligned (the default). |
 
 
 
@@ -64,7 +64,7 @@ viewport:
 
 Constructs the carousel with options.
 
-    $('.m-scooch').scooch({
+    $('.scooch').scooch({
           dragRadius: 10
         , moveRadius: 20
         , classPrefix: undefined
@@ -83,43 +83,43 @@ Constructs the carousel with options.
 
 Moves the carousel one item to the right.
 
-    $('.m-scooch').scooch('next');
+    $('.scooch').scooch('next');
 
 ### .scooch('prev')
 
 Moves the carousel one item to the left.
 
-    $('.m-scooch').scooch('prev');
+    $('.scooch').scooch('prev');
 
 ### .scooch('move', x)
 
 Moves the carousel to a index `x` (1-based).
 
-    $('.m-scooch').scooch('move', 1);
+    $('.scooch').scooch('move', 1);
 
 ### .scooch('unbind')
 
 Removes event handlers bound on the carousel.
 
-    $('.m-scooch').scooch('unbind');
+    $('.scooch').scooch('unbind');
 
 ### .scooch('bind')
 
 Binds the event handlers on the carousel.
 
-    $('.m-scooch').scooch('bind');
+    $('.scooch').scooch('bind');
 
 ### .scooch('refresh')
 
 Re-initialize carousel after new slides were added or removed
 
-    $('.m-scooch').scooch('refresh');
+    $('.scooch').scooch('refresh');
 
 ### .scooch('destroy')
 
 Removes the carousel and its event handlers from the DOM.
 
-    $('.m-scooch').scooch('destroy');
+    $('.scooch').scooch('destroy');
 
 
 ## Events
