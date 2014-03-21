@@ -1,173 +1,14 @@
-/* 
-  Carousel control base styling 
-*/
+/* Scooch Theme Base Styling */
 
-.m-scooch-controls {
-    padding-top: 10px;
-    text-align: center;
+.scooch__item {
+    margin-right: 20px;
 }
 
-.m-scooch-controls a {
-    padding: 5px;
-    -webkit-user-select: none;
-    -moz-user-select: -moz-none;
-    user-select: none;
-    -webkit-user-drag: none;
-    -moz-user-drag: -moz-none;
-    user-drag: none;
-}
-
-
-   
-/* Carousel controls: Bulleted */
-.m-scooch-bulleted a {
-    line-height: 0;
-    text-decoration: none;
-    text-indent: -999px;
-    overflow: hidden;
-    display: inline-block;
-    padding: 6px;
-    width: 0;
-    height: 0;
-    margin: 0 3px;
-    color: #333;
-    background-color: rgba(255,255,255,0.3);
-    -webkit-transition: background-color 0.1s ease-in;
-    -moz-transition: background-color 0.1s ease-in;
-    -o-transition: background-color 0.1s ease-in;
-    transition: background-color 0.1s ease-in;
-    -webkit-box-shadow: inset rgba(0,0,0,0.25) 0 1px 2px;
-    -moz-box-shadow: inset rgba(0,0,0,0.25) 0 1px 2px;
-    box-shadow: inset rgba(0,0,0,0.25) 0 1px 2px;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    border-radius: 6px;
-}
-.m-scooch-bulleted a:hover, .m-scooch-bulleted a:focus {
-    text-decoration: none;
-    background-color: rgba(255,255,255,0.6);
-}
-.m-scooch-bulleted a.m-active {
-    background-color: rgba(255,255,255,1);
-    -webkit-box-shadow: rgba(0,0,0,0.25) 0 1px 2px;
-    -moz-box-shadow: rgba(0,0,0,0.25) 0 1px 2px;
-    box-shadow: rgba(0,0,0,0.25) 0 1px 2px;
-}
-
-
-
-/* Carousel controls: Pagination */
-.m-scooch-pagination {
-    padding-top: 10px;
-}
-.m-scooch-pagination a {
-    text-decoration: none;
-    display: inline-block;
-    padding: 3px 10px;
-    margin: 1px 0;
-    color: #333;
-    background-color: rgba(255,255,255,0.3);
-    -webkit-transition: background-color 0.1s ease-in;
-    -moz-transition: background-color 0.1s ease-in;
-    -o-transition: background-color 0.1s ease-in;
-    transition: background-color 0.1s ease-in;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-}
-.m-scooch-pagination a:hover, .m-scooch-pagination a:focus {
-    text-decoration: none;
-    background-color: rgba(255,255,255,0.6);
-}
-.m-scooch-pagination a.m-active {
-    background-color: rgba(255,255,255,1);
-}
-
-/* Carousel controls: HUD */
-.m-scooch-hud {
-  padding-top: 0;
-}
-.m-scooch-hud a {
-    z-index: 2;
-    opacity: 0;
-    display: block;
-    position: absolute;
-    top: 50%;
-    width: 50px;
-    height: 50px;
-    margin: -25px 0 0 0;
-    padding: 0;
-    text-decoration: none;
-    text-indent: -999px;
-    overflow: hidden;
-    color: rgba(255, 255, 255, 0.8);
-    background: rgba(0, 0, 0, 0.8);
-    -webkit-transition: opacity 0.1s ease-in;
-    -moz-transition: opacity 0.1s ease-in;
-    -o-transition: opacity 0.1s ease-in;
-    transition: opacity 0.1s ease-in;
-    -webkit-border-radius: 25px;
-    -moz-border-radius: 25px;
-    border-radius: 25px;
-}
-.m-scooch:hover .m-scooch-hud a {
-    opacity: 0.3;
-}
-.m-scooch .m-scooch-hud a:hover, .m-scooch .m-scooch-hud a:focus {
-    opacity: 1;
-}
-.m-scooch-hud a:after {
-    color: rgba(255,255,255,0.85);
-    content: "\25c0";
-    font-size: 25px;
-    font-weight: bold;
-    text-indent: 0;
-    text-align: center;
-    display: block;
-    position: absolute;
-    top: 10px;
-    left: 0;
-    width: 47px;
-    height: 50px;
-    z-index: 9;
-}
-.m-scooch-hud .m-scooch-prev {
-    left: 10px;
-}
-.m-scooch-hud .m-scooch-next {
-    right: 10px;
-}
-.m-scooch-hud .m-scooch-next:after {
-    left: auto;
-    right: 0;
-    content: "\25b6";
-}
-
-
-
-
-/* extra bits */
-
-/* captions */
-.m-caption {
-    margin: 0;
-    padding: 10px;
-    height: auto;
-    text-align: center;
-}
-
-
-
-
-
-/* scaled slides */
-.m-scaled .m-item {
+/* Scaling */
+.scooch--scaled .scooch__item {
     opacity: 0.7;
+    
     -webkit-backface-visibility: hidden;
-    -webkit-transform: scale(0.75);
-    -moz-transform: scale(0.75);
-    -ms-transform: scale(0.75);
-    -o-transform: scale(0.75);
     transform: scale(0.75);
 
     /* Configure animations */
@@ -175,88 +16,219 @@
       but fast swiping on a phone can result in odd timing. 
       Half-length durations for each transform is a reasonable 
       middle ground.) */
-    -webkit-transition: -webkit-transform cubic-bezier(0.33, 0.66, 0.66, 1) 0.25s, opacity ease-out 0.25s;
-    -moz-transition-timing-function: -moz-transform cubic-bezier(0.33, 0.66, 0.66, 1) 0.25s, opacity ease-out 0.25s;
-    -o-transition-timing-function: -o-transform cubic-bezier(0.33, 0.66, 0.66, 1) 0.25s, opacity ease-out 0.25s;
-    transition-timing-function: transform cubic-bezier(0.33, 0.66, 0.66, 1) 0.25s, opacity ease-out 0.25s;
+    transition:
+        transform cubic-bezier(0.33, 0.66, 0.66, 1) 0.25s,
+        opacity ease-out 0.25s;
 }
-.m-scaled .m-active {
+
+.scooch--scaled .scooch__item.scooch--active {
     opacity: 1;
-    -webkit-transform: scale(1);
-    -moz-transform: scale(1);
-    -ms-transform: scale(1);
-    -o-transform: scale(1);
     transform: scale(1);
 }
 
-/* Default Themes/Sytles for Slider */
+/* If you use scaled with center, we need to readd the transform */
 
-.m-fluid .m-item {
-    margin-right: 20px;
+.scooch--center.scooch--scaled .scooch__item {
+    transform: translateX(-50%) scale(0.75);
+}
+
+.scooch--center.scooch--scaled .scooch__item.scooch--active {
+    transform: translateX(-50%) scale(1);
+}
+
+/* 
+  Carousel control base styling 
+*/
+
+.scooch__controls {
+    padding-top: 10px;
+    text-align: center;
+}
+
+.scooch__control {
+    padding: 5px;
+    
+    user-select: none;
+    user-drag: none;
+}
+
+/* Carousel controls: Bulleted */
+
+.scooch--bullet {
+    overflow: hidden;
+    display: inline-block;
+    padding: 6px;
+    width: 0;
+    height: 0;
+    margin: 0 3px;
+    
+    background-color: rgba(255,255,255,0.3);
+    border-radius: 6px;
+    box-shadow: inset rgba(0,0,0,0.25) 0 1px 2px;
+
+    line-height: 0;
+    text-decoration: none;
+    text-indent: -999px;
+    color: #333;
+
+    transition: background-color 0.1s ease-in;
+}
+
+.scooch--bullet.scooch--active {
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: rgba(0,0,0,0.25) 0 1px 2px;
+}
+
+/* Carousel controls: Pagination */
+
+.scooch--pagination {
+    padding-top: 10px;
+}
+
+.scooch--page {
+    display: inline-block;
+    padding: 3px 10px;
+    margin: 1px 0;
+    
+    border-radius: 2px;
+    background-color: rgba(240, 240, 240,0.3);
+    
+    text-decoration: none;
+    color: #333;
+
+    transition: background-color 0.1s ease-in;
+}
+
+.scooch--page.scooch--active {
+    background-color: rgba(255,255,255,1);
+}
+
+/* Carousel controls: HUD */
+
+.scooch--hud {
+  padding-top: 0;
+}
+
+.scooch--hud .scooch__control {
+    z-index: 2;
+    position: absolute;
+    top: 50%;
+    
+    display: block;
+    width: 50px;
+    height: 50px;
+    margin: -25px 0 0 0;
+    padding: 0;
+    overflow: hidden;
+    
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 25px;
+    opacity: 0;
+    
+    white-space: nowrap;
+    text-decoration: none;
+    text-indent: 100%;
+
+    transition: opacity 0.1s ease-in;
+}
+
+.scooch--hud .scooch--next {
+    right: 10px;
+}
+
+.scooch--hud .scooch__control:after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9;
+
+    display: block;
+
+    color: rgba(255, 255, 255, 0.85);
+    content: "\25c0";
+    font-size: 20px;
+    font-weight: bold;
+    text-indent: 0;
+    text-align: center;    
+    line-height: 55px;
+}
+
+.scooch--hud .scooch--next:after {
+    content: "\25b6";
+}
+
+.scooch:hover .scooch--hud .scooch__control {
+    opacity: 0.3;
+}
+
+.scooch--hud .scooch__control:hover,
+.scooch--hud .scooch__control:focus {
+    opacity: 1;
+}
+
+
+/* extra bits */
+
+/* captions */
+.scooch__caption {
+    margin: 0;
+    padding: 10px;
+    height: auto;
+    text-align: center;
 }
 
 /* Fluid Width Photo Carousel
- * .m-scooch.m-fluid.m-scooch-photos
+ * .scooch.scooch--fluid.scooch--photos
  */
 
-.m-scooch-photos {
+.scooch--photos {
     margin: 0 -10px;
     padding: 0 10px;
 }
 
-.m-scooch-photos .m-item  > img {
+.scooch--photos .scooch__item  > img {
     margin: 0;
     padding: 0;
     max-width: none;
     width: 100%;
     height: auto;
 
-    -webkit-box-shadow: rgba(0,0,0,0.5) 0 5px 10px;
-    -moz-box-shadow: rgba(0,0,0,0.5) 0 5px 10px;
-    -o-box-shadow: rgba(0,0,0,0.5) 0 5px 10px;
-    -ms-box-shadow: rgba(0,0,0,0.5) 0 5px 10px;
     box-shadow: rgba(0,0,0,0.5) 0 5px 10px;
 }
 
-.m-scooch-photos .m-caption {
+.scooch--photos .scooch__caption {
     background: rgba(0,0,0,0.7);
     bottom: 0;
     position: absolute;
     z-index: 9;
     width: 100%;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
     box-sizing: border-box;
+    
+    color: white;
 }
-
 
 /* Inner Cards for Carousel */
-.m-card-dark, .m-card-light {
+.scooch__card {
     padding: 20px;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
+    
     border-radius: 6px;
-
-    -webkit-box-shadow: rgba(0,0,0,0.5) 0 5px 10px;
-    -moz-box-shadow: rgba(0,0,0,0.5) 0 5px 10px;
-    -o-box-shadow: rgba(0,0,0,0.5) 0 5px 10px;
-    -ms-box-shadow: rgba(0,0,0,0.5) 0 5px 10px;
-    box-shadow: rgba(0,0,0,0.5) 0 5px 10px;    
+    box-shadow: rgba(0,0,0,0.5) 0 5px 10px;
 }
-.m-card-dark {
+
+.scooch--dark {
     background: rgba(0,0,0,0.5);
     color: #FFF;
 }
-.m-card-light {
+
+.scooch--light {
     background: rgba(255,255,255,0.9);
     color: #000;
 }
-.m-card-dark .m-caption, .m-card-light .m-caption {
+
+.scooch__card .scooch__caption {
     margin: 0;
     padding: 10px 0 0 0;
-}
-
-.m-fade-out {
-    -webkit-mask-image: -webkit-linear-gradient(left, rgba(0,0,0,0) 0%,
-    rgba(0,0,0,1) 5%, rgba(0,0,0,1) 95%, rgba(0,0,0,0) 100%);
 }

@@ -1,91 +1,50 @@
-/*  Classes  on  outer  slideshow  wrapper:
-    either  NONE  or  'fraction'  or  'fraction'  +  one  of  'fraction1'...'fraction10'.
-        fraction  sets  box-sizing:  border-box,  so  that  padding  on  the  element  is  taken  out  ;
-    either  NONE  or  'center'  or  'right'
+.scooch {
+    position: relative;
+    overflow: hidden;
+}
 
-*/
-.m-scooch  {
-    position:  relative;
-    overflow:  hidden;
-    -webkit-font-smoothing:  antialiased;  }
-    .m-scooch.m-left  {
-        text-align:  left;  }
-    .m-scooch.m-center  {
-        text-align:  center;  }
-    .m-scooch.m-fluid  >  .m-scooch-inner  >  *  {
-        width:  100%;  }
-    .m-scooch.m-fluid.m-center  >  .m-scooch-inner  >  *:first-child  {
-        margin-left:  0%;  }
-    .m-scooch.m-fluid-2  >  .m-scooch-inner  >  *  {
-        width:  50%;  }
-    .m-scooch.m-fluid-2.m-center  >  .m-scooch-inner  >  *:first-child  {
-        margin-left:  25%;  }
-    .m-scooch.m-fluid-3  >  .m-scooch-inner  >  *  {
-        width:  33.333%;  }
-    .m-scooch.m-fluid-3.m-center  >  .m-scooch-inner  >  *:first-child  {
-        margin-left:  33.333%;  }
-    .m-scooch.m-fluid-4  >  .m-scooch-inner  >  *  {
-        width:  25%;  }
-    .m-scooch.m-fluid-4.m-center  >  .m-scooch-inner  >  *:first-child  {
-        margin-left:  37.5%;  }
-    .m-scooch.m-fluid-5  >  .m-scooch-inner  >  *  {
-        width:  20%;  }
-    .m-scooch.m-fluid-5.m-center  >  .m-scooch-inner  >  *:first-child  {
-        margin-left:  40%;  }
-    .m-scooch.m-fluid-6  >  .m-scooch-inner  >  *  {
-        width:  16.667%;  }
-    .m-scooch.m-fluid-6.m-center  >  .m-scooch-inner  >  *:first-child  {
-        margin-left:  41.667%;  }
-    .m-scooch  img  {
-        -ms-interpolation-mode:  bicubic;  }
+.scooch img {
+    -ms-interpolation-mode: bicubic; /* Better scaling in Internet Explorer */
+}
 
-.m-scooch-inner  {
-    position:  relative;
-    white-space:  nowrap;
-    text-align:  left;
-    /*  Removes  inline-block  gaps  due  to  whitespace  */
-    font-size:  0;
-    /*  Configure  animations  */
-    -webkit-transition-property:  -webkit-transform;
-    -moz-transition-property:  -moz-transform;
-    -ms-transition-property:  -ms-transform;
-    -o-transition-property:  -o-transform;
-    transition-property:  transform;
+.scooch__inner {
+    position: relative;
+    
+    white-space: nowrap;
+    text-align: left;
+
+    transition-property: transform;
     /*  iOS  like  slide  timings  */
-    -webkit-transition-timing-function:  cubic-bezier(0.33,  0.66,  0.66,  1);
-    -moz-transition-timing-function:  cubic-bezier(0.33,  0.66,  0.66,  1);
-    -ms-transition-timing-function:  cubic-bezier(0.33,  0.66,  0.66,  1);
-    -o-transition-timing-function:  cubic-bezier(0.33,  0.66,  0.66,  1);
-    transition-timing-function:  cubic-bezier(0.33,  0.66,  0.66,  1);
-    -webkit-transition-duration:  0.5s;
-    -moz-transition-duration:  0.5s;
-    -ms-transition-duration:  0.5s;
-    -o-transition-duration:  0.5s;
-    transition-duration:  0.5s;  }
-    .m-scooch-inner  >  *  {
-        display:  inline-block;
-        vertical-align:  top;
-        white-space:  normal;
-        /*  We  must  reset  the  font-size  here  */
-        font-size:  16px;  }
-    .m-fluid  >  .m-scooch-inner  >  *  {
-        box-sizing:  border-box;
-        -ms-box-sizing:  border-box;
-        -moz-box-sizing:  border-box;
-        -o-box-sizing:  border-box;
-        -webkit-box-sizing:  border-box;  }
-    .m-center:not(.m-fluid)  >  .m-scooch-inner  {
-        display:  inline-block;
-        margin-right:  -20000px  !important;
-        margin-left:  0  !important;  }
-        .m-center:not(.m-fluid)  >  .m-scooch-inner  >  *  {
-            position:  relative;
-            left:  -20000px;  }
-        .m-center:not(.m-fluid)  >  .m-scooch-inner  >  *:first-child  {
-            float:  left;
-            margin-right:  20000px;
-            left:  0;  }
-            .m-center:not(.m-fluid)  >  .m-scooch-inner  >  *:first-child:last-child  {
-                margin-right:  0;  }
-        .m-center:not(.m-fluid)  >  .m-scooch-inner  >  *:last-child  {
-            margin-right:  -30000px;  }
+    transition-timing-function: cubic-bezier(0.33,  0.66,  0.66,  1);
+    transition-duration: 0.5s;
+}
+
+.scooch__item {
+    display: inline-block;
+    /*  Removes  inline-block  gaps  due  to  whitespace  */
+    margin-right: -4px;
+    
+    vertical-align: top;
+    white-space: normal;
+}
+
+/* .scooch--fluid scales scooch to 100% of window width */
+
+.scooch--fluid .scooch__item {
+    box-sizing: border-box;
+}
+
+.scooch--fluid .scooch__item,
+.scooch--fluid .scooch__item img {
+    width: 100%;
+}
+
+/* .scooch--center centers individual items in the viewport instead of aligning to left */
+.scooch--center .scooch__inner {
+    position: relative;
+    left: 50%;
+}
+
+.scooch--center .scooch__item {
+    transform: translateX(-50%);
+}
