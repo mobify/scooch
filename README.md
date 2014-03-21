@@ -4,6 +4,7 @@ A mobile-first content and image carousel.
 
 ## Usage
 
+```html
     <!-- include scooch.css -->
     <link rel="stylesheet" href="scooch.css">
     <link rel="stylesheet" href="scooch-style.css">
@@ -39,6 +40,7 @@ A mobile-first content and image carousel.
     <script src="scooch.js"></script>
     <!-- construct the carousel -->
     <script>$('.scooch').scooch()</script>
+```
 
 
 ## Classes
@@ -64,6 +66,7 @@ To change the styling of the items, add the following classes to the
 
 Constructs the carousel with options.
 
+```javascript
     $('.scooch').scooch({
           dragRadius: 10
         , moveRadius: 20
@@ -78,6 +81,7 @@ Constructs the carousel with options.
           , active: "active"
         }
     });
+```
 
 ### .scooch('next')
 
