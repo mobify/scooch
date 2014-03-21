@@ -1,6 +1,6 @@
 var Mobify = window.Mobify = window.Mobify || {};
 Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
-Mobify.UI = Mobify.UI ? Mobify.$.extend(Mobify.UI, { classPrefix: 'm-' }) : { classPrefix: 'm-' };
+Mobify.UI = Mobify.UI ? Mobify.$.extend(Mobify.UI, { classPrefix: 'scooch' }) : { classPrefix: 'scooch' };
 
 (function($, document) {
     $.support = $.support || {};
@@ -130,14 +130,14 @@ Mobify.UI.Scooch = (function($, Utils) {
           , animate: true
           , classPrefix: undefined
           , classNames: {
-                outer: 'scooch'
-              , inner: 'scooch-inner'
-              , item: 'item'
-              , center: 'center'
-              , touch: 'has-touch'
-              , dragging: 'dragging'
-              , active: 'active'
-              , fluid: 'fluid'
+                outer: ''
+              , inner: '__inner'
+              , item: '--item'
+              , center: '--center'
+              , touch: '--has-touch'
+              , dragging: '--dragging'
+              , active: '--active'
+              , fluid: '--fluid'
             }
         }
        , has = $.support;
@@ -369,9 +369,9 @@ Mobify.UI.Scooch = (function($, Utils) {
             .on('click.scooch', click)
             .on('mouseout.scooch', end);
 
-        $element.on('click', '[data-m-slide]', function(e){
+        $element.on('click', '[data-scooch-slide]', function(e){
             e.preventDefault();
-            var action = $(this).attr('data-m-slide')
+            var action = $(this).attr('data-scooch-slide')
               , index = parseInt(action, 10);
 
             if (isNaN(index)) {
@@ -385,8 +385,8 @@ Mobify.UI.Scooch = (function($, Utils) {
             self.$items.eq(previousSlide - 1).removeClass(self._getClass('active'));
             self.$items.eq(nextSlide - 1).addClass(self._getClass('active'));
 
-            self.$element.find('[data-m-slide=\'' + previousSlide + '\']').removeClass(self._getClass('active'));
-            self.$element.find('[data-m-slide=\'' + nextSlide + '\']').addClass(self._getClass('active'));
+            self.$element.find('[data-scooch-slide=\'' + previousSlide + '\']').removeClass(self._getClass('active'));
+            self.$element.find('[data-scooch-slide=\'' + nextSlide + '\']').addClass(self._getClass('active'));
         });
 
         $(window).on('resize orientationchange', function(e) {

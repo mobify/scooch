@@ -37,13 +37,24 @@ module.exports = function(grunt) {
                 dest: 'build/scooch.min.js'
             }
         },
+        autoprefixer: {
+            options: {
+              browsers: ['last 4 version', 'ie 8', 'ie 9', 'Android 2']
+            },
+            multiple_files: {
+                expand: true,
+                flatten: true,
+                src: 'src/*.css',
+                dest: 'build/'
+            }
+        },
         cssmin: {
             core: {
-                src: 'src/scooch.css',
+                src: 'build/scooch.css',
                 dest: 'build/scooch.min.css'
             },
             style: {
-                src: 'src/scooch-style.css',
+                src: 'build/scooch-style.css',
                 dest: 'build/scooch-style.min.css'
             }
         },
@@ -83,10 +94,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-zip');
     grunt.loadNpmTasks('grunt-s3');
     grunt.loadNpmTasks('grunt-clean');
+    grunt.loadNpmTasks('grunt-autoprefixer');
 
     // Default task(s).
     grunt.registerTask('serve', ['connect', 'watch']);
-    grunt.registerTask('build', ['uglify', 'cssmin', 'zip']);
+    grunt.registerTask('build', ['uglify', 'autoprefixer', 'cssmin', 'zip']);
     grunt.registerTask('release', ['build', 'shell:tagRelease', 's3'])
     grunt.registerTask('default', 'build')
 

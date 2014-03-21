@@ -3,29 +3,29 @@
     <head>
         <title>Examples of Scooch in action</title>
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-        <link rel="stylesheet" href="src/scooch.css">
-        <link rel="stylesheet" href="src/scooch-style.css">
+        <link rel="stylesheet" href="build/scooch.min.css">
+        <link rel="stylesheet" href="build/scooch-style.min.css">
         <style>
             /* styling for this page */
-            .m-scooch {
+            .scooch {
                 padding-bottom: 30px;
             }
 
-            .m-card-light {
+            .scooch__card .scooch--light {
                 width: 200px;
                 margin: 30px 10px 0 10px;
             }
-            .m-card-dark h3 {
+            .scooch__card .scooch--dark h3 {
                 margin-top: 0;
             }
 
-            .m-item .m-card-dark img, .m-item .m-card-light img {
+            .scooch__item .scooch__card.scooch--dark img, .scooch__item .scooch__card.scooch--light img {
                 width: 100%;
                 max-width: 100%;
                 height: auto;
             }
 
-            .m-scooch-example-5 .m-caption {
+            #scooch-example-5 .scooch__caption {
                 color: #ccc;
             }
 
@@ -39,232 +39,232 @@
 
         <h2>Previous / Next controls</h2>
         <p>Carousel with Previous / Next controls to advance between items.</p>
-        <div class="m-scooch m-fluid m-scooch-photos" id="m-scooch-example-1">
-          <div class="m-scooch-inner">
-            <div class="m-item">
+        <div class="scooch scooch--fluid scooch--photos" id="scooch-example-1">
+          <div class="scooch__inner">
+            <div class="scooch__item">
                 <img src="http://lorempixel.com/300/300/animals/?1">
             </div>
-            <div class="m-item">
+            <div class="scooch__item">
                 <img src="http://lorempixel.com/300/300/animals/?2">
             </div>
-            <div class="m-item">
+            <div class="scooch__item">
                 <img src="http://lorempixel.com/300/300/animals/?3">
             </div>
-            <div class="m-item">
+            <div class="scooch__item">
                 <img src="http://lorempixel.com/300/300/animals/?4">
             </div>
-            <div class="m-item">
+            <div class="scooch__item">
                 <img src="http://lorempixel.com/300/300/animals/?5">
             </div>
           </div>
-          <div class="m-scooch-controls">
-            <a href="#" data-m-slide="prev">&lsaquo; Previous</a>
-            <a href="#" data-m-slide="next">Next &rsaquo;</a>
+          <div class="scooch__controls">
+            <a href="#" data-scooch-slide="prev" class="scooch__control scooch--prev">&lsaquo; Previous</a>
+            <a href="#" data-scooch-slide="next" class="scooch__control scooch--next">Next &rsaquo;</a>
           </div>
         </div>
 
         <h2>Bulleted controls</h2>
         <p>Bulleted indicators for number of items and currently-selected item. Click to advance between items.</p>
-        <div class="m-scooch m-fluid m-scooch-photos" id="m-scooch-example-2">
-          <div class="m-scooch-inner">
-            <div class="m-item">
+        <div class="scooch scooch--fluid scooch--photos" id="scooch-example-2">
+          <div class="scooch__inner">
+            <div class="scooch__item">
                 <img src="http://lorempixel.com/300/300/animals/?1">
             </div>
-            <div class="m-item">
+            <div class="scooch__item">
                 <img src="http://lorempixel.com/300/300/animals/?2">
             </div>
-            <div class="m-item">
+            <div class="scooch__item">
                 <img src="http://lorempixel.com/300/300/animals/?3">
             </div>
-            <div class="m-item">
+            <div class="scooch__item">
                 <img src="http://lorempixel.com/300/300/animals/?4">
             </div>
-            <div class="m-item">
+            <div class="scooch__item">
                 <img src="http://lorempixel.com/300/300/animals/?5">
             </div>
           </div>
-          <div class="m-scooch-controls m-scooch-bulleted">
-            <a href="#" data-m-slide="1">1</a>
-            <a href="#" data-m-slide="2">2</a>
-            <a href="#" data-m-slide="3">3</a>
-            <a href="#" data-m-slide="4">4</a>
-            <a href="#" data-m-slide="5">5</a>
+          <div class="scooch__controls scooch--bulleted">
+            <a href="#" data-scooch-slide="1" class="scooch__control scooch--bullet">1</a>
+            <a href="#" data-scooch-slide="2" class="scooch__control scooch--bullet">2</a>
+            <a href="#" data-scooch-slide="3" class="scooch__control scooch--bullet">3</a>
+            <a href="#" data-scooch-slide="4" class="scooch__control scooch--bullet">4</a>
+            <a href="#" data-scooch-slide="5" class="scooch__control scooch--bullet">5</a>
           </div>
         </div>
 
         <h2>Numbered pagination-style controls</h2>
         <p>Numbered pagination controls for each item, with flanking Previous / Next controls.</p>
-        <div class="m-scooch m-fluid m-scooch-photos" id="m-scooch-example-3">
-            <div class="m-scooch-inner">
-                <div class="m-item">
+        <div class="scooch scooch--fluid scooch--photos" id="scooch-example-3">
+            <div class="scooch__inner">
+                <div class="scooch__item">
                     <img src="http://lorempixel.com/300/300/animals/?1">
                 </div>
-                <div class="m-item">
+                <div class="scooch__item">
                     <img src="http://lorempixel.com/300/300/animals/?2">
                 </div>
-                <div class="m-item">
+                <div class="scooch__item">
                     <img src="http://lorempixel.com/300/300/animals/?3">
                 </div>
-                <div class="m-item">
+                <div class="scooch__item">
                     <img src="http://lorempixel.com/300/300/animals/?4">
                 </div>
-                <div class="m-item">
+                <div class="scooch__item">
                     <img src="http://lorempixel.com/300/300/animals/?5">
                 </div>
             </div>
-            <div class="m-scooch-controls m-scooch-pagination">
-                <a href="#" data-m-slide="prev">Previous</a>
-                <a href="#" data-m-slide="1">1</a>
-                <a href="#" data-m-slide="2">2</a>
-                <a href="#" data-m-slide="3">3</a>
-                <a href="#" data-m-slide="4">4</a>
-                <a href="#" data-m-slide="5">5</a>
-                <a href="#" data-m-slide="next">Next</a>
+            <div class="scooch__controls scooch--pagination">
+                <a href="#" data-scooch-slide="prev" class="scooch__control scooch--prev">Previous</a>
+                <a href="#" data-scooch-slide="1" class="scooch__control scooch--page">1</a>
+                <a href="#" data-scooch-slide="2" class="scooch__control scooch--page">2</a>
+                <a href="#" data-scooch-slide="3" class="scooch__control scooch--page">3</a>
+                <a href="#" data-scooch-slide="4" class="scooch__control scooch--page">4</a>
+                <a href="#" data-scooch-slide="5" class="scooch__control scooch--page">5</a>
+                <a href="#" data-scooch-slide="next" class="scooch__control scooch--next">Next</a>
             </div>
         </div>
 
         <h2>HUD-style Controls</h2>
         <p>Previous and Next render as heads-up controls that display on hover events. Since hover events don't work on mobile, simply swipe to advance.</p>
-        <div class="m-scooch m-fluid m-scooch-photos" id="m-scooch-example-4">
-            <div class="m-scooch-inner">
-                <div class="m-item">
+        <div class="scooch scooch--fluid scooch--photos" id="scooch-example-4">
+            <div class="scooch__inner">
+                <div class="scooch__item">
                     <img src="http://lorempixel.com/300/300/animals/?1">
                 </div>
-                <div class="m-item">
+                <div class="scooch__item">
                     <img src="http://lorempixel.com/300/300/animals/?2">
                 </div>
-                <div class="m-item">
+                <div class="scooch__item">
                     <img src="http://lorempixel.com/300/300/animals/?3">
                 </div>
-                <div class="m-item">
+                <div class="scooch__item">
                     <img src="http://lorempixel.com/300/300/animals/?4">
                 </div>
-                <div class="m-item">
+                <div class="scooch__item">
                     <img src="http://lorempixel.com/300/300/animals/?5">
                 </div>
             </div>
-            <div class="m-scooch-controls m-scooch-hud">
-                <a class="m-scooch-prev" href="#" data-m-slide="prev">Previous</a>
-                <a class="m-scooch-next" href="#" data-m-slide="next">Next</a>
+            <div class="scooch__controls scooch--hud">
+                <a href="#" data-scooch-slide="prev" class="scooch__control scooch--prev">&lsaquo; Previous</a>
+                <a href="#" data-scooch-slide="next" class="scooch__control scooch--next">Next &rsaquo;</a>
             </div>
         </div>
 
 
         <h2>Image + Caption</h2>
         <p>Image carousel containing textual captions with simple Previous / Next controls to advance between items.</p>
-        <div class="m-scooch m-fluid m-scooch-photos" id="m-scooch-example-5">
-            <div class="m-scooch-inner">
-                <div class="m-item">
+        <div class="scooch scooch--fluid scooch--photos" id="scooch-example-5">
+            <div class="scooch__inner">
+                <div class="scooch__item">
                     <img src="http://lorempixel.com/300/300/animals/?1">
-                    <p class="m-caption">How</p>
+                    <p class="scooch__caption">How</p>
                 </div>
-                <div class="m-item">
+                <div class="scooch__item">
                     <img src="http://lorempixel.com/300/300/animals/?2">
-                    <p class="m-caption">many</p>
+                    <p class="scooch__caption">many</p>
                 </div>
-                <div class="m-item">
+                <div class="scooch__item">
                     <img src="http://lorempixel.com/300/300/animals/?3">
-                    <p class="m-caption">roads</p>
+                    <p class="scooch__caption">roads</p>
                 </div>
-                <div class="m-item">
+                <div class="scooch__item">
                     <img src="http://lorempixel.com/300/300/animals/?4">
-                    <p class="m-caption">must</p>
+                    <p class="scooch__caption">must</p>
                 </div>
-                <div class="m-item">
+                <div class="scooch__item">
                     <img src="http://lorempixel.com/300/300/animals/?5">
-                    <p class="m-caption">a</p>
+                    <p class="scooch__caption">a</p>
                 </div>
             </div>
-            <div class="m-scooch-controls">
-                <a href="#" data-m-slide="prev">&lsaquo; Previous</a>
-                <a href="#" data-m-slide="next">Next &rsaquo;</a>
+            <div class="scooch__controls">
+                <a href="#" data-scooch-slide="prev" class="scooch__control scooch--prev">&lsaquo; Previous</a>
+                <a href="#" data-scooch-slide="next" class="scooch__control scooch--next">Next &rsaquo;</a>
             </div>
         </div>
 
         <h2>Fixed Width Items</h2>
         <p>Items can be stretched to fit the viewport, or they can be sized individually like in this example.
-        In this example, we've used the included <code>.m-card-light</code> class to give the element a background and border.
+        In this example, we've used the included <code>.scooch__card scooch--light</code> class to give the element a background and border.
         You will have to to size the element or it's content yourself.
         </p>
 
-        <div class="m-scooch m-center m-fade-out" id="m-scooch-example-6">
-            <div class="m-scooch-inner">
-                <div class="m-item">
-                    <div class="m-card-light">
+        <div class="scooch scooch--center scooch--fade-out" id="scooch-example-6">
+            <div class="scooch__inner">
+                <div class="scooch__item">
+                    <div class="scooch__card scooch--light">
                         <img src="http://lorempixel.com/300/300/animals/?1">
-                        <p class="m-caption">Blossoms</p>
+                        <p class="scooch__caption">Blossoms</p>
                     </div>
                 </div>
-                <div class="m-item">
-                    <div class="m-card-light">
+                <div class="scooch__item">
+                    <div class="scooch__card scooch--light">
                         <img src="http://lorempixel.com/300/300/animals/?2">
-                        <p class="m-caption">Glacier</p>
+                        <p class="scooch__caption">Glacier</p>
                     </div>
                 </div>
-                <div class="m-item">
-                    <div class="m-card-light">
+                <div class="scooch__item">
+                    <div class="scooch__card scooch--light">
                         <img src="http://lorempixel.com/300/300/animals/?3">
-                        <p class="m-caption">Helmets</p>
+                        <p class="scooch__caption">Helmets</p>
                     </div>
                 </div>
-                <div class="m-item">
-                    <div class="m-card-light">
+                <div class="scooch__item">
+                    <div class="scooch__card scooch--light">
                         <img src="http://lorempixel.com/300/300/animals/?4">
-                        <p class="m-caption">Parliament</p>
+                        <p class="scooch__caption">Parliament</p>
                     </div>
                 </div>
-                <div class="m-item">
-                    <div class="m-card-light">
+                <div class="scooch__item">
+                    <div class="scooch__card scooch--light">
                         <img src="http://lorempixel.com/300/300/animals/?5">
-                        <p class="m-caption">Pods</p>
+                        <p class="scooch__caption">Pods</p>
                     </div>
                 </div>
             </div>
-            <div class="m-scooch-controls">
-                <a href="#" data-m-slide="prev">&lsaquo; Previous</a>
-                <a href="#" data-m-slide="next">Next &rsaquo;</a>
+            <div class="scooch__controls">
+                <a href="#" data-scooch-slide="prev" class="scooch__control scooch--prev">&lsaquo; Previous</a>
+                <a href="#" data-scooch-slide="next" class="scooch__control scooch--next">Next &rsaquo;</a>
             </div>
         </div>
 
         <h2>Scaled Transitions</h2>
         <p>Display the current item larger than the rest, and animate the transition between each with the <code>.m-scaled</code> class.</p>
 
-        <div class="m-scooch m-center m-scaled m-fade-out" id="m-scooch-example-7">
-            <div class="m-scooch-inner">
-                <div class="m-item">
-                    <div class="m-card-light">
+        <div class="scooch scooch--center m-scaled scooch--fade-out" id="scooch-example-7">
+            <div class="scooch__inner">
+                <div class="scooch__item">
+                    <div class="scooch__card scooch--light">
                         <img src="http://lorempixel.com/300/300/animals/?1">
-                        <p class="m-caption">Blossoms</p>
+                        <p class="scooch__caption">Blossoms</p>
                     </div>
                 </div>
-                <div class="m-item">
-                    <div class="m-card-light">
+                <div class="scooch__item">
+                    <div class="scooch__card scooch--light">
                         <img src="http://lorempixel.com/300/300/animals/?2">
-                        <p class="m-caption">Fox Glacier</p>
+                        <p class="scooch__caption">Fox Glacier</p>
                     </div>
                 </div>
-                <div class="m-item">
-                    <div class="m-card-light">
+                <div class="scooch__item">
+                    <div class="scooch__card scooch--light">
                         <img src="http://lorempixel.com/300/300/animals/?3">
-                        <p class="m-caption">Helmets</p>
+                        <p class="scooch__caption">Helmets</p>
                     </div>
                 </div>
-                <div class="m-item">
-                    <div class="m-card-light">
+                <div class="scooch__item">
+                    <div class="scooch__card scooch--light">
                         <img src="http://lorempixel.com/300/300/animals/?4">
-                        <p class="m-caption">Parliament</p>
+                        <p class="scooch__caption">Parliament</p>
                     </div>
                 </div>
-                <div class="m-item">
-                    <div class="m-card-light">
+                <div class="scooch__item">
+                    <div class="scooch__card scooch--light">
                         <img src="http://lorempixel.com/300/300/animals/?5">
-                        <p class="m-caption">Pods</p>
+                        <p class="scooch__caption">Pods</p>
                     </div>
                 </div>
             </div>
-            <div class="m-scooch-controls">
-                <a href="#" data-m-slide="prev">&lsaquo; Previous</a>
-                <a href="#" data-m-slide="next">Next &rsaquo;</a>
+            <div class="scooch__controls">
+                <a href="#" data-scooch-slide="prev" class="scooch__control scooch--prev">&lsaquo; Previous</a>
+                <a href="#" data-scooch-slide="next" class="scooch__control scooch--next">Next &rsaquo;</a>
             </div>
         </div>
 
@@ -272,56 +272,56 @@
         <p>Doesn't animate when we move between items.  Can use this to
             initialize scooch to a different item than the first.  Either
             initializes scooch with <code>{animate:false}</code> or call move
-            <code>$('.m-scooch').scooch('move', 8, {animate:false})</code></p>
+            <code>$('.scooch').scooch('move', 8, {animate:false})</code></p>
 
-        <div class="m-scooch m-center m-fade-out" id="m-scooch-no-animate">
-             <div class="m-scooch-inner">
-                <div class="m-item">
-                    <div class="m-card-light">
+        <div class="scooch scooch--center scooch--fade-out" id="scooch-no-animate">
+             <div class="scooch__inner">
+                <div class="scooch__item">
+                    <div class="scooch__card scooch--light">
                         <img src="http://lorempixel.com/300/300/animals/">
-                        <p class="m-caption">Blossoms</p>
+                        <p class="scooch__caption">Blossoms</p>
                     </div>
                 </div>
-                <div class="m-item">
-                    <div class="m-card-light">
+                <div class="scooch__item">
+                    <div class="scooch__card scooch--light">
                         <img src="http://lorempixel.com/300/300/animals/">
-                        <p class="m-caption">Glacier</p>
+                        <p class="scooch__caption">Glacier</p>
                     </div>
                 </div>
-                <div class="m-item">
-                    <div class="m-card-light">
+                <div class="scooch__item">
+                    <div class="scooch__card scooch--light">
                         <img src="http://lorempixel.com/300/300/animals/">
-                        <p class="m-caption">Helmets</p>
+                        <p class="scooch__caption">Helmets</p>
                     </div>
                 </div>
-                <div class="m-item">
-                    <div class="m-card-light">
+                <div class="scooch__item">
+                    <div class="scooch__card scooch--light">
                         <img src="http://lorempixel.com/300/300/animals/">
-                        <p class="m-caption">Parliament</p>
+                        <p class="scooch__caption">Parliament</p>
                     </div>
                 </div>
-                <div class="m-item">
-                    <div class="m-card-light">
+                <div class="scooch__item">
+                    <div class="scooch__card scooch--light">
                         <img src="http://lorempixel.com/300/300/animals/">
-                        <p class="m-caption">Pods</p>
+                        <p class="scooch__caption">Pods</p>
                     </div>
                 </div>
             </div>
-            <div class="m-scooch-controls">
-                <a href="#" data-m-slide="prev">&lsaquo; Previous</a>
-                <a href="#" data-m-slide="next">Next &rsaquo;</a>
+            <div class="scooch__controls">
+                <a href="#" data-scooch-slide="prev" class="scooch__control scooch--prev">&lsaquo; Previous</a>
+                <a href="#" data-scooch-slide="next" class="scooch__control scooch--next">Next &rsaquo;</a>
             </div>
         </div>
 
         <h2>Arbitrary Content</h2>
         <p>Arbitrary content carousel with simple Previous / Next controls to advance between items.
-        We used the included class <code>.m-card-dark</code> to give each element a background.
-        These elements are automatically sized by the <code>.m-fluid</code> class to be full width.</p>
+        We used the included class <code>.scooch__card scooch--dark</code> to give each element a background.
+        These elements are automatically sized by the <code>.scooch--fluid</code> class to be full width.</p>
 
-        <div class="m-scooch m-fluid" id="m-scooch-example-8">
-            <div class="m-scooch-inner">
-                <div class="m-item">
-                    <div class="m-card-dark">
+        <div class="scooch scooch--fluid" id="scooch-example-8">
+            <div class="scooch__inner">
+                <div class="scooch__item">
+                    <div class="scooch__card scooch--dark">
                         <h3>Slipsum</h3>
                         <!-- start slipsum code -->
 
@@ -336,8 +336,8 @@
 
                     </div>
                 </div>
-                <div class="m-item">
-                    <div class="m-card-dark">
+                <div class="scooch__item">
+                    <div class="scooch__card scooch--dark">
                         <h3>More Slipsum</h3>
                         <!-- start slipsum code -->
 
@@ -353,16 +353,16 @@
                     </div>
                 </div>
             </div>
-            <div class="m-scooch-controls">
-                <a href="#" data-m-slide="prev">&lsaquo; Previous</a>
-                <a href="#" data-m-slide="next">Next &rsaquo;</a>
+            <div class="scooch__controls">
+                <a href="#" data-scooch-slide="prev" class="scooch__control scooch--prev">&lsaquo; Previous</a>
+                <a href="#" data-scooch-slide="next" class="scooch__control scooch--next">Next &rsaquo;</a>
             </div>
         </div>
 
         <!-- <script src="http://zeptojs.com/zepto.js"></script> -->
         <script src="http://code.jquery.com/jquery-1.10.1.js"></script>
         <script src="src/scooch.js"></script>
-        <script>$('#m-scooch-no-animate').scooch({animate:false});</script>
-        <script>$('.m-scooch').scooch();</script>
+        <script>$('#scooch-no-animate').scooch({animate:false});</script>
+        <script>$('.scooch').scooch();</script>
     </body>
 </html>
