@@ -54,8 +54,7 @@ module.exports = function(grunt) {
             }
         },
         zip: {
-            "build/scooch.zip": ["src/scooch.js", "src/scooch.css",
-            "src/scooch-style.css"]
+            "build/scooch.zip": ["src/scooch.js", "src/scooch.css", "src/scooch-style.css"]
         },
         s3: {
             key: '<%= localConfig.aws.key %>',

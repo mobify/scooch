@@ -3,4 +3,5 @@ node_modules/
 npm-debug.log
 
 localConfig.json
-build
+
+/build/scooch.zip
