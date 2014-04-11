@@ -47,12 +47,6 @@ module.exports = function(grunt) {
                 dest: 'build/scooch-style.min.css'
             }
         },
-        shell: {
-            tagRelease: {
-                command: 'git tag -a <%= releaseName %> -m "<%= releaseMessage %>" &&' +
-                  'git push origin <%= releaseName %>'
-            }
-        },
         zip: {
             "build/scooch.zip": ["src/scooch.js", "src/scooch.css", "src/scooch-style.css"]
         },
@@ -69,8 +63,18 @@ module.exports = function(grunt) {
                     rel: "build"
                 }
             ]
+        },
+        release: {
+            options: {
+                folder: '.',
+                npm: false,
+                github: {
+                    repo: 'mobify/scooch',
+                    usernameVar: 'GITHUB_USERNAME',
+                    passwordVar: 'GITHUB_TOKEN'
+                }
+            }
         }
-        // TODO: upload over a LATEST version and/or create a redirect?
     });
 
     // Load the task plugins
@@ -82,11 +86,12 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-zip');
     grunt.loadNpmTasks('grunt-s3');
     grunt.loadNpmTasks('grunt-clean');
+    grunt.loadNpmTasks('grunt-release');
 
     // Default task(s).
     grunt.registerTask('serve', ['connect', 'watch']);
     grunt.registerTask('build', ['uglify', 'cssmin', 'zip']);
-    grunt.registerTask('release', ['build', 'shell:tagRelease', 's3'])
+    grunt.registerTask('publish' ['build', 'release', 's3'])
     grunt.registerTask('default', 'build')
 
 };
