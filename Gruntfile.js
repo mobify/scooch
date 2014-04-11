@@ -91,7 +91,7 @@ module.exports = function(grunt) {
     // Default task(s).
     grunt.registerTask('serve', ['connect', 'watch']);
     grunt.registerTask('build', ['uglify', 'cssmin', 'zip']);
-    grunt.registerTask('publish' ['build', 'release', 's3'])
+    grunt.registerTask('publish', ['build', 'release', 's3'])
     grunt.registerTask('default', 'build')
 
 };
