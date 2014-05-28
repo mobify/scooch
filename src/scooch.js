@@ -1,6 +1,11 @@
 var Mobify = window.Mobify = window.Mobify || {};
-Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
-Mobify.UI = Mobify.UI ? Mobify.$.extend(Mobify.UI, { classPrefix: 'm-' }) : { classPrefix: 'm-' };
+var Adaptive = window.Adaptive || {};
+if (Adaptive.$ === undefined) {
+    Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
+    Mobify.UI = Mobify.UI ? Mobify.$.extend(Mobify.UI, { classPrefix: 'm-' }) : { classPrefix: 'm-' };
+} else {
+    Mobify.UI = Mobify.UI ? Adaptive.$.extend(Mobify.UI, { classPrefix: 'm-' }) : { classPrefix: 'm-' };
+}
 
 (function($, document) {
     $.support = $.support || {};
@@ -9,7 +14,7 @@ Mobify.UI = Mobify.UI ? Mobify.$.extend(Mobify.UI, { classPrefix: 'm-' }) : { cl
         'touch': 'ontouchend' in document
     });
 
-})(Mobify.$, document);
+})(Adaptive.$ || Mobify.$, document);
 
 
 
@@ -121,7 +126,7 @@ Mobify.UI.Utils = (function($) {
 
     return exports;
 
-})(Mobify.$);
+})(Adaptive.$ || Mobify.$);
 
 Mobify.UI.Scooch = (function($, Utils) {
     var defaults = {
@@ -487,7 +492,7 @@ Mobify.UI.Scooch = (function($, Utils) {
 
     return Scooch;
 
-})(Mobify.$, Mobify.UI.Utils);
+})(Adaptive.$ || Mobify.$, Mobify.UI.Utils);
 
 
 
@@ -536,4 +541,4 @@ Mobify.UI.Scooch = (function($, Utils) {
 
     $.fn.scooch.defaults = {};
 
-})(Mobify.$);
+})(Adaptive.$ || Mobify.$);
