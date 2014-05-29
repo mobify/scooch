@@ -186,7 +186,9 @@ Mobify.UI.Scooch = (function($, Utils) {
         options.classNames = $.extend({}, options.classNames, opts.classNames || {});
 
         /* By default, classPrefix is `undefined`, which means to use the Mobify-wide level prefix */
-        options.classPrefix = options.classPrefix || Mobify.UI.classPrefix;
+        if (typeof options.classPrefix === 'undefined') {
+            options.classPrefix = Mobify.UI.classPrefix;
+        }
 
         this.options = options;
     };
@@ -244,6 +246,15 @@ Mobify.UI.Scooch = (function($, Utils) {
         Utils.setTransitions(this.$inner[0], false);
         this.$inner.addClass(this._getClass('dragging'));
         this.animating = false;
+    };
+
+    Scooch.prototype.refresh = function() {
+        /* Call when number of items has changed (e.g. with AJAX) */
+        this.$items = this.$inner.children( '.' + this._getClass('item'));
+        this.$start = this.$items.eq(0);
+        this.$sec = this.$items.eq(1);
+        this._length = this.$items.length;
+        this.update();
     };
 
     Scooch.prototype.update = function(callback) {
@@ -385,9 +396,9 @@ Mobify.UI.Scooch = (function($, Utils) {
             .on('click.scooch', click)
             .on('mouseout.scooch', end);
 
-        $element.on('click', '[data-slide]', function(e){
+        $element.on('click', '[data-m-slide]', function(e){
             e.preventDefault();
-            var action = $(this).attr('data-slide')
+            var action = $(this).attr('data-m-slide')
               , index = parseInt(action, 10);
 
             if (isNaN(index)) {
@@ -401,8 +412,8 @@ Mobify.UI.Scooch = (function($, Utils) {
             self.$items.eq(previousSlide - 1).removeClass(self._getClass('active'));
             self.$items.eq(nextSlide - 1).addClass(self._getClass('active'));
 
-            self.$element.find('[data-slide=\'' + previousSlide + '\']').removeClass(self._getClass('active'));
-            self.$element.find('[data-slide=\'' + nextSlide + '\']').addClass(self._getClass('active'));
+            self.$element.find('[data-m-slide=\'' + previousSlide + '\']').removeClass(self._getClass('active'));
+            self.$element.find('[data-m-slide=\'' + nextSlide + '\']').addClass(self._getClass('active'));
         });
 
         $(window).on('resize orientationchange', function(e) {

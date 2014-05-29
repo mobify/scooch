@@ -25,11 +25,11 @@ A mobile-first content and image carousel.
       </div>
       <!-- the controls -->
       <div class="m-scooch-controls m-scooch-bulleted">
-        <a href="#" data-slide="prev">Previous</a>
-        <a href="#" data-slide="1" class="m-active">1</a>
-        <a href="#" data-slide="2">2</a>
-        <a href="#" data-slide="3">3</a>
-        <a href="#" data-slide="next">Next</a>
+        <a href="#" data-m-slide="prev">Previous</a>
+        <a href="#" data-m-slide="1" class="m-active">1</a>
+        <a href="#" data-m-slide="2">2</a>
+        <a href="#" data-m-slide="3">3</a>
+        <a href="#" data-m-slide="next">Next</a>
       </div>
     </div>
 
@@ -108,6 +108,12 @@ Removes event handlers bound on the carousel.
 Binds the event handlers on the carousel.
 
     $('.m-scooch').scooch('bind');
+
+### .scooch('refresh')
+
+Re-initialize carousel after new slides were added or removed
+
+    $('.m-scooch').scooch('refresh');
 
 ### .scooch('destroy')
 
