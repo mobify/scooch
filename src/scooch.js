@@ -102,21 +102,44 @@ Mobify.UI.Utils = (function($) {
 
     // Request Animation Frame
     // courtesy of @paul_irish
+    var lastAnimTime = 0;
     exports.requestAnimationFrame = (function() {
-        var prefixed = (window.requestAnimationFrame       || 
-                        window.webkitRequestAnimationFrame || 
-                        window.mozRequestAnimationFrame    || 
-                        window.oRequestAnimationFrame      || 
-                        window.msRequestAnimationFrame     || 
-                        function( callback ){
-                            window.setTimeout(callback, 1000 / 60);
-                        });
+        var vendors = ['ms', 'moz', 'webkit', 'o'];
+        var prefixed = window.requestAnimationFrame;
+        for(var x = 0; x < vendors.length && !prefixed; ++x) {
+            console.log('vendors[x] = ', vendors[x]);
+            prefixed = window[vendors[x]+'RequestAnimationFrame'];
+        }
+        if (!prefixed) {
+            prefixed = function(callback, element) {
+                var currTime = new Date().getTime();
+                var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+                lastTime = currTime + timeToCall;
+                var id = window.setTimeout(function() { callback(currTime + timeToCall); }, timeToCall);
+                return id;
+            };
+        }
 
-        var requestAnimationFrame = function() {
+        return function() {
             prefixed.apply(window, arguments);
         };
+    })();
 
-        return requestAnimationFrame;
+    exports.cancelAnimationFrame = (function(){
+        var vendors = ['ms', 'moz', 'webkit', 'o'];
+        var prefixed;
+        for(var x = 0; x < vendors.length && !prefixed; ++x) {
+            prefixed = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+        }
+        if (!prefixed) {
+            prefixed = function(id) {
+                clearTimeout(id);
+            };
+        }
+
+        return function() {
+            prefixed.apply(window, arguments);
+        };
     })();
 
     return exports;
@@ -145,8 +168,6 @@ Mobify.UI.Scooch = (function($, Utils) {
         }
        , has = $.support;
 
-    var timeHandler = null;
-
     // Constructor
     var Scooch = function(element, options) {
         this.setOptions(options);
@@ -163,16 +184,26 @@ Mobify.UI.Scooch = (function($, Utils) {
     };
 
     Scooch.prototype.startLoop = function() {
-        var that = this;
-        this.timeHandler = setTimeout(function(){
-            that.next();
-            that.startLoop();
-        }, this.options.interval);
+        var self = this;
+        self.prevTimestamp = Date.now(); // reset
+
+        function showNext() {
+            var timeInterval = Date.now() - self.prevTimestamp;
+            if (self.animating && timeInterval >= self.options.interval) {
+                self.prevTimestamp = Date.now();
+                self.next();
+            }
+            if (self.animating) {
+                self.loopAnimId = Utils.requestAnimationFrame(showNext);
+            }
+        }
+        
+        showNext();
     };
 
     Scooch.prototype.stopLoop = function() {
-        if (this.timeHandler) {
-            clearTimeout(this.timeHandler);
+        if (this.loopAnimId) {
+            Utils.cancelAnimationFrame(this.loopAnimId);
         }
     };
 

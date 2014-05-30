@@ -313,6 +313,35 @@
             </div>
         </div>
 
+        <h2>Auto Looping Show</h2>
+        <p>Display items loop and loop with special interval (default 5000), and auto start loop when scooch ready</p>
+        <div class="m-scooch m-fluid m-scooch-photos" id="m-scooch-example-loop">
+          <div class="m-scooch-inner">
+            <div class="m-item">
+                <img src="http://lorempixel.com/300/300/animals/?1">
+            </div>
+            <div class="m-item">
+                <img src="http://lorempixel.com/300/300/animals/?2">
+            </div>
+            <div class="m-item">
+                <img src="http://lorempixel.com/300/300/animals/?3">
+            </div>
+            <div class="m-item">
+                <img src="http://lorempixel.com/300/300/animals/?4">
+            </div>
+            <div class="m-item">
+                <img src="http://lorempixel.com/300/300/animals/?5">
+            </div>
+          </div>
+          <div class="m-scooch-controls m-scooch-bulleted">
+            <a href="#" data-m-slide="1">1</a>
+            <a href="#" data-m-slide="2">2</a>
+            <a href="#" data-m-slide="3">3</a>
+            <a href="#" data-m-slide="4">4</a>
+            <a href="#" data-m-slide="5">5</a>
+          </div>
+        </div>
+
         <h2>Arbitrary Content</h2>
         <p>Arbitrary content carousel with simple Previous / Next controls to advance between items.
         We used the included class <code>.m-card-dark</code> to give each element a background.
@@ -362,7 +391,7 @@
         <!-- <script src="http://zeptojs.com/zepto.js"></script> -->
         <script src="http://code.jquery.com/jquery-1.10.1.js"></script>
         <script src="src/scooch.js"></script>
-        <script>$('#m-scooch-no-animate').scooch({animate:false});</script>
+        <script>$('#m-scooch-no-animate').scooch({animate:false}); $('#m-scooch-example-loop').scooch({autoStart: true, loop:true});</script>
         <script>$('.m-scooch').scooch();</script>
     </body>
 </html>
