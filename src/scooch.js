@@ -102,7 +102,6 @@ Mobify.UI.Utils = (function($) {
 
     // Request Animation Frame
     // courtesy of @paul_irish
-    var lastAnimTime = 0;
     exports.requestAnimationFrame = (function() {
         var vendors = ['ms', 'moz', 'webkit', 'o'];
         var prefixed = window.requestAnimationFrame;
