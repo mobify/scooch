@@ -68,6 +68,10 @@ module.exports = function(grunt) {
             options: {
                 folder: '.',
                 npm: false,
+                bump: false,
+                add: false,
+                commit: false,
+                file: 'bower.json',
                 github: {
                     repo: 'mobify/scooch',
                     usernameVar: 'GITHUB_USERNAME',
@@ -91,7 +95,7 @@ module.exports = function(grunt) {
     // Default task(s).
     grunt.registerTask('serve', ['connect', 'watch']);
     grunt.registerTask('build', ['uglify', 'cssmin', 'zip']);
-    grunt.registerTask('publish' ['build', 'release', 's3'])
+    grunt.registerTask('publish', ['build', 'release', 's3'])
     grunt.registerTask('default', 'build')
 
 };
