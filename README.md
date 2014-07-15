@@ -53,6 +53,7 @@ viewport:
 | Class       | Description                                            |
 |-------------|---------------------------------------------------------
 | `.m-fluid`  | Causes the width of items to resize to match the viewport width. |
+| `.m-loop`   | Loop the carousel |
 | `.m-center` | Causes the items to be center aligned, not left aligned (the default). |
 
 
@@ -129,7 +130,7 @@ The viewport emits the following events:
 | Name          | Arguments                 | Description                               |
 |---------------|---------------------------|-------------------------------------------|
 | beforeSlide   | previousIndex, newIndex   | Fired before the carousel moves.          |
-| afterSlide    | previousIndex, newIndex   | Fired after the carousel begins moving.   |
+| afterSlide    | previousIndex, newIndex   | Fired after the carousel ends moving.     |
 
 ## Browser Compatibility
 
@@ -178,6 +179,6 @@ The following desktop browsers have degraded support:
 2. `npm install`
 3. `grunt`
 
-The build directory will be populated with minified versions of the css and 
+The build directory will be populated with minified versions of the css and
 javascript files and a .zip of the original source files (for distribution and
 use with whatever build system you might use).
