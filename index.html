@@ -359,9 +359,43 @@
             </div>
         </div>
 
+        <h2>Infinite loop</h2>
+        <p>Infinitely looped carousel with Previous / Next controls to advance between items.</p>
+        <div class="m-scooch m-fluid m-loop m-scooch-photos" id="m-scooch-example-9">
+          <div class="m-scooch-inner">
+            <div class="m-item">
+                <img src="http://lorempixel.com/300/300/animals/?1">
+            </div>
+            <div class="m-item">
+                <img src="http://lorempixel.com/300/300/animals/?2">
+            </div>
+            <div class="m-item">
+                <img src="http://lorempixel.com/300/300/animals/?3">
+            </div>
+            <div class="m-item">
+                <img src="http://lorempixel.com/300/300/animals/?4">
+            </div>
+            <div class="m-item">
+                <img src="http://lorempixel.com/300/300/animals/?5">
+            </div>
+          </div>
+          <div class="m-scooch-controls m-scooch-bulleted">
+            <a href="#" data-m-slide="1">1</a>
+            <a href="#" data-m-slide="2">2</a>
+            <a href="#" data-m-slide="3">3</a>
+            <a href="#" data-m-slide="4">4</a>
+            <a href="#" data-m-slide="5">5</a>
+          </div>
+
+          <div class="m-scooch-controls">
+            <a href="#" data-m-slide="prev">Previous</a>
+            <a href="#" data-m-slide="next">Next</a>
+          </div>
+        </div>
+
         <!-- <script src="http://zeptojs.com/zepto.js"></script> -->
         <script src="http://code.jquery.com/jquery-1.10.1.js"></script>
-        <script src="src/scooch.js"></script>
+        <script src="src/scooch.js?22"></script>
         <script>$('#m-scooch-no-animate').scooch({animate:false});</script>
         <script>$('.m-scooch').scooch();</script>
     </body>
