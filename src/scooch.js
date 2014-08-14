@@ -1,7 +1,7 @@
 (function (factory, root) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(['selectorEngine'], factory);
+        define(['selectorLibrary'], factory);
     } else {
         // Browser globals
         var selectorEngine = root.Zepto || root.jQuery;
@@ -13,7 +13,7 @@
         var exports = {};
         var ua = navigator.userAgent;
         var has = $.support = $.support || {};
-        
+
         $.extend($.support, {
             'touch': 'ontouchend' in document
         });
