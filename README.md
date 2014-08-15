@@ -77,6 +77,9 @@ Constructs the carousel with options.
           , dragging: "dragging"
           , active: "active"
         }
+        , loop : false
+        , autoStart : false
+        , interval : 5000
     });
 
 ### .scooch('next')

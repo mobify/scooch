@@ -103,20 +103,42 @@ Mobify.UI.Utils = (function($) {
     // Request Animation Frame
     // courtesy of @paul_irish
     exports.requestAnimationFrame = (function() {
-        var prefixed = (window.requestAnimationFrame       || 
-                        window.webkitRequestAnimationFrame || 
-                        window.mozRequestAnimationFrame    || 
-                        window.oRequestAnimationFrame      || 
-                        window.msRequestAnimationFrame     || 
-                        function( callback ){
-                            window.setTimeout(callback, 1000 / 60);
-                        });
+        var vendors = ['ms', 'moz', 'webkit', 'o'];
+        var prefixed = window.requestAnimationFrame;
+        for(var x = 0; x < vendors.length && !prefixed; ++x) {
+            console.log('vendors[x] = ', vendors[x]);
+            prefixed = window[vendors[x]+'RequestAnimationFrame'];
+        }
+        if (!prefixed) {
+            prefixed = function(callback, element) {
+                var currTime = new Date().getTime();
+                var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+                lastTime = currTime + timeToCall;
+                var id = window.setTimeout(function() { callback(currTime + timeToCall); }, timeToCall);
+                return id;
+            };
+        }
 
-        var requestAnimationFrame = function() {
+        return function() {
             prefixed.apply(window, arguments);
         };
+    })();
 
-        return requestAnimationFrame;
+    exports.cancelAnimationFrame = (function(){
+        var vendors = ['ms', 'moz', 'webkit', 'o'];
+        var prefixed;
+        for(var x = 0; x < vendors.length && !prefixed; ++x) {
+            prefixed = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+        }
+        if (!prefixed) {
+            prefixed = function(id) {
+                clearTimeout(id);
+            };
+        }
+
+        return function() {
+            prefixed.apply(window, arguments);
+        };
     })();
 
     return exports;
@@ -139,6 +161,9 @@ Mobify.UI.Scooch = (function($, Utils) {
               , active: 'active'
               , fluid: 'fluid'
             }
+          , loop : false
+          , autoStart : false
+          , interval : 5000
         }
        , has = $.support;
 
@@ -151,6 +176,34 @@ Mobify.UI.Scooch = (function($, Utils) {
         this.bind();
 
         this._updateCallbacks = [];
+
+        if (this.options.autoStart) {
+            this.startLoop();
+        }
+    };
+
+    Scooch.prototype.startLoop = function() {
+        var self = this;
+        self.prevTimestamp = Date.now(); // reset
+
+        function showNext() {
+            var timeInterval = Date.now() - self.prevTimestamp;
+            if (self.animating && timeInterval >= self.options.interval) {
+                self.prevTimestamp = Date.now();
+                self.next();
+            }
+            if (self.animating) {
+                self.loopAnimId = Utils.requestAnimationFrame(showNext);
+            }
+        }
+        
+        showNext();
+    };
+
+    Scooch.prototype.stopLoop = function() {
+        if (this.loopAnimId) {
+            Utils.cancelAnimationFrame(this.loopAnimId);
+        }
     };
 
     // Expose Dfaults
@@ -305,6 +358,7 @@ Mobify.UI.Scooch = (function($, Utils) {
 
             // Disable smooth transitions
             self._disableAnimation();
+            self.stopLoop();
 
             lockLeft = self._index == 1;
             lockRight = self._index == self._length;
@@ -342,6 +396,9 @@ Mobify.UI.Scooch = (function($, Utils) {
             dragging = false;
 
             self._enableAnimation();
+            if (self.options.autoStart) {
+                self.startLoop();
+            }
 
             if (!canceled && abs(dx) > opts.moveRadius) {
                 // Move to the next slide if necessary
@@ -438,9 +495,9 @@ Mobify.UI.Scooch = (function($, Utils) {
 
         // Bound Values between [1, length];
         if (newIndex < 1) {
-            newIndex = 1;
+            newIndex = this.options.loop ? length : 1;
         } else if (newIndex > this._length) {
-            newIndex = length;
+            newIndex = this.options.loop ? 1 : length;
         }
         
         // Bail out early if no move is necessary.
