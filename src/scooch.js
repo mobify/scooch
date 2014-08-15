@@ -1,6 +1,11 @@
 var Mobify = window.Mobify = window.Mobify || {};
-Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
-Mobify.UI = Mobify.UI ? Mobify.$.extend(Mobify.UI, { classPrefix: 'm-' }) : { classPrefix: 'm-' };
+var Adaptive = window.Adaptive || {};
+if (Adaptive.$ === undefined) {
+    Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
+    Mobify.UI = Mobify.UI ? Mobify.$.extend(Mobify.UI, { classPrefix: 'm-' }) : { classPrefix: 'm-' };
+} else {
+    Mobify.UI = Mobify.UI ? Adaptive.$.extend(Mobify.UI, { classPrefix: 'm-' }) : { classPrefix: 'm-' };
+}
 
 (function($, document) {
     $.support = $.support || {};
@@ -9,7 +14,7 @@ Mobify.UI = Mobify.UI ? Mobify.$.extend(Mobify.UI, { classPrefix: 'm-' }) : { cl
         'touch': 'ontouchend' in document
     });
 
-})(Mobify.$, document);
+})(Adaptive.$ || Mobify.$, document);
 
 
 
@@ -47,7 +52,7 @@ Mobify.UI.Utils = (function($) {
     exports.getProperty = function(name) {
         var prefixes = ['Webkit', 'Moz', 'O', 'ms', '']
           , testStyle = document.createElement('div').style;
-        
+
         for (var i = 0; i < prefixes.length; ++i) {
             if (testStyle[prefixes[i] + name] !== undefined) {
                 return prefixes[i] + name;
@@ -64,7 +69,7 @@ Mobify.UI.Utils = (function($) {
         // Usage of transform3d on *android* would cause problems for input fields:
         // - https://coderwall.com/p/d5lmba
         // - http://static.trygve-lie.com/bugs/android_input/
-      , 'transform3d': !! (window.WebKitCSSMatrix && 'm11' in new WebKitCSSMatrix() && !/android\s+[1-2]/i.test(ua)) 
+      , 'transform3d': !! (window.WebKitCSSMatrix && 'm11' in new WebKitCSSMatrix() && !/android\s+[1-2]/i.test(ua))
     });
 
     // translateX(element, delta)
@@ -99,15 +104,25 @@ Mobify.UI.Utils = (function($) {
         }
     };
 
+    exports.onTransitionEnd = function($el, callback) {
+        $el.one("transitionend webkitTransitionEnd otransitionend MSTransitionEnd", function(e) {
+            var $target = $(e.target);
+            if ($target.not($el).length == 0) {
+                callback(e);
+            }
+        });
+    }
+
+
 
     // Request Animation Frame
     // courtesy of @paul_irish
     exports.requestAnimationFrame = (function() {
-        var prefixed = (window.requestAnimationFrame       || 
-                        window.webkitRequestAnimationFrame || 
-                        window.mozRequestAnimationFrame    || 
-                        window.oRequestAnimationFrame      || 
-                        window.msRequestAnimationFrame     || 
+        var prefixed = (window.requestAnimationFrame       ||
+                        window.webkitRequestAnimationFrame ||
+                        window.mozRequestAnimationFrame    ||
+                        window.oRequestAnimationFrame      ||
+                        window.msRequestAnimationFrame     ||
                         function( callback ){
                             window.setTimeout(callback, 1000 / 60);
                         });
@@ -121,7 +136,7 @@ Mobify.UI.Utils = (function($) {
 
     return exports;
 
-})(Mobify.$);
+})(Adaptive.$ || Mobify.$);
 
 Mobify.UI.Scooch = (function($, Utils) {
     var defaults = {
@@ -138,6 +153,7 @@ Mobify.UI.Scooch = (function($, Utils) {
               , dragging: 'dragging'
               , active: 'active'
               , fluid: 'fluid'
+              , loop: 'loop'
             }
         }
        , has = $.support;
@@ -146,9 +162,18 @@ Mobify.UI.Scooch = (function($, Utils) {
     var Scooch = function(element, options) {
         this.setOptions(options);
         this.initElements(element);
+
+        // Make scooch infinite
+        this.initLoop();
+
+        this.initStartElement();
+
         this.initOffsets();
         this.initAnimation();
+
         this.bind();
+
+        this.start();
 
         this._updateCallbacks = [];
     };
@@ -178,14 +203,66 @@ Mobify.UI.Scooch = (function($, Utils) {
         this.$inner = this.$element.find('.' + this._getClass('inner'));
         this.$items = this.$inner.children();
 
-        this.$start = this.$items.eq(0);
-        this.$sec = this.$items.eq(1);
-        this.$current = this.$items.eq(this._index - 1);  // convert to 0-based index
-
         this._length = this.$items.length;
         this._alignment = this.$element.hasClass(this._getClass('center')) ? 0.5 : 0;
 
         this._isFluid = this.$element.hasClass(this._getClass('fluid'));
+        this._isLoop = this.$element.hasClass(this._getClass('loop'));
+
+        // Limits
+        this._lockLeft = 1;
+        this._lockRight = this._length;
+    };
+
+    Scooch.prototype.initStartElement = function() {
+        this.$start = this.$inner.children().first();
+        this.$current = this.$items.eq(this._index - 1);
+    };
+
+    Scooch.prototype.initLoop = function() {
+        if (!this._isLoop) {
+            return;
+        }
+
+        this._loopPrepend = 2;
+        this._loopAppend = 2;
+
+        for (var i = 0; i < this._loopPrepend; i++) {
+            var $clone = this.$items.eq(this._length - 1 - i).clone();
+            this.$inner.prepend($clone);
+        }
+        for (var i = 0; i < this._loopAppend; i++) {
+            var $clone = this.$items.eq(i).clone();
+            this.$inner.append($clone);
+        }
+
+        this._lockLeft = this._lockLeft - 1;
+        this._lockRight = this._lockRight + 1;
+
+        // Redefine items
+        //this.$items = this.$inner.children();
+        //this._length = this.$items.length;
+
+        var self = this;
+        this.$element.on('afterSlide', function() {
+            //var loopIndex = self._index - self._loopPrepend;
+            var newIndex = self._index;
+
+
+            // If one of the appended clones, go to the other side of the loop
+            if (self._index < 1) {
+                newIndex =  self._length;
+            } else if (self._index > self._length) {
+                newIndex =  1;
+            } else {
+                return;
+            }
+
+
+            self._index = newIndex;
+            self.initStartElement();
+            self.start();
+        });
     };
 
     Scooch.prototype.initOffsets = function() {
@@ -225,13 +302,20 @@ Mobify.UI.Scooch = (function($, Utils) {
         this.animating = false;
     };
 
+    Scooch.prototype.start = function() {
+        this._disableAnimation();
+
+        this.$element.trigger('beforeSlide', [this._index, this._index]);
+        this.$element.trigger('afterSlide', [this._index, this._index]);
+
+        this.update();
+    };
+
     Scooch.prototype.refresh = function() {
         /* Call when number of items has changed (e.g. with AJAX) */
         this.$items = this.$inner.children( '.' + this._getClass('item'));
-        this.$start = this.$items.eq(0);
-        this.$sec = this.$items.eq(1);
         this._length = this.$items.length;
-        this.update();
+        this.start();
     };
 
     Scooch.prototype.update = function(callback) {
@@ -245,7 +329,7 @@ Mobify.UI.Scooch = (function($, Utils) {
         }
 
         this._needsUpdate = true;
-        
+
         var self = this;
         Utils.requestAnimationFrame(function() {
             self._update();
@@ -269,7 +353,6 @@ Mobify.UI.Scooch = (function($, Utils) {
           , currentOffset = $current.prop('offsetLeft') + $current.prop('clientWidth') * this._alignment
           , startOffset = $start.prop('offsetLeft') + $start.prop('clientWidth') * this._alignment
           , x = Math.round(-(currentOffset - startOffset) + this._offsetDrag);
-
         Utils.translateX(this.$inner[0], x);
 
         this._needsUpdate = false;
@@ -306,8 +389,8 @@ Mobify.UI.Scooch = (function($, Utils) {
             // Disable smooth transitions
             self._disableAnimation();
 
-            lockLeft = self._index == 1;
-            lockRight = self._index == self._length;
+            lockLeft = self._index == self._lockLeft;
+            lockRight = self._index == self._lockRight;
         }
 
         function drag(e) {
@@ -381,16 +464,16 @@ Mobify.UI.Scooch = (function($, Utils) {
             }
         });
 
-        $element.on('afterSlide', function(e, previousSlide, nextSlide) {
-            self.$items.eq(previousSlide - 1).removeClass(self._getClass('active'));
-            self.$items.eq(nextSlide - 1).addClass(self._getClass('active'));
-
+        $element.on('beforeSlide', function(e, previousSlide, nextSlide) {
             self.$element.find('[data-m-slide=\'' + previousSlide + '\']').removeClass(self._getClass('active'));
             self.$element.find('[data-m-slide=\'' + nextSlide + '\']').addClass(self._getClass('active'));
+
+            self.$items.eq(previousSlide - 1).removeClass(self._getClass('active'));
+            self.$items.eq(nextSlide - 1).addClass(self._getClass('active'));
         });
 
         $(window).on('resize orientationchange', function(e) {
-            // Disable animation for now to avoid seeing 
+            // Disable animation for now to avoid seeing
             // the carousel sliding, as it updates its position.
             // Animation will be enabled automatically when you're swiping.
             // Don't update Carousel on window height change
@@ -401,12 +484,6 @@ Mobify.UI.Scooch = (function($, Utils) {
             windowWidth = $(window).width();
             self.update();
         });
-
-        $element.trigger('beforeSlide', [1, 1]);
-        $element.trigger('afterSlide', [1, 1]);
-
-        self.update();
-
     };
 
     Scooch.prototype.unbind = function() {
@@ -433,20 +510,20 @@ Mobify.UI.Scooch = (function($, Utils) {
             , $current = this.$current
             , length = this._length
             , index = this._index;
-                
+
         opts = $.extend({}, this.options, opts);
 
         // Bound Values between [1, length];
-        if (newIndex < 1) {
-            newIndex = 1;
-        } else if (newIndex > this._length) {
-            newIndex = length;
+        if (newIndex < this._lockLeft) {
+            newIndex = this._lockLeft;
+        } else if (newIndex > this._lockRight) {
+            newIndex = this._lockRight;
         }
-        
+
         // Bail out early if no move is necessary.
-        if (newIndex == this._index) {
+        //if (newIndex == index) {
             //return; // Return Type?
-        }
+        //}
 
         // Check if we should animate
         if (opts.animate) {
@@ -460,7 +537,11 @@ Mobify.UI.Scooch = (function($, Utils) {
 
 
         // Index must be decremented to convert between 1- and 0-based indexing.
-        this.$current = $current = $items.eq(newIndex - 1);
+        if(this._isLoop) {
+            this.$current = $current = $inner.children().eq(newIndex + this._loopPrepend - 1);
+        } else {
+            this.$current = $current = $items.eq(newIndex - 1);
+        }
 
         this._offsetDrag = 0;
         this._index = newIndex;
@@ -469,25 +550,32 @@ Mobify.UI.Scooch = (function($, Utils) {
         if (opts.animate) {
             this.update();
         } else {
-            this.update(function() {    
+            this.update(function() {
                 this._enableAnimation();
             });
         }
         // Trigger afterSlide event
-        $element.trigger('afterSlide', [index, newIndex]);
+        if (opts.animate) {
+            Utils.onTransitionEnd(this.$inner, function() {
+                $element.trigger('afterSlide', [index, newIndex]);
+            });
+        } else {
+            $element.trigger('afterSlide', [index, newIndex]);
+        }
+
     };
 
     Scooch.prototype.next = function() {
         this.move(this._index + 1);
     };
-    
+
     Scooch.prototype.prev = function() {
         this.move(this._index - 1);
     };
 
     return Scooch;
 
-})(Mobify.$, Mobify.UI.Utils);
+})(Adaptive.$ || Mobify.$, Mobify.UI.Utils);
 
 
 
@@ -515,7 +603,7 @@ Mobify.UI.Scooch = (function($, Utils) {
             var $this = $(this)
               , scooch = this._scooch;
 
-            
+
             if (!scooch) {
                 scooch = new Mobify.UI.Scooch(this, initOptions);
             }
@@ -527,7 +615,7 @@ Mobify.UI.Scooch = (function($, Utils) {
                     scooch = null;
                 }
             }
-            
+
             this._scooch = scooch;
         })
 
@@ -536,4 +624,4 @@ Mobify.UI.Scooch = (function($, Utils) {
 
     $.fn.scooch.defaults = {};
 
-})(Mobify.$);
+})(Adaptive.$ || Mobify.$);
