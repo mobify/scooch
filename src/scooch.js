@@ -137,8 +137,15 @@ Mobify.UI.Scooch = (function($, Utils) {
               , touch: 'has-touch'
               , dragging: 'dragging'
               , active: 'active'
+              , inactive: 'inactive'
               , fluid: 'fluid'
             }
+          , next: function() {
+            this.move(this._index + 1);
+          }
+          , prev: function() {
+            this.move(this._index - 1);
+          }
         }
        , has = $.support;
 
@@ -382,11 +389,28 @@ Mobify.UI.Scooch = (function($, Utils) {
         });
 
         $element.on('afterSlide', function(e, previousSlide, nextSlide) {
+            var $prevSlideControl = self.$element.find('[data-m-slide="prev"]');
+            var $nextSlideControl = self.$element.find('[data-m-slide="next"]');
+
             self.$items.eq(previousSlide - 1).removeClass(self._getClass('active'));
             self.$items.eq(nextSlide - 1).addClass(self._getClass('active'));
 
             self.$element.find('[data-m-slide=\'' + previousSlide + '\']').removeClass(self._getClass('active'));
             self.$element.find('[data-m-slide=\'' + nextSlide + '\']').addClass(self._getClass('active'));
+
+            if(nextSlide === 1) {
+                $prevSlideControl.addClass(self._getClass('inactive'));
+            }
+            else {
+                $prevSlideControl.removeClass(self._getClass('inactive'));
+            }
+
+            if(nextSlide === self._length) {
+                $nextSlideControl.addClass(self._getClass('inactive'));
+            }
+            else {
+                $nextSlideControl.removeClass(self._getClass('inactive'));
+            }
         });
 
         $(window).on('resize orientationchange', function(e) {
@@ -478,11 +502,11 @@ Mobify.UI.Scooch = (function($, Utils) {
     };
 
     Scooch.prototype.next = function() {
-        this.move(this._index + 1);
+        this.options.next.apply(this, arguments);
     };
     
     Scooch.prototype.prev = function() {
-        this.move(this._index - 1);
+        this.options.prev.apply(this, arguments);
     };
 
     return Scooch;
