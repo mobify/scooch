@@ -1,11 +1,15 @@
-(function (factory, root) {
+(function (factory) {
     if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define(['selectorLibrary'], factory);
+        /*
+         In AMD environments, you will need to define an alias
+         to your selector engine. i.e. either zepto or jQuery.
+         */
+        define(['$'], factory);
     } else {
-        // Browser globals
-        var selectorEngine = root.Zepto || root.jQuery;
-        factory(selectorEngine);
+        /*
+         Browser globals
+         */
+        factory(window.Zepto || window.jQuery);
     }
 }(function ($) {
 
@@ -150,7 +154,7 @@
             this._updateCallbacks = [];
         };
 
-        // Expose Dfaults
+        // Expose Defaults
         Scooch.defaults = defaults;
 
         Scooch.prototype.setOptions = function(opts) {
@@ -498,7 +502,7 @@
             action = null;
         }
 
-        var options = Array.prototype.slice.apply(arguments);
+        options = Array.prototype.slice.apply(arguments);
 
         this.each(function () {
             var $this = $(this)
@@ -518,11 +522,11 @@
             }
             
             this._scooch = scooch;
-        })
+        });
 
         return this;
     };
 
     $.fn.scooch.defaults = {};
 
-}, window));
+}));
