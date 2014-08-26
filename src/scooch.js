@@ -9,7 +9,8 @@
         /*
          Browser globals
          */
-        factory(window.Zepto || window.jQuery);
+        var selectorLibrary = (Mobify && Mobify.$) || window.Zepto || window.jQuery;
+        factory(selectorLibrary);
     }
 }(function ($) {
 
