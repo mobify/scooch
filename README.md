@@ -2,6 +2,8 @@
 
 A mobile-first content and image carousel.
 
+[![Bower version](https://badge.fury.io/bo/scooch.svg)](http://badge.fury.io/bo/scooch)
+
 ## Usage
 
     <!-- include scooch.css -->
