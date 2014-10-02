@@ -3,13 +3,13 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        localConfig: (function(){
-                        try {
-                            return grunt.file.readJSON('localConfig.json');
-                        } catch(e) {
-                            return {};
-                        }
-                    })(),
+        aws: (function(){
+                try {
+                    return grunt.file.readJSON('localConfig.json');
+                } catch(e) {
+                    return {};
+                }
+            })(),
         releaseName: '<%= pkg.name %>-<%= pkg.version %>',
         releaseMessage: '<%= pkg.name %> release <%= pkg.version %>',
         clean: {
@@ -50,19 +50,23 @@ module.exports = function(grunt) {
         zip: {
             "build/scooch.zip": ["src/scooch.js", "src/scooch.css", "src/scooch-style.css"]
         },
-        s3: {
-            key: '<%= localConfig.aws.key %>',
-            secret: '<%= localConfig.aws.secret %>',
-            bucket: '<%= localConfig.aws.bucket %>',
-            access: "public-read",
-            headers: { "Cache-Control": "max-age=1200" },
-            upload: [
-                { // build
-                    src: "build/*",
-                    dest: "modules/scooch/<%= pkg.version %>/",
-                    rel: "build"
+        aws_s3: {
+            options: {
+                accessKeyId: '<%= aws.AWSAccessKeyId %>',
+                secretAccessKey: '<%= aws.AWSSecretKey %>',
+                bucket: 'mobify',
+                params: {
+                    CacheControl: 'max-age="1200"'
                 }
-            ]
+            },
+            production: {
+                files:[{
+                    expand: true,
+                    cwd: 'build/',
+                    src: ['**'],
+                    dest: 'modules/scooch/<%= pkg.version %>/'
+                }]
+            }
         },
         release: {
             options: {
@@ -88,14 +92,14 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-css');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-zip');
-    grunt.loadNpmTasks('grunt-s3');
+    grunt.loadNpmTasks('grunt-aws-s3');
     grunt.loadNpmTasks('grunt-clean');
     grunt.loadNpmTasks('grunt-release');
 
     // Default task(s).
     grunt.registerTask('serve', ['connect', 'watch']);
     grunt.registerTask('build', ['uglify', 'cssmin', 'zip']);
-    grunt.registerTask('publish', ['build', 'release', 's3'])
+    grunt.registerTask('publish', ['build', 'release', 'aws_s3'])
     grunt.registerTask('default', 'build')
 
 };

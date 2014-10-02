@@ -1,7 +1,4 @@
 {
-    "aws": {
-        "key": ["<AWS Key>"],
-        "secret": ["<AWS secret>"],
-        "bucket": "<S3 Bucket Name>"
-    }
+    "AWSAccessKeyId": "<access_key_id>",
+    "AWSSecretKey": "<secret_key>"
 }
