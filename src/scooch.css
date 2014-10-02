@@ -39,6 +39,11 @@
     .m-scooch  img  {
         -ms-interpolation-mode:  bicubic;  }
 
+/* https://github.com/mobify/scooch/issues/23 */
+.m-scooch .m-item {
+    -webkit-transform: translate(0);
+    transform: translate(0); }
+
 .m-scooch-inner  {
     position:  relative;
     white-space:  nowrap;
