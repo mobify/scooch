@@ -130,6 +130,7 @@
                 dragRadius: 10
               , moveRadius: 20
               , animate: true
+              , autoHideArrows: false
               , classPrefix: 'm-'
               , classNames: {
                     outer: 'scooch'
@@ -384,6 +385,17 @@
 
                 self.$element.find('[data-m-slide=\'' + previousSlide + '\']').removeClass(self._getClass('active'));
                 self.$element.find('[data-m-slide=\'' + nextSlide + '\']').addClass(self._getClass('active'));
+
+                if (opts.autoHideArrows) { // Hide prev/next arrows when at bounds
+                    if (nextSlide === 1) {
+                        self.$element.find('[data-m-slide=prev]').hide();
+                    } else if (nextSlide === self._length) {
+                        self.$element.find('[data-m-slide=next]').hide();
+                    } else {
+                        self.$element.find('[data-m-slide=prev]').show();
+                        self.$element.find('[data-m-slide=next]').show();
+                    }
+                }
             });
 
             $(window).on('resize orientationchange', function(e) {
