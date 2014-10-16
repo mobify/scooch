@@ -140,6 +140,7 @@
                   , touch: 'has-touch'
                   , dragging: 'dragging'
                   , active: 'active'
+                  , inactive: 'inactive'
                   , fluid: 'fluid'
                 }
             }
@@ -388,14 +389,14 @@
 
                 if (opts.autoHideArrows) { // Hide prev/next arrows when at bounds
                     if (nextSlide === 1) {
-                        self.$element.find('[data-m-slide=prev]').hide();
-                        self.$element.find('[data-m-slide=next]').show();
+                        self.$element.find('[data-m-slide=prev]').addClass(self._getClass('inactive'));
+                        self.$element.find('[data-m-slide=next]').removeClass(self._getClass('inactive'));
                     } else if (nextSlide === self._length) {
-                        self.$element.find('[data-m-slide=next]').hide();
-                        self.$element.find('[data-m-slide=prev]').show();
+                        self.$element.find('[data-m-slide=next]').addClass(self._getClass('inactive'));
+                        self.$element.find('[data-m-slide=prev]').removeClass(self._getClass('inactive'));
                     } else {
-                        self.$element.find('[data-m-slide=prev]').show();
-                        self.$element.find('[data-m-slide=next]').show();
+                        self.$element.find('[data-m-slide=prev]').removeClass(self._getClass('inactive'));
+                        self.$element.find('[data-m-slide=next]').removeClass(self._getClass('inactive'));
                     }
                 }
             });
