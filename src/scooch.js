@@ -389,8 +389,10 @@
                 if (opts.autoHideArrows) { // Hide prev/next arrows when at bounds
                     if (nextSlide === 1) {
                         self.$element.find('[data-m-slide=prev]').hide();
+                        self.$element.find('[data-m-slide=next]').show();
                     } else if (nextSlide === self._length) {
                         self.$element.find('[data-m-slide=next]').hide();
+                        self.$element.find('[data-m-slide=prev]').show();
                     } else {
                         self.$element.find('[data-m-slide=prev]').show();
                         self.$element.find('[data-m-slide=next]').show();
