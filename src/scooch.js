@@ -130,6 +130,7 @@
                 dragRadius: 10
               , moveRadius: 20
               , animate: true
+              , autoHideArrows: false
               , classPrefix: 'm-'
               , classNames: {
                     outer: 'scooch'
@@ -139,6 +140,7 @@
                   , touch: 'has-touch'
                   , dragging: 'dragging'
                   , active: 'active'
+                  , inactive: 'inactive'
                   , fluid: 'fluid'
                 }
             }
@@ -384,6 +386,19 @@
 
                 self.$element.find('[data-m-slide=\'' + previousSlide + '\']').removeClass(self._getClass('active'));
                 self.$element.find('[data-m-slide=\'' + nextSlide + '\']').addClass(self._getClass('active'));
+
+                if (opts.autoHideArrows) { // Hide prev/next arrows when at bounds
+                    if (nextSlide === 1) {
+                        self.$element.find('[data-m-slide=prev]').addClass(self._getClass('inactive'));
+                        self.$element.find('[data-m-slide=next]').removeClass(self._getClass('inactive'));
+                    } else if (nextSlide === self._length) {
+                        self.$element.find('[data-m-slide=next]').addClass(self._getClass('inactive'));
+                        self.$element.find('[data-m-slide=prev]').removeClass(self._getClass('inactive'));
+                    } else {
+                        self.$element.find('[data-m-slide=prev]').removeClass(self._getClass('inactive'));
+                        self.$element.find('[data-m-slide=next]').removeClass(self._getClass('inactive'));
+                    }
+                }
             });
 
             $(window).on('resize orientationchange', function(e) {
