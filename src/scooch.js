@@ -388,15 +388,15 @@
                 self.$element.find('[data-m-slide=\'' + nextSlide + '\']').addClass(self._getClass('active'));
 
                 if (opts.autoHideArrows) { // Hide prev/next arrows when at bounds
+                    self.$element.find('[data-m-slide=prev]').removeClass(self._getClass('inactive'));
+                    self.$element.find('[data-m-slide=next]').removeClass(self._getClass('inactive'));
+
                     if (nextSlide === 1) {
                         self.$element.find('[data-m-slide=prev]').addClass(self._getClass('inactive'));
-                        self.$element.find('[data-m-slide=next]').removeClass(self._getClass('inactive'));
-                    } else if (nextSlide === self._length) {
+                    }
+
+                    if (nextSlide === self._length) {
                         self.$element.find('[data-m-slide=next]').addClass(self._getClass('inactive'));
-                        self.$element.find('[data-m-slide=prev]').removeClass(self._getClass('inactive'));
-                    } else {
-                        self.$element.find('[data-m-slide=prev]').removeClass(self._getClass('inactive'));
-                        self.$element.find('[data-m-slide=next]').removeClass(self._getClass('inactive'));
                     }
                 }
             });
