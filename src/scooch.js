@@ -230,6 +230,7 @@
             this.$start = this.$items.eq(0);
             this.$sec = this.$items.eq(1);
             this._length = this.$items.length;
+            this.move(0);
             this.update();
         };
 
