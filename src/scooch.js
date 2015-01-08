@@ -131,6 +131,7 @@
               , moveRadius: 20
               , animate: true
               , autoHideArrows: false
+              , rightToLeft: false
               , classPrefix: 'm-'
               , classNames: {
                     outer: 'scooch'
@@ -344,10 +345,18 @@
 
                 if (!canceled && abs(dx) > opts.moveRadius) {
                     // Move to the next slide if necessary
-                    if (dx > 0) {
-                        self.next();
+                    if (opts.rightToLeft) {
+                        if (dx < 0) {
+                            self.next();
+                        } else {
+                            self.prev();
+                        }
                     } else {
-                        self.prev();
+                        if (dx > 0) {
+                            self.next();
+                        } else {
+                            self.prev();
+                        }
                     }
                 } else {
                     // Reset back to regular position
