@@ -1,585 +1,594 @@
-var Mobify = window.Mobify = window.Mobify || {};
-var Adaptive = window.Adaptive || {};
-if (Adaptive.$ === undefined) {
-    Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
-    Mobify.UI = Mobify.UI ? Mobify.$.extend(Mobify.UI, { classPrefix: 'm-' }) : { classPrefix: 'm-' };
-} else {
-    Mobify.UI = Mobify.UI ? Adaptive.$.extend(Mobify.UI, { classPrefix: 'm-' }) : { classPrefix: 'm-' };
-}
-
-(function($, document) {
-    $.support = $.support || {};
-
-    $.extend($.support, {
-        'touch': 'ontouchend' in document
-    });
-
-})(Adaptive.$ || Mobify.$, document);
-
-
-
-/**
-    @module Holds common functions relating to UI.
-*/
-Mobify.UI.Utils = (function($) {
-    var exports = {}
-        , has = $.support
-        , ua = navigator.userAgent;
-
-    /**
-        Events (either touch or mouse)
-    */
-    exports.events = (has.touch)
-        ? {down: 'touchstart', move: 'touchmove', up: 'touchend'}
-        : {down: 'mousedown', move: 'mousemove', up: 'mouseup'};
-
-    /**
-        Returns the position of a mouse or touch event in (x, y)
-        @function
-        @param {Event} touch or mouse event
-        @returns {Object} X and Y coordinates
-    */
-    exports.getCursorPosition = (has.touch)
-        ? function(e) {e = e.originalEvent || e; return {x: e.touches[0].clientX, y: e.touches[0].clientY}}
-        : function(e) {return {x: e.clientX, y: e.clientY}};
-
-
-    /**
-        Returns prefix property for current browser.
-        @param {String} CSS Property Name
-        @return {String} Detected CSS Property Name
-    */
-    exports.getProperty = function(name) {
-        var prefixes = ['Webkit', 'Moz', 'O', 'ms', '']
-          , testStyle = document.createElement('div').style;
-
-        for (var i = 0; i < prefixes.length; ++i) {
-            if (testStyle[prefixes[i] + name] !== undefined) {
-                return prefixes[i] + name;
-            }
-        }
-
-        // Not Supported
-        return;
-    };
-
-    $.extend(has, {
-        'transform': !! (exports.getProperty('Transform'))
-
-        // Usage of transform3d on *android* would cause problems for input fields:
-        // - https://coderwall.com/p/d5lmba
-        // - http://static.trygve-lie.com/bugs/android_input/
-      , 'transform3d': !! (window.WebKitCSSMatrix && 'm11' in new WebKitCSSMatrix() && !/android\s+[1-2]/i.test(ua))
-    });
-
-    // translateX(element, delta)
-    // Moves the element by delta (px)
-    var transformProperty = exports.getProperty('Transform');
-    if (has.transform3d) {
-        exports.translateX = function(element, delta) {
-             if (typeof delta == 'number') delta = delta + 'px';
-             element.style[transformProperty] = 'translate3d(' + delta  + ',0,0)';
-        };
-    } else if (has.transform) {
-        exports.translateX = function(element, delta) {
-             if (typeof delta == 'number') delta = delta + 'px';
-             element.style[transformProperty] = 'translate(' + delta  + ',0)';
-        };
+(function (factory) {
+    if (typeof define === 'function' && define.amd) {
+        /*
+         In AMD environments, you will need to define an alias
+         to your selector engine. i.e. either zepto or jQuery.
+         */
+        define(['$'], factory);
     } else {
-        exports.translateX = function(element, delta) {
-            if (typeof delta == 'number') delta = delta + 'px';
-            element.style.left = delta;
-        };
+        /*
+         Browser globals
+         */
+        var selectorLibrary = window.Mobify && window.Mobify.$ || window.Zepto || window.jQuery;
+        factory(selectorLibrary);
     }
+}(function ($) {
 
-    // setTransitions
-    var transitionProperty = exports.getProperty('Transition')
-      , durationProperty = exports.getProperty('TransitionDuration');
+    var Utils = (function($) {
+        var exports = {};
+        var ua = navigator.userAgent;
+        var has = $.support = $.support || {};
 
-    exports.setTransitions = function(element, enable) {
-        if (enable) {
-            element.style[durationProperty] = '';
+        $.extend($.support, {
+            'touch': 'ontouchend' in document
+        });
+
+        /**
+            Events (either touch or mouse)
+        */
+        exports.events = (has.touch)
+            ? {down: 'touchstart', move: 'touchmove', up: 'touchend'}
+            : {down: 'mousedown', move: 'mousemove', up: 'mouseup'};
+
+        /**
+            Returns the position of a mouse or touch event in (x, y)
+            @function
+            @param {Event} touch or mouse event
+            @returns {Object} X and Y coordinates
+        */
+        exports.getCursorPosition = (has.touch)
+            ? function(e) {e = e.originalEvent || e; return {x: e.touches[0].clientX, y: e.touches[0].clientY}}
+            : function(e) {return {x: e.clientX, y: e.clientY}};
+
+
+        /**
+            Returns prefix property for current browser.
+            @param {String} CSS Property Name
+            @return {String} Detected CSS Property Name
+        */
+        exports.getProperty = function(name) {
+            var prefixes = ['Webkit', 'Moz', 'O', 'ms', '']
+              , testStyle = document.createElement('div').style;
+
+            for (var i = 0; i < prefixes.length; ++i) {
+                if (testStyle[prefixes[i] + name] !== undefined) {
+                    return prefixes[i] + name;
+                }
+            }
+
+            // Not Supported
+            return;
+        };
+
+        $.extend(has, {
+            'transform': !! (exports.getProperty('Transform'))
+
+            // Usage of transform3d on *android* would cause problems for input fields:
+            // - https://coderwall.com/p/d5lmba
+            // - http://static.trygve-lie.com/bugs/android_input/
+          , 'transform3d': !! (window.WebKitCSSMatrix && 'm11' in new WebKitCSSMatrix() && !/android\s+[1-2]/i.test(ua))
+        });
+
+        // translateX(element, delta)
+        // Moves the element by delta (px)
+        var transformProperty = exports.getProperty('Transform');
+        if (has.transform3d) {
+            exports.translateX = function(element, delta) {
+                 if (typeof delta == 'number') delta = delta + 'px';
+                 element.style[transformProperty] = 'translate3d(' + delta  + ',0,0)';
+            };
+        } else if (has.transform) {
+            exports.translateX = function(element, delta) {
+                 if (typeof delta == 'number') delta = delta + 'px';
+                 element.style[transformProperty] = 'translate(' + delta  + ',0)';
+            };
         } else {
-            element.style[durationProperty] = '0s';
+            exports.translateX = function(element, delta) {
+                if (typeof delta == 'number') delta = delta + 'px';
+                element.style.left = delta;
+            };
         }
-    };
 
-    exports.onTransitionEnd = function($el, callback) {
-        $el.one("transitionend webkitTransitionEnd otransitionend MSTransitionEnd", function(e) {
-            var $target = $(e.target);
-            if ($target.not($el).length == 0) {
-                callback(e);
+        // setTransitions
+        var transitionProperty = exports.getProperty('Transition')
+          , durationProperty = exports.getProperty('TransitionDuration');
+
+        exports.setTransitions = function(element, enable) {
+            if (enable) {
+                element.style[durationProperty] = '';
+            } else {
+                element.style[durationProperty] = '0s';
             }
-        });
-    }
-
-
-
-    // Request Animation Frame
-    // courtesy of @paul_irish
-    exports.requestAnimationFrame = (function() {
-        var prefixed = (window.requestAnimationFrame       ||
-                        window.webkitRequestAnimationFrame ||
-                        window.mozRequestAnimationFrame    ||
-                        window.oRequestAnimationFrame      ||
-                        window.msRequestAnimationFrame     ||
-                        function( callback ){
-                            window.setTimeout(callback, 1000 / 60);
-                        });
-
-        var requestAnimationFrame = function() {
-            prefixed.apply(window, arguments);
         };
 
-        return requestAnimationFrame;
-    })();
+        exports.onTransitionEnd = function($el, callback) {
+            $el.one("transitionend webkitTransitionEnd otransitionend MSTransitionEnd", function(e) {
+                var $target = $(e.target);
+                if ($target.not($el).length == 0) {
+                    callback(e);
+                }
+            });
+        }
 
-    return exports;
 
-})(Adaptive.$ || Mobify.$);
+        // Request Animation Frame
+        // courtesy of @paul_irish
+        exports.requestAnimationFrame = (function() {
+            var prefixed = (window.requestAnimationFrame       ||
+                            window.webkitRequestAnimationFrame ||
+                            window.mozRequestAnimationFrame    ||
+                            window.oRequestAnimationFrame      ||
+                            window.msRequestAnimationFrame     ||
+                            function( callback ){
+                                window.setTimeout(callback, 1000 / 60);
+                            });
 
-Mobify.UI.Scooch = (function($, Utils) {
-    var defaults = {
-            dragRadius: 10
-          , moveRadius: 20
-          , animate: true
-          , classPrefix: undefined
-          , classNames: {
-                outer: 'scooch'
-              , inner: 'scooch-inner'
-              , item: 'item'
-              , center: 'center'
-              , touch: 'has-touch'
-              , dragging: 'dragging'
-              , active: 'active'
-              , fluid: 'fluid'
-              , loop: 'loop'
+            var requestAnimationFrame = function() {
+                prefixed.apply(window, arguments);
+            };
+
+            return requestAnimationFrame;
+        })();
+
+        return exports;
+
+    })($);
+
+    var Scooch = (function($, Utils) {
+        var defaults = {
+                dragRadius: 10
+              , moveRadius: 20
+              , animate: true
+              , autoHideArrows: false
+              , classPrefix: 'm-'
+              , classNames: {
+                    outer: 'scooch'
+                  , inner: 'scooch-inner'
+                  , item: 'item'
+                  , center: 'center'
+                  , touch: 'has-touch'
+                  , dragging: 'dragging'
+                  , active: 'active'
+                  , inactive: 'inactive'
+                  , fluid: 'fluid'
+                  , loop: 'loop'
+                }
             }
-        }
-       , has = $.support;
+           , has = $.support;
 
-    // Constructor
-    var Scooch = function(element, options) {
-        this.setOptions(options);
-        this.initElements(element);
+        // Constructor
+        var Scooch = function(element, options) {
+            this.setOptions(options);
+            this.initElements(element);
 
-        // Make scooch infinite
-        this.initLoop();
+            // Make scooch infinite
+            this.initLoop();
 
-        this.initStartElement();
+            this.initStartElement();
 
-        this.initOffsets();
-        this.initAnimation();
+            this.initOffsets();
+            this.initAnimation();
 
-        this.bind();
+            this.bind();
+            this.start();
 
-        this.start();
+            this._updateCallbacks = [];
+        };
 
-        this._updateCallbacks = [];
-    };
+        // Expose Defaults
+        Scooch.defaults = defaults;
 
-    // Expose Dfaults
-    Scooch.defaults = defaults;
+        Scooch.prototype.setOptions = function(opts) {
+            var options = this.options || $.extend({}, defaults, opts);
 
-    Scooch.prototype.setOptions = function(opts) {
-        var options = this.options || $.extend({}, defaults, opts);
+            /* classNames requires a deep copy */
+            options.classNames = $.extend({}, options.classNames, opts.classNames || {});
 
-        /* classNames requires a deep copy */
-        options.classNames = $.extend({}, options.classNames, opts.classNames || {});
+            this.options = options;
+        };
 
-        /* By default, classPrefix is `undefined`, which means to use the Mobify-wide level prefix */
-        if (typeof options.classPrefix === 'undefined') {
-            options.classPrefix = Mobify.UI.classPrefix;
-        }
+        Scooch.prototype.initElements = function(element) {
+            this._index = 1;  // 1-based index
 
-        this.options = options;
-    };
+            this.element = element;
+            this.$element = $(element);
+            this.$inner = this.$element.find('.' + this._getClass('inner'));
+            this.$items = this.$inner.children();
 
-    Scooch.prototype.initElements = function(element) {
-        this._index = 1;  // 1-based index
+            this._length = this.$items.length;
+            this._alignment = this.$element.hasClass(this._getClass('center')) ? 0.5 : 0;
 
-        this.element = element;
-        this.$element = $(element);
-        this.$inner = this.$element.find('.' + this._getClass('inner'));
-        this.$items = this.$inner.children();
+            this._isFluid = this.$element.hasClass(this._getClass('fluid'));
+            this._isLoop = this.$element.hasClass(this._getClass('loop'));
 
-        this._length = this.$items.length;
-        this._alignment = this.$element.hasClass(this._getClass('center')) ? 0.5 : 0;
+            // Limits
+            this._lockLeft = 1;
+            this._lockRight = this._length;
+        };
 
-        this._isFluid = this.$element.hasClass(this._getClass('fluid'));
-        this._isLoop = this.$element.hasClass(this._getClass('loop'));
+        Scooch.prototype.initStartElement = function() {
+            this.$start = this.$inner.children().first();
+            this.$current = this.$items.eq(this._index - 1);
+        };
 
-        // Limits
-        this._lockLeft = 1;
-        this._lockRight = this._length;
-    };
-
-    Scooch.prototype.initStartElement = function() {
-        this.$start = this.$inner.children().first();
-        this.$current = this.$items.eq(this._index - 1);
-    };
-
-    Scooch.prototype.initLoop = function() {
-        if (!this._isLoop) {
-            return;
-        }
-
-        this._loopPrepend = 2;
-        this._loopAppend = 2;
-
-        for (var i = 0; i < this._loopPrepend; i++) {
-            var $clone = this.$items.eq(this._length - 1 - i).clone();
-            this.$inner.prepend($clone);
-        }
-        for (var i = 0; i < this._loopAppend; i++) {
-            var $clone = this.$items.eq(i).clone();
-            this.$inner.append($clone);
-        }
-
-        this._lockLeft = this._lockLeft - 1;
-        this._lockRight = this._lockRight + 1;
-
-        // Redefine items
-        //this.$items = this.$inner.children();
-        //this._length = this.$items.length;
-
-        var self = this;
-        this.$element.on('afterSlide', function() {
-            //var loopIndex = self._index - self._loopPrepend;
-            var newIndex = self._index;
-
-
-            // If one of the appended clones, go to the other side of the loop
-            if (self._index < 1) {
-                newIndex =  self._length;
-            } else if (self._index > self._length) {
-                newIndex =  1;
-            } else {
+        Scooch.prototype.initLoop = function() {
+            if (!this._isLoop) {
                 return;
             }
 
+            this._loopPrepend = 2;
+            this._loopAppend = 2;
 
-            self._index = newIndex;
-            self.initStartElement();
-            self.start();
-        });
-    };
-
-    Scooch.prototype.initOffsets = function() {
-        this._offsetDrag = 0;
-    };
-
-    Scooch.prototype.initAnimation = function() {
-        this.animating = false;
-        this.dragging = false;
-        this._needsUpdate = false;
-        this._enableAnimation();
-    };
-
-
-    Scooch.prototype._getClass = function(id) {
-        return this.options.classPrefix + this.options.classNames[id];
-    };
-
-
-    Scooch.prototype._enableAnimation = function() {
-        if (this.animating) {
-            return;
-        }
-
-        Utils.setTransitions(this.$inner[0], true);
-        this.$inner.removeClass(this._getClass('dragging'));
-        this.animating = true;
-    };
-
-    Scooch.prototype._disableAnimation = function() {
-        if (!this.animating) {
-            return;
-        }
-
-        Utils.setTransitions(this.$inner[0], false);
-        this.$inner.addClass(this._getClass('dragging'));
-        this.animating = false;
-    };
-
-    Scooch.prototype.start = function() {
-        this._disableAnimation();
-
-        this.$element.trigger('beforeSlide', [this._index, this._index]);
-        this.$element.trigger('afterSlide', [this._index, this._index]);
-
-        this.update();
-    };
-
-    Scooch.prototype.refresh = function() {
-        /* Call when number of items has changed (e.g. with AJAX) */
-        this.$items = this.$inner.children( '.' + this._getClass('item'));
-        this._length = this.$items.length;
-        this.start();
-    };
-
-    Scooch.prototype.update = function(callback) {
-        if (typeof callback != 'undefined') {
-            this._updateCallbacks.push(callback);
-        }
-
-        /* We throttle calls to the real `_update` for efficiency */
-        if (this._needsUpdate) {
-            return;
-        }
-
-        this._needsUpdate = true;
-
-        var self = this;
-        Utils.requestAnimationFrame(function() {
-            self._update();
-
-            setTimeout(function() {
-                for (var i=0, _len = self._updateCallbacks.length; i < _len; i++) {
-                    self._updateCallbacks[i].call(self);
-                }
-                self._updateCallbacks = [];
-            }, 10)
-        });
-    };
-
-    Scooch.prototype._update = function() {
-        if (!this._needsUpdate) {
-            return;
-        }
-
-        var $current = this.$current
-          , $start = this.$start
-          , currentOffset = $current.prop('offsetLeft') + $current.prop('clientWidth') * this._alignment
-          , startOffset = $start.prop('offsetLeft') + $start.prop('clientWidth') * this._alignment
-          , x = Math.round(-(currentOffset - startOffset) + this._offsetDrag);
-        Utils.translateX(this.$inner[0], x);
-
-        this._needsUpdate = false;
-    };
-
-    Scooch.prototype.bind = function() {
-        var abs = Math.abs
-            , dragging = false
-            , canceled = false
-            , dragRadius = this.options.dragRadius
-            , xy
-            , dx
-            , dy
-            , dragThresholdMet
-            , self = this
-            , $element = this.$element
-            , $inner = this.$inner
-            , opts = this.options
-            , lockLeft = false
-            , lockRight = false
-            , windowWidth = $(window).width();
-
-        function start(e) {
-            if (!has.touch) e.preventDefault();
-
-            dragging = true;
-            canceled = false;
-
-            xy = Utils.getCursorPosition(e);
-            dx = 0;
-            dy = 0;
-            dragThresholdMet = false;
-
-            // Disable smooth transitions
-            self._disableAnimation();
-
-            lockLeft = self._index == self._lockLeft;
-            lockRight = self._index == self._lockRight;
-        }
-
-        function drag(e) {
-            if (!dragging || canceled) return;
-
-            var newXY = Utils.getCursorPosition(e)
-              , dragLimit = self.$element.width();
-            dx = xy.x - newXY.x;
-            dy = xy.y - newXY.y;
-
-            if (dragThresholdMet || abs(dx) > abs(dy) && (abs(dx) > dragRadius)) {
-                dragThresholdMet = true;
-                e.preventDefault();
-
-                if (lockLeft && (dx < 0)) {
-                    dx = dx * (-dragLimit)/(dx - dragLimit);
-                } else if (lockRight && (dx > 0)) {
-                    dx = dx * (dragLimit)/(dx + dragLimit);
-                }
-                self._offsetDrag = -dx;
-                self.update();
-            } else if ((abs(dy) > abs(dx)) && (abs(dy) > dragRadius)) {
-                canceled = true;
+            for (var i = 0; i < this._loopPrepend; i++) {
+                var $clone = this.$items.eq(this._length - 1 - i).clone();
+                this.$inner.prepend($clone);
             }
-        }
-
-        function end(e) {
-            if (!dragging) {
-                return;
+            for (var i = 0; i < this._loopAppend; i++) {
+                var $clone = this.$items.eq(i).clone();
+                this.$inner.append($clone);
             }
 
-            dragging = false;
+            this._lockLeft = this._lockLeft - 1;
+            this._lockRight = this._lockRight + 1;
 
-            self._enableAnimation();
+            // Redefine items
+            //this.$items = this.$inner.children();
+            //this._length = this.$items.length;
 
-            if (!canceled && abs(dx) > opts.moveRadius) {
-                // Move to the next slide if necessary
-                if (dx > 0) {
-                    self.next();
+            var self = this;
+            this.$element.on('afterSlide', function() {
+                //var loopIndex = self._index - self._loopPrepend;
+                var newIndex = self._index;
+
+
+                // If one of the appended clones, go to the other side of the loop
+                if (self._index < 1) {
+                    newIndex =  self._length;
+                } else if (self._index > self._length) {
+                    newIndex =  1;
                 } else {
-                    self.prev();
+                    return;
                 }
-            } else {
-                // Reset back to regular position
-                self._offsetDrag = 0;
-                self.update();
-            }
 
-        }
 
-        function click(e) {
-            if (dragThresholdMet) e.preventDefault();
-        }
+                self._index = newIndex;
+                self.initStartElement();
+                self.start();
+            });
+        };
 
-        $inner
-            .on(Utils.events.down + '.scooch', start)
-            .on(Utils.events.move + '.scooch', drag)
-            .on(Utils.events.up + '.scooch', end)
-            .on('click.scooch', click)
-            .on('mouseout.scooch', end);
+        Scooch.prototype.initOffsets = function() {
+            this._offsetDrag = 0;
+        };
 
-        $element.on('click', '[data-m-slide]', function(e){
-            e.preventDefault();
-            var action = $(this).attr('data-m-slide')
-              , index = parseInt(action, 10);
-
-            if (isNaN(index)) {
-                self[action]();
-            } else {
-                self.move(index);
-            }
-        });
-
-        $element.on('beforeSlide', function(e, previousSlide, nextSlide) {
-            self.$element.find('[data-m-slide=\'' + previousSlide + '\']').removeClass(self._getClass('active'));
-            self.$element.find('[data-m-slide=\'' + nextSlide + '\']').addClass(self._getClass('active'));
-
-            self.$items.eq(previousSlide - 1).removeClass(self._getClass('active'));
-            self.$items.eq(nextSlide - 1).addClass(self._getClass('active'));
-        });
-
-        $(window).on('resize orientationchange', function(e) {
-            // Disable animation for now to avoid seeing
-            // the carousel sliding, as it updates its position.
-            // Animation will be enabled automatically when you're swiping.
-            // Don't update Carousel on window height change
-            if(windowWidth == $(window).width())
-                return;
-
-            self._disableAnimation();
-            windowWidth = $(window).width();
-            self.update();
-        });
-    };
-
-    Scooch.prototype.unbind = function() {
-        this.$inner.off();
-    };
-
-    Scooch.prototype.destroy = function() {
-        this.unbind();
-        this.$element.trigger('destroy');
-        this.$element.remove();
-
-        // Cleanup
-        this.$element = null;
-        this.$inner = null;
-        this.$start = null;
-        this.$current = null;
-    };
-
-    Scooch.prototype.move = function(newIndex, opts) {
-        var $element = this.$element
-            , $inner = this.$inner
-            , $items = this.$items
-            , $start = this.$start
-            , $current = this.$current
-            , length = this._length
-            , index = this._index;
-
-        opts = $.extend({}, this.options, opts);
-
-        // Bound Values between [1, length];
-        if (newIndex < this._lockLeft) {
-            newIndex = this._lockLeft;
-        } else if (newIndex > this._lockRight) {
-            newIndex = this._lockRight;
-        }
-
-        // Bail out early if no move is necessary.
-        //if (newIndex == index) {
-            //return; // Return Type?
-        //}
-
-        // Check if we should animate
-        if (opts.animate) {
+        Scooch.prototype.initAnimation = function() {
+            this.animating = false;
+            this.dragging = false;
+            this._needsUpdate = false;
             this._enableAnimation();
-        } else {
+        };
+
+
+        Scooch.prototype._getClass = function(id) {
+            return this.options.classPrefix + this.options.classNames[id];
+        };
+
+
+        Scooch.prototype._enableAnimation = function() {
+            if (this.animating) {
+                return;
+            }
+
+            Utils.setTransitions(this.$inner[0], true);
+            this.$inner.removeClass(this._getClass('dragging'));
+            this.animating = true;
+        };
+
+        Scooch.prototype._disableAnimation = function() {
+            if (!this.animating) {
+                return;
+            }
+
+            Utils.setTransitions(this.$inner[0], false);
+            this.$inner.addClass(this._getClass('dragging'));
+            this.animating = false;
+        };
+
+        Scooch.prototype.start = function() {
             this._disableAnimation();
-        }
 
-        // Trigger beforeSlide event
-        $element.trigger('beforeSlide', [index, newIndex]);
+            this.$element.trigger('beforeSlide', [this._index, this._index]);
+            this.$element.trigger('afterSlide', [this._index, this._index]);
 
-
-        // Index must be decremented to convert between 1- and 0-based indexing.
-        if(this._isLoop) {
-            this.$current = $current = $inner.children().eq(newIndex + this._loopPrepend - 1);
-        } else {
-            this.$current = $current = $items.eq(newIndex - 1);
-        }
-
-        this._offsetDrag = 0;
-        this._index = newIndex;
-
-        // Update, re-enable animation if necessary
-        if (opts.animate) {
             this.update();
-        } else {
-            this.update(function() {
+        };
+
+        Scooch.prototype.refresh = function() {
+            /* Call when number of items has changed (e.g. with AJAX) */
+            this.$items = this.$inner.children( '.' + this._getClass('item'));
+            this._length = this.$items.length;
+            this.start();
+        };
+
+        Scooch.prototype.update = function(callback) {
+            if (typeof callback != 'undefined') {
+                this._updateCallbacks.push(callback);
+            }
+
+            /* We throttle calls to the real `_update` for efficiency */
+            if (this._needsUpdate) {
+                return;
+            }
+
+            this._needsUpdate = true;
+
+            var self = this;
+            Utils.requestAnimationFrame(function() {
+                self._update();
+
+                setTimeout(function() {
+                    for (var i=0, _len = self._updateCallbacks.length; i < _len; i++) {
+                        self._updateCallbacks[i].call(self);
+                    }
+                    self._updateCallbacks = [];
+                }, 10)
+            });
+        };
+
+        Scooch.prototype._update = function() {
+            if (!this._needsUpdate) {
+                return;
+            }
+
+            var $current = this.$current
+              , $start = this.$start
+              , currentOffset = $current.prop('offsetLeft') + $current.prop('clientWidth') * this._alignment
+              , startOffset = $start.prop('offsetLeft') + $start.prop('clientWidth') * this._alignment
+              , x = Math.round(-(currentOffset - startOffset) + this._offsetDrag);
+
+            Utils.translateX(this.$inner[0], x);
+
+            this._needsUpdate = false;
+        };
+
+        Scooch.prototype.bind = function() {
+            var abs = Math.abs
+                , dragging = false
+                , canceled = false
+                , dragRadius = this.options.dragRadius
+                , xy
+                , dx
+                , dy
+                , dragThresholdMet
+                , self = this
+                , $element = this.$element
+                , $inner = this.$inner
+                , opts = this.options
+                , lockLeft = false
+                , lockRight = false
+                , windowWidth = $(window).width();
+
+            function start(e) {
+                if (!has.touch) e.preventDefault();
+
+                dragging = true;
+                canceled = false;
+
+                xy = Utils.getCursorPosition(e);
+                dx = 0;
+                dy = 0;
+                dragThresholdMet = false;
+
+                // Disable smooth transitions
+                self._disableAnimation();
+
+                lockLeft = self._index == self._lockLeft;
+                lockRight = self._index == self._lockRight;
+            }
+
+            function drag(e) {
+                if (!dragging || canceled) return;
+
+                var newXY = Utils.getCursorPosition(e)
+                  , dragLimit = self.$element.width();
+                dx = xy.x - newXY.x;
+                dy = xy.y - newXY.y;
+
+                if (dragThresholdMet || abs(dx) > abs(dy) && (abs(dx) > dragRadius)) {
+                    dragThresholdMet = true;
+                    e.preventDefault();
+
+                    if (lockLeft && (dx < 0)) {
+                        dx = dx * (-dragLimit)/(dx - dragLimit);
+                    } else if (lockRight && (dx > 0)) {
+                        dx = dx * (dragLimit)/(dx + dragLimit);
+                    }
+                    self._offsetDrag = -dx;
+                    self.update();
+                } else if ((abs(dy) > abs(dx)) && (abs(dy) > dragRadius)) {
+                    canceled = true;
+                }
+            }
+
+            function end(e) {
+                if (!dragging) {
+                    return;
+                }
+
+                dragging = false;
+
+                self._enableAnimation();
+
+                if (!canceled && abs(dx) > opts.moveRadius) {
+                    // Move to the next slide if necessary
+                    if (dx > 0) {
+                        self.next();
+                    } else {
+                        self.prev();
+                    }
+                } else {
+                    // Reset back to regular position
+                    self._offsetDrag = 0;
+                    self.update();
+                }
+
+            }
+
+            function click(e) {
+                if (dragThresholdMet) e.preventDefault();
+            }
+
+            $inner
+                .on(Utils.events.down + '.scooch', start)
+                .on(Utils.events.move + '.scooch', drag)
+                .on(Utils.events.up + '.scooch', end)
+                .on('click.scooch', click)
+                .on('mouseout.scooch', end);
+
+            $element.on('click', '[data-m-slide]', function(e){
+                e.preventDefault();
+                var action = $(this).attr('data-m-slide')
+                  , index = parseInt(action, 10);
+
+                if (isNaN(index)) {
+                    self[action]();
+                } else {
+                    self.move(index);
+                }
+            });
+
+            $element.on('afterSlide', function(e, previousSlide, nextSlide) {
+                self.$items.eq(previousSlide - 1).removeClass(self._getClass('active'));
+                self.$items.eq(nextSlide - 1).addClass(self._getClass('active'));
+
+                self.$element.find('[data-m-slide=\'' + previousSlide + '\']').removeClass(self._getClass('active'));
+                self.$element.find('[data-m-slide=\'' + nextSlide + '\']').addClass(self._getClass('active'));
+
+                if (opts.autoHideArrows) { // Hide prev/next arrows when at bounds
+                    if (nextSlide === 1) {
+                        self.$element.find('[data-m-slide=prev]').addClass(self._getClass('inactive'));
+                        self.$element.find('[data-m-slide=next]').removeClass(self._getClass('inactive'));
+                    } else if (nextSlide === self._length) {
+                        self.$element.find('[data-m-slide=next]').addClass(self._getClass('inactive'));
+                        self.$element.find('[data-m-slide=prev]').removeClass(self._getClass('inactive'));
+                    } else {
+                        self.$element.find('[data-m-slide=prev]').removeClass(self._getClass('inactive'));
+                        self.$element.find('[data-m-slide=next]').removeClass(self._getClass('inactive'));
+                    }
+                }
+            });
+
+            $(window).on('resize orientationchange', function(e) {
+                // Disable animation for now to avoid seeing
+                // the carousel sliding, as it updates its position.
+                // Animation will be enabled automatically when you're swiping.
+                // Don't update Carousel on window height change
+                if(windowWidth == $(window).width())
+                    return;
+
+                self._disableAnimation();
+                windowWidth = $(window).width();
+                self.update();
+            });
+
+            $element.trigger('beforeSlide', [1, 1]);
+            $element.trigger('afterSlide', [1, 1]);
+
+            // self.update();
+
+        };
+
+        Scooch.prototype.unbind = function() {
+            this.$inner.off();
+        };
+
+        Scooch.prototype.destroy = function() {
+            this.unbind();
+            this.$element.trigger('destroy');
+            this.$element.remove();
+
+            // Cleanup
+            this.$element = null;
+            this.$inner = null;
+            this.$start = null;
+            this.$current = null;
+        };
+
+        Scooch.prototype.move = function(newIndex, opts) {
+            var $element = this.$element
+                , $inner = this.$inner
+                , $items = this.$items
+                , $start = this.$start
+                , $current = this.$current
+                , length = this._length
+                , index = this._index;
+
+            opts = $.extend({}, this.options, opts);
+
+            // Bound Values between [1, length];
+            if (newIndex < this._lockLeft) {
+                newIndex = this._lockLeft;
+            } else if (newIndex > this._lockRight) {
+                newIndex = this._lockRight;
+            }
+
+            // Bail out early if no move is necessary.
+            //if (newIndex == index) {
+                //return; // Return Type?
+            //}
+
+            // Check if we should animate
+            if (opts.animate) {
                 this._enableAnimation();
-            });
-        }
-        // Trigger afterSlide event
-        if (opts.animate) {
-            Utils.onTransitionEnd(this.$inner, function() {
+            } else {
+                this._disableAnimation();
+            }
+
+            // Trigger beforeSlide event
+            $element.trigger('beforeSlide', [index, newIndex]);
+
+
+            // Index must be decremented to convert between 1- and 0-based indexing.
+            if(this._isLoop) {
+                this.$current = $current = $inner.children().eq(newIndex + this._loopPrepend - 1);
+            } else {
+                this.$current = $current = $items.eq(newIndex - 1);
+            }
+
+            this._offsetDrag = 0;
+            this._index = newIndex;
+
+            // Update, re-enable animation if necessary
+            if (opts.animate) {
+                this.update();
+            } else {
+                this.update(function() {
+                    this._enableAnimation();
+                });
+            }
+            // Trigger afterSlide event
+            if (opts.animate) {
+                Utils.onTransitionEnd(this.$inner, function() {
+                    $element.trigger('afterSlide', [index, newIndex]);
+                });
+            } else {
                 $element.trigger('afterSlide', [index, newIndex]);
-            });
-        } else {
-            $element.trigger('afterSlide', [index, newIndex]);
-        }
+            }
 
-    };
+        };
 
-    Scooch.prototype.next = function() {
-        this.move(this._index + 1);
-    };
+        Scooch.prototype.next = function() {
+            this.move(this._index + 1);
+        };
 
-    Scooch.prototype.prev = function() {
-        this.move(this._index - 1);
-    };
+        Scooch.prototype.prev = function() {
+            this.move(this._index - 1);
+        };
 
-    return Scooch;
+        return Scooch;
 
-})(Adaptive.$ || Mobify.$, Mobify.UI.Utils);
+    })($, Utils);
 
-
-
-(function($) {
     /**
         jQuery interface to set up a scooch carousel
 
@@ -597,7 +606,7 @@ Mobify.UI.Scooch = (function($, Utils) {
             action = null;
         }
 
-        var options = Array.prototype.slice.apply(arguments);
+        options = Array.prototype.slice.apply(arguments);
 
         this.each(function () {
             var $this = $(this)
@@ -605,7 +614,7 @@ Mobify.UI.Scooch = (function($, Utils) {
 
 
             if (!scooch) {
-                scooch = new Mobify.UI.Scooch(this, initOptions);
+                scooch = new Scooch(this, initOptions);
             }
 
             if (action) {
@@ -617,11 +626,11 @@ Mobify.UI.Scooch = (function($, Utils) {
             }
 
             this._scooch = scooch;
-        })
+        });
 
         return this;
     };
 
     $.fn.scooch.defaults = {};
 
-})(Adaptive.$ || Mobify.$);
+}));

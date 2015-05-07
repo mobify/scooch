@@ -359,6 +359,48 @@
             </div>
         </div>
 
+        <h2>Disable Arrows</h2>
+        <p>When you're at the first or last items, Scooch disables the appropriate controls</p>
+
+        <div class="m-scooch" id="m-scooch-hide-arrows">
+            <div class="m-scooch-inner">
+                <div class="m-item">
+                    <div class="m-card-light">
+                        <img src="http://lorempixel.com/300/300/animals/?1">
+                        <p class="m-caption">Blossoms</p>
+                    </div>
+                </div>
+                <div class="m-item">
+                    <div class="m-card-light">
+                        <img src="http://lorempixel.com/300/300/animals/?2">
+                        <p class="m-caption">Fox Glacier</p>
+                    </div>
+                </div>
+                <div class="m-item">
+                    <div class="m-card-light">
+                        <img src="http://lorempixel.com/300/300/animals/?3">
+                        <p class="m-caption">Helmets</p>
+                    </div>
+                </div>
+                <div class="m-item">
+                    <div class="m-card-light">
+                        <img src="http://lorempixel.com/300/300/animals/?4">
+                        <p class="m-caption">Parliament</p>
+                    </div>
+                </div>
+                <div class="m-item">
+                    <div class="m-card-light">
+                        <img src="http://lorempixel.com/300/300/animals/?5">
+                        <p class="m-caption">Pods</p>
+                    </div>
+                </div>
+            </div>
+            <div class="m-scooch-controls">
+                <a href="#" data-m-slide="prev">&lsaquo; Previous</a>
+                <a href="#" data-m-slide="next">Next &rsaquo;</a>
+            </div>
+        </div>
+
         <h2>Infinite loop</h2>
         <p>Infinitely looped carousel with Previous / Next controls to advance between items.</p>
         <div class="m-scooch m-fluid m-loop m-scooch-photos" id="m-scooch-example-9">
@@ -395,7 +437,9 @@
 
         <!-- <script src="http://zeptojs.com/zepto.js"></script> -->
         <script src="http://code.jquery.com/jquery-1.10.1.js"></script>
-        <script src="src/scooch.js?22"></script>
+
+        <script src="src/scooch.js"></script>
+        <script>$('#m-scooch-hide-arrows').scooch({autoHideArrows:true});</script>
         <script>$('#m-scooch-no-animate').scooch({animate:false});</script>
         <script>$('.m-scooch').scooch();</script>
     </body>
