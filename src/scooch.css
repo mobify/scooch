@@ -10,8 +10,6 @@
     -webkit-font-smoothing:  antialiased;  }
     .m-scooch.m-left  {
         text-align:  left;  }
-    .m-scooch.m-center  {
-        text-align:  center;  }
     .m-scooch.m-fluid  >  .m-scooch-inner  >  *  {
         width:  100%;  }
     .m-scooch.m-fluid.m-center  >  .m-scooch-inner  >  *:first-child  {
