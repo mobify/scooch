@@ -195,6 +195,25 @@
     margin-right: 20px;
 }
 
+/* https://github.com/mobify/scooch/issues/32 */
+/* Styles for non-fluid, centered carousel */
+.m-center.m-scaled:not(.m-fluid) .m-item {
+    -webkit-transform: translate(-50%) scale(0.75);
+    -moz-transform: translate(-50%) scale(0.75);
+    -ms-transform: translate(-50%) scale(0.75);
+    -o-transform: translate(-50%) scale(0.75);
+    transform: translate(-50%) scale(0.75);
+}
+
+.m-center.m-scaled:not(.m-fluid) .m-item.m-active {
+    -webkit-transform: scale(1) translate(-50%);
+    -moz-transform: scale(1) translate(-50%);
+    -ms-transform: scale(1) translate(-50%);
+    -o-transform: scale(1) translate(-50%);
+    transform: scale(1) translate(-50%);
+}
+
+
 /* Fluid Width Photo Carousel
  * .m-scooch.m-fluid.m-scooch-photos
  */

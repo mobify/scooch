@@ -79,18 +79,17 @@
         -moz-box-sizing:  border-box;
         -o-box-sizing:  border-box;
         -webkit-box-sizing:  border-box;  }
-    .m-center:not(.m-fluid)  >  .m-scooch-inner  {
-        display:  inline-block;
-        margin-right:  -20000px  !important;
-        margin-left:  0  !important;  }
-        .m-center:not(.m-fluid)  >  .m-scooch-inner  >  *  {
-            position:  relative;
-            left:  -20000px;  }
-        .m-center:not(.m-fluid)  >  .m-scooch-inner  >  *:first-child  {
-            float:  left;
-            margin-right:  20000px;
-            left:  0;  }
-            .m-center:not(.m-fluid)  >  .m-scooch-inner  >  *:first-child:last-child  {
-                margin-right:  0;  }
-        .m-center:not(.m-fluid)  >  .m-scooch-inner  >  *:last-child  {
-            margin-right:  -30000px;  }
+        
+    /* https://github.com/mobify/scooch/issues/32 */
+    /* Styles for non-fluid, centered carousel */
+    .m-center:not(.m-fluid) .m-item:first-child {
+        margin-left: 50%;
+    }
+
+    .m-center:not(.m-fluid) .m-item {
+        -webkit-transform: translate(-50%);
+        -moz-transform: translate(-50%);
+        -ms-transform: translate(-50%);
+        -o-transform: translate(-50%);
+        transform: translate(-50%);
+    }
