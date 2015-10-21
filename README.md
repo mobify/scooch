@@ -69,15 +69,20 @@ Constructs the carousel with options.
     $('.m-scooch').scooch({
           dragRadius: 10
         , moveRadius: 20
-        , classPrefix: undefined
+        , animate: true
+        , autoHideArrows: false
+        , rightToLeft: false
+        , classPrefix: "m-"
         , classNames: {
-            outer: "carousel"
-          , inner: "carousel-inner"
+            outer: "scooch"
+          , inner: "scooch-inner"
           , item: "item"
           , center: "center"
           , touch: "has-touch"
           , dragging: "dragging"
           , active: "active"
+          , inactive: "inactive"
+          , fluid: "fluid"
         }
     });
 
@@ -180,6 +185,6 @@ The following desktop browsers have degraded support:
 2. `npm install`
 3. `grunt`
 
-The build directory will be populated with minified versions of the css and 
+The build directory will be populated with minified versions of the css and
 javascript files and a .zip of the original source files (for distribution and
 use with whatever build system you might use).
