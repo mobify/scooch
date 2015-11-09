@@ -2,6 +2,7 @@
 
 A mobile-first content and image carousel.
 
+[![Code Climate](https://codeclimate.com/github/mobify/scooch/badges/gpa.svg)](https://codeclimate.com/github/mobify/scooch)
 [![Bower version](https://badge.fury.io/bo/scooch.svg)](http://badge.fury.io/bo/scooch)
 
 ## Usage
