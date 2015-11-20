@@ -269,7 +269,9 @@
               , startOffset = $start.prop('offsetLeft') + $start.prop('clientWidth') * this._alignment
               , x = Math.round(-(currentOffset - startOffset) + this._offsetDrag);
 
-            Utils.translateX(this.$inner[0], x);
+            if ($current.prop('offsetParent')) {
+                Utils.translateX(this.$inner[0], x);
+            }
 
             this._needsUpdate = false;
         };
