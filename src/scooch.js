@@ -183,6 +183,9 @@
             this.$current = this.$items.eq(this._index - 1);  // convert to 0-based index
 
             this._length = this.$items.length;
+            //Add new var to contain number of items
+            this._numberOfItems= this._length; 
+
             this._alignment = this.$element.hasClass(this._getClass('center')) ? 0.5 : 0;
 
             this._isFluid = this.$element.hasClass(this._getClass('fluid'));
@@ -501,12 +504,30 @@
         };
 
         Scooch.prototype.next = function() {
-            this.move(this._index + 1);
+            //Check to see if it's at the last image
+            if(this._index === this._numberOfItems){
+                //Restart to beginning 1 based indexing
+                this._index = 1;
+                this.move(this._index);
+            }
+            //Not last image, proceed
+            else    
+                this.move(this._index + 1);
+            
         };
         
         Scooch.prototype.prev = function() {
-            this.move(this._index - 1);
+            //Check to see if it's at the first image, 1 based index
+            if(this._index === 1){
+                //Set index to last image 
+                this._index =  this._numberOfItems;
+                this.move(this._index);
+            }
+            //Not first image, process
+            else    
+                this.move(this._index - 1);
         };
+
 
         return Scooch;
 
