@@ -5,6 +5,7 @@
     - Lint JS source code with eslint
     - Update versions of dependencies `grunt-contrib-connect` and `grunt-contrib-uglify`
     - Integrate with CircleCI
+    - Add some GitHub templates for contributing, issues, and PRs
 0.6.1
     - Remove all old styles pertaining to .m-center:not(.m-fluid)
     - Set the margin of the first item to 50%
