@@ -9,7 +9,7 @@
         /*
          Browser globals
          */
-        var selectorLibrary = window.Mobify && window.Mobify.$ || window.Zepto || window.jQuery;
+        var selectorLibrary = window.Mobify && window.Mobify.$ || window.jQuery || window.Zepto;
         factory(selectorLibrary);
     }
 }(function ($) {
@@ -49,7 +49,7 @@
         exports.getProperty = function(name) {
             var prefixes = ['Webkit', 'Moz', 'O', 'ms', '']
               , testStyle = document.createElement('div').style;
-            
+
             for (var i = 0; i < prefixes.length; ++i) {
                 if (testStyle[prefixes[i] + name] !== undefined) {
                     return prefixes[i] + name;
@@ -66,7 +66,7 @@
             // Usage of transform3d on *android* would cause problems for input fields:
             // - https://coderwall.com/p/d5lmba
             // - http://static.trygve-lie.com/bugs/android_input/
-          , 'transform3d': !! (window.WebKitCSSMatrix && 'm11' in new WebKitCSSMatrix() && !/android\s+[1-2]/i.test(ua)) 
+          , 'transform3d': !! (window.WebKitCSSMatrix && 'm11' in new WebKitCSSMatrix() && !/android\s+[1-2]/i.test(ua))
         });
 
         // translateX(element, delta)
@@ -105,11 +105,11 @@
         // Request Animation Frame
         // courtesy of @paul_irish
         exports.requestAnimationFrame = (function() {
-            var prefixed = (window.requestAnimationFrame       || 
-                            window.webkitRequestAnimationFrame || 
-                            window.mozRequestAnimationFrame    || 
-                            window.oRequestAnimationFrame      || 
-                            window.msRequestAnimationFrame     || 
+            var prefixed = (window.requestAnimationFrame       ||
+                            window.webkitRequestAnimationFrame ||
+                            window.mozRequestAnimationFrame    ||
+                            window.oRequestAnimationFrame      ||
+                            window.msRequestAnimationFrame     ||
                             function( callback ){
                                 window.setTimeout(callback, 1000 / 60);
                             });
@@ -245,7 +245,7 @@
             }
 
             this._needsUpdate = true;
-            
+
             var self = this;
             Utils.requestAnimationFrame(function() {
                 self._update();
@@ -413,7 +413,7 @@
             });
 
             $(window).on('resize orientationchange', function(e) {
-                // Disable animation for now to avoid seeing 
+                // Disable animation for now to avoid seeing
                 // the carousel sliding, as it updates its position.
                 // Animation will be enabled automatically when you're swiping.
                 // Don't update Carousel on window height change
@@ -456,7 +456,7 @@
                 , $current = this.$current
                 , length = this._length
                 , index = this._index;
-                    
+
             opts = $.extend({}, this.options, opts);
 
             // Bound Values between [1, length];
@@ -465,7 +465,7 @@
             } else if (newIndex > this._length) {
                 newIndex = length;
             }
-            
+
             // Bail out early if no move is necessary.
             if (newIndex == this._index) {
                 //return; // Return Type?
@@ -492,7 +492,7 @@
             if (opts.animate) {
                 this.update();
             } else {
-                this.update(function() {    
+                this.update(function() {
                     this._enableAnimation();
                 });
             }
@@ -503,7 +503,7 @@
         Scooch.prototype.next = function() {
             this.move(this._index + 1);
         };
-        
+
         Scooch.prototype.prev = function() {
             this.move(this._index - 1);
         };
@@ -535,7 +535,7 @@
             var $this = $(this)
               , scooch = this._scooch;
 
-            
+
             if (!scooch) {
                 scooch = new Scooch(this, initOptions);
             }
@@ -547,7 +547,7 @@
                     scooch = null;
                 }
             }
-            
+
             this._scooch = scooch;
         });
 
