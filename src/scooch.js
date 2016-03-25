@@ -159,7 +159,6 @@
                 , active: 'active'
                 , inactive: 'inactive'
                 , fluid: 'fluid'
-                , loop: 'loop'
             }
         };
         var has = $.support;
@@ -235,13 +234,8 @@
             this._lockLeft = this._lockLeft - 1;
             this._lockRight = this._lockRight + 1;
 
-            // Redefine items
-            //this.$items = this.$inner.children();
-            //this._length = this.$items.length;
-
             var self = this;
             this.$element.on('afterSlide', function() {
-                //var loopIndex = self._index - self._loopPrepend;
                 var newIndex = self._index;
 
                 // If one of the appended clones, go to the other side of the loop

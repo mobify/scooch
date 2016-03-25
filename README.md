@@ -73,6 +73,7 @@ Constructs the carousel with options.
         , animate: true
         , autoHideArrows: false
         , rightToLeft: false
+        , infinite: false
         , classPrefix: "m-"
         , classNames: {
             outer: "scooch"
