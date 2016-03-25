@@ -31,7 +31,10 @@ module.exports = function(grunt) {
             }
         },
         watch: {
-            files: ['src/**/*'],
+            files: [
+                'src/**/*',
+                'examples/**/*'
+            ],
             tasks: ['build']
         },
         uglify: {
@@ -100,6 +103,12 @@ module.exports = function(grunt) {
                     config: require.resolve('mobify-code-style/javascript/.eslintrc')
                 }
             }
+        },
+        open: {
+            examples: {
+                path: 'http://localhost:3000/examples',
+                app: 'Google Chrome'
+            }
         }
     });
 
@@ -109,6 +118,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-css');
     grunt.loadNpmTasks('grunt-eslint');
+    grunt.loadNpmTasks('grunt-open');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-zip');
     grunt.loadNpmTasks('grunt-s3');
@@ -116,6 +126,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-release');
 
     // Default task(s).
+    grunt.registerTask('examples', ['build', 'connect:server', 'open:examples', 'watch']);
     grunt.registerTask('lint', ['eslint:prod']);
     grunt.registerTask('serve', ['connect', 'watch']);
     grunt.registerTask('build', ['lint', 'uglify', 'cssmin', 'zip']);

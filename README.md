@@ -5,6 +5,10 @@ A mobile-first content and image carousel.
 [![Code Climate](https://codeclimate.com/github/mobify/scooch/badges/gpa.svg)](https://codeclimate.com/github/mobify/scooch)
 [![Bower version](https://badge.fury.io/bo/scooch.svg)](http://badge.fury.io/bo/scooch)
 
+## Demo
+
+You can find a simple demo on [the Documentation page](http://mobify.github.io/scooch/). More demos can be found inside the `examples` folder in the repo. Run `grunt examples` to see them in Chrome (mobile device emulation is recommended).
+
 ## Usage
 
     <!-- include scooch.css -->

@@ -3,8 +3,8 @@
     <head>
         <title>Examples of Scooch in action</title>
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-        <link rel="stylesheet" href="src/scooch.css">
-        <link rel="stylesheet" href="src/scooch-style.css">
+        <link rel="stylesheet" href="../src/scooch.css">
+        <link rel="stylesheet" href="../src/scooch-style.css">
         <style>
             /* styling for this page */
             .m-scooch {
@@ -23,6 +23,11 @@
                 width: 100%;
                 max-width: 100%;
                 height: auto;
+            }
+
+            .m-inactive {
+                opacity: 0.1;
+                cursor: not-allowed;
             }
 
             .m-scooch-example-5 .m-caption {
@@ -406,10 +411,13 @@
         <div class="m-scooch m-fluid m-scooch-photos" id="m-scooch-infinite">
           <div class="m-scooch-inner">
             <div class="m-item">
-                <img src="http://lorempixel.com/300/300/animals/?1">
+                <img src="http://lorempixel.com/300/300/animals/1">
             </div>
             <div class="m-item">
-                <img src="http://lorempixel.com/300/300/animals/?2">
+                <img src="http://lorempixel.com/300/300/animals/2">
+            </div>
+            <div class="m-item">
+                <img src="http://lorempixel.com/300/300/animals/3">
             </div>
           </div>
           <div class="m-scooch-controls">
@@ -421,7 +429,7 @@
         <!-- <script src="http://zeptojs.com/zepto.js"></script> -->
         <script src="http://code.jquery.com/jquery-1.10.1.js"></script>
 
-        <script src="src/scooch.js"></script>
+        <script src="../src/scooch.js"></script>
         <script>$('#m-scooch-infinite').scooch({infinite:true});</script>
         <script>$('#m-scooch-hide-arrows').scooch({autoHideArrows:true});</script>
         <script>$('#m-scooch-no-animate').scooch({animate:false});</script>
