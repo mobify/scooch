@@ -36,8 +36,8 @@ A mobile-first content and image carousel.
       </div>
     </div>
 
-    <!-- include zepto.js or jquery.js -->
-    <script src="zepto.js"></script>
+    <!-- include jquery.js -->
+    <script src="jquery.js"></script>
     <!-- include scooch.js -->
     <script src="scooch.js"></script>
     <!-- construct the carousel -->
@@ -89,13 +89,13 @@ Constructs the carousel with options.
 
 ### .scooch('next')
 
-Moves the carousel one item to the right.
+Moves the carousel one item to the right (or left if `rightToLeft` option is enabled).
 
     $('.m-scooch').scooch('next');
 
 ### .scooch('prev')
 
-Moves the carousel one item to the left.
+Moves the carousel one item to the left (or right if `rightToLeft` option is enabled).
 
     $('.m-scooch').scooch('prev');
 
