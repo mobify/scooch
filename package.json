@@ -1,6 +1,6 @@
 {
   "name": "scooch",
-  "version": "0.6.1",
+  "version": "1.0.0",
   "description": "A mobile-first JavaScript-driven content and image carousel",
   "license": "MIT",
   "main": "build/scooch.min.js",
