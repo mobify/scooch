@@ -1,4 +1,5 @@
 Pending Release:
+    - Add `infinite` option for looping carousels
     - Publish to NPM
     - De-emphasize Zepto in favor of jQuery
     - Lint JS source code with eslint
