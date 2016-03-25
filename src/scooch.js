@@ -1,4 +1,4 @@
-(function (factory) {
+(function(factory) {
     if (typeof define === 'function' && define.amd) {
         /*
          In AMD environments, you will need to define an alias
@@ -12,7 +12,7 @@
         var selectorLibrary = window.Mobify && window.Mobify.$ || window.jQuery || window.Zepto;
         factory(selectorLibrary);
     }
-}(function ($) {
+})(function($) {
 
     var Utils = (function($) {
         var exports = {};
@@ -37,8 +37,8 @@
             @returns {Object} X and Y coordinates
         */
         exports.getCursorPosition = (has.touch)
-            ? function(e) {e = e.originalEvent || e; return {x: e.touches[0].clientX, y: e.touches[0].clientY}}
-            : function(e) {return {x: e.clientX, y: e.clientY}};
+            ? function(e) {e = e.originalEvent || e; return {x: e.touches[0].clientX, y: e.touches[0].clientY};}
+            : function(e) {return {x: e.clientX, y: e.clientY};};
 
 
         /**
@@ -61,12 +61,12 @@
         };
 
         $.extend(has, {
-            'transform': !! (exports.getProperty('Transform'))
+            'transform': !!(exports.getProperty('Transform'))
 
             // Usage of transform3d on *android* would cause problems for input fields:
             // - https://coderwall.com/p/d5lmba
             // - http://static.trygve-lie.com/bugs/android_input/
-          , 'transform3d': !! (window.WebKitCSSMatrix && 'm11' in new WebKitCSSMatrix() && !/android\s+[1-2]/i.test(ua))
+          , 'transform3d': !!(window.WebKitCSSMatrix && 'm11' in new window.WebKitCSSMatrix() && !/android\s+[1-2]/i.test(ua))
         });
 
         // translateX(element, delta)
@@ -74,17 +74,17 @@
         var transformProperty = exports.getProperty('Transform');
         if (has.transform3d) {
             exports.translateX = function(element, delta) {
-                 if (typeof delta == 'number') delta = delta + 'px';
-                 element.style[transformProperty] = 'translate3d(' + delta  + ',0,0)';
+                if (typeof delta === 'number') delta = delta + 'px';
+                element.style[transformProperty] = 'translate3d(' + delta  + ',0,0)';
             };
         } else if (has.transform) {
             exports.translateX = function(element, delta) {
-                 if (typeof delta == 'number') delta = delta + 'px';
-                 element.style[transformProperty] = 'translate(' + delta  + ',0)';
+                if (typeof delta === 'number') delta = delta + 'px';
+                element.style[transformProperty] = 'translate(' + delta  + ',0)';
             };
         } else {
             exports.translateX = function(element, delta) {
-                if (typeof delta == 'number') delta = delta + 'px';
+                if (typeof delta === 'number') delta = delta + 'px';
                 element.style.left = delta;
             };
         }
@@ -110,7 +110,7 @@
                             window.mozRequestAnimationFrame    ||
                             window.oRequestAnimationFrame      ||
                             window.msRequestAnimationFrame     ||
-                            function( callback ){
+                            function( callback ) {
                                 window.setTimeout(callback, 1000 / 60);
                             });
 
@@ -134,7 +134,7 @@
               , rightToLeft: false
               , classPrefix: 'm-'
               , classNames: {
-                    outer: 'scooch'
+                  outer: 'scooch'
                   , inner: 'scooch-inner'
                   , item: 'item'
                   , center: 'center'
@@ -143,7 +143,7 @@
                   , active: 'active'
                   , inactive: 'inactive'
                   , fluid: 'fluid'
-                }
+              }
             }
            , has = $.support;
 
@@ -235,7 +235,7 @@
         };
 
         Scooch.prototype.update = function(callback) {
-            if (typeof callback != 'undefined') {
+            if (typeof callback !== 'undefined') {
                 this._updateCallbacks.push(callback);
             }
 
@@ -251,11 +251,11 @@
                 self._update();
 
                 setTimeout(function() {
-                    for (var i=0, _len = self._updateCallbacks.length; i < _len; i++) {
+                    for (var i = 0, _len = self._updateCallbacks.length; i < _len; i++) {
                         self._updateCallbacks[i].call(self);
                     }
                     self._updateCallbacks = [];
-                }, 10)
+                }, 10);
             });
         };
 
@@ -294,7 +294,7 @@
                 , lockRight = false
                 , windowWidth = $(window).width();
 
-            function start(e) {
+            var start = function(e) {
                 if (!has.touch) e.preventDefault();
 
                 dragging = true;
@@ -308,11 +308,11 @@
                 // Disable smooth transitions
                 self._disableAnimation();
 
-                lockLeft = self._index == 1;
-                lockRight = self._index == self._length;
-            }
+                lockLeft = self._index === 1;
+                lockRight = self._index === self._length;
+            };
 
-            function drag(e) {
+            var drag = function(e) {
                 if (!dragging || canceled) return;
 
                 var newXY = Utils.getCursorPosition(e)
@@ -325,18 +325,18 @@
                     e.preventDefault();
 
                     if (lockLeft && (dx < 0)) {
-                        dx = dx * (-dragLimit)/(dx - dragLimit);
+                        dx = dx * (-dragLimit) / (dx - dragLimit);
                     } else if (lockRight && (dx > 0)) {
-                        dx = dx * (dragLimit)/(dx + dragLimit);
+                        dx = dx * (dragLimit) / (dx + dragLimit);
                     }
                     self._offsetDrag = -dx;
                     self.update();
                 } else if ((abs(dy) > abs(dx)) && (abs(dy) > dragRadius)) {
                     canceled = true;
                 }
-            }
+            };
 
-            function end(e) {
+            var end = function(e) {
                 if (!dragging) {
                     return;
                 }
@@ -366,11 +366,11 @@
                     self.update();
                 }
 
-            }
+            };
 
-            function click(e) {
+            var click = function(e) {
                 if (dragThresholdMet) e.preventDefault();
-            }
+            };
 
             $inner
                 .on(Utils.events.down + '.scooch', start)
@@ -379,7 +379,7 @@
                 .on('click.scooch', click)
                 .on('mouseout.scooch', end);
 
-            $element.on('click', '[data-m-slide]', function(e){
+            $element.on('click', '[data-m-slide]', function(e) {
                 e.preventDefault();
                 var action = $(this).attr('data-m-slide')
                   , index = parseInt(action, 10);
@@ -417,7 +417,7 @@
                 // the carousel sliding, as it updates its position.
                 // Animation will be enabled automatically when you're swiping.
                 // Don't update Carousel on window height change
-                if(windowWidth == $(window).width())
+                if (windowWidth === $(window).width())
                     return;
 
                 self._disableAnimation();
@@ -467,7 +467,7 @@
             }
 
             // Bail out early if no move is necessary.
-            if (newIndex == this._index) {
+            if (newIndex === this._index) {
                 //return; // Return Type?
             }
 
@@ -519,11 +519,11 @@
         @param {String} [action] Action to perform. When no action is passed, the carousel is simply initialized.
         @param {Object} [options] Options passed to the action.
     */
-    $.fn.scooch = function (action, options) {
+    $.fn.scooch = function(action, options) {
         var initOptions = $.extend({}, $.fn.scooch.defaults);
 
         // Handle different calling conventions
-        if (typeof action == 'object') {
+        if (typeof action === 'object') {
             $.extend(initOptions, action, true);
             options = null;
             action = null;
@@ -531,7 +531,7 @@
 
         options = Array.prototype.slice.apply(arguments);
 
-        this.each(function () {
+        this.each(function() {
             var $this = $(this)
               , scooch = this._scooch;
 
@@ -556,4 +556,4 @@
 
     $.fn.scooch.defaults = {};
 
-}));
+});
