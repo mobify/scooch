@@ -9,17 +9,17 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        localConfig: (function(){
-                        try {
-                            return grunt.file.readJSON('localConfig.json');
-                        } catch(e) {
-                            return {};
-                        }
-                    })(),
+        localConfig: (function() {
+            try {
+                return grunt.file.readJSON('localConfig.json');
+            } catch (e) {
+                return {};
+            }
+        })(),
         releaseName: '<%= pkg.name %>-<%= pkg.version %>',
         releaseMessage: '<%= pkg.name %> release <%= pkg.version %>',
         clean: {
-            buildProducts: "build/"
+            buildProducts: 'build/'
         },
         connect: {
             server: {
@@ -31,7 +31,7 @@ module.exports = function(grunt) {
             }
         },
         watch: {
-            files: ["src/**/*"],
+            files: ['src/**/*'],
             tasks: ['build']
         },
         uglify: {
@@ -54,19 +54,19 @@ module.exports = function(grunt) {
             }
         },
         zip: {
-            "build/scooch.zip": ["src/scooch.js", "src/scooch.css", "src/scooch-style.css"]
+            'build/scooch.zip': ['src/scooch.js', 'src/scooch.css', 'src/scooch-style.css']
         },
         s3: {
             key: '<%= localConfig.aws.key %>',
             secret: '<%= localConfig.aws.secret %>',
             bucket: '<%= localConfig.aws.bucket %>',
-            access: "public-read",
-            headers: { "Cache-Control": "max-age=1200" },
+            access: 'public-read',
+            headers: { 'Cache-Control': 'max-age=1200' },
             upload: [
                 { // build
-                    src: "build/*",
-                    dest: "modules/scooch/<%= pkg.version %>/",
-                    rel: "build"
+                    src: 'build/*',
+                    dest: 'modules/scooch/<%= pkg.version %>/',
+                    rel: 'build'
                 }
             ]
         },
@@ -119,7 +119,6 @@ module.exports = function(grunt) {
     grunt.registerTask('lint', ['eslint:prod']);
     grunt.registerTask('serve', ['connect', 'watch']);
     grunt.registerTask('build', ['lint', 'uglify', 'cssmin', 'zip']);
-    grunt.registerTask('publish', ['build', 'release', 's3'])
-    grunt.registerTask('default', 'build')
-
+    grunt.registerTask('publish', ['build', 'release', 's3']);
+    grunt.registerTask('default', 'build');
 };
