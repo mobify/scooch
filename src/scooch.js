@@ -74,24 +74,30 @@
         var transformProperty = exports.getProperty('Transform');
         if (has.transform3d) {
             exports.translateX = function(element, delta) {
-                if (typeof delta === 'number') delta = delta + 'px';
+                if (typeof delta === 'number') {
+                    delta = delta + 'px';
+                }
                 element.style[transformProperty] = 'translate3d(' + delta  + ',0,0)';
             };
         } else if (has.transform) {
             exports.translateX = function(element, delta) {
-                if (typeof delta === 'number') delta = delta + 'px';
+                if (typeof delta === 'number') {
+                    delta = delta + 'px';
+                }
                 element.style[transformProperty] = 'translate(' + delta  + ',0)';
             };
         } else {
             exports.translateX = function(element, delta) {
-                if (typeof delta === 'number') delta = delta + 'px';
+                if (typeof delta === 'number') {
+                    delta = delta + 'px';
+                }
                 element.style.left = delta;
             };
         }
 
         // setTransitions
-        var transitionProperty = exports.getProperty('Transition')
-          , durationProperty = exports.getProperty('TransitionDuration');
+        var transitionProperty = exports.getProperty('Transition');
+        var durationProperty = exports.getProperty('TransitionDuration');
 
         exports.setTransitions = function(element, enable) {
             if (enable) {
@@ -127,25 +133,25 @@
 
     var Scooch = (function($, Utils) {
         var defaults = {
-                dragRadius: 10
-              , moveRadius: 20
-              , animate: true
-              , autoHideArrows: false
-              , rightToLeft: false
-              , classPrefix: 'm-'
-              , classNames: {
-                  outer: 'scooch'
-                  , inner: 'scooch-inner'
-                  , item: 'item'
-                  , center: 'center'
-                  , touch: 'has-touch'
-                  , dragging: 'dragging'
-                  , active: 'active'
-                  , inactive: 'inactive'
-                  , fluid: 'fluid'
-              }
+            dragRadius: 10
+            , moveRadius: 20
+            , animate: true
+            , autoHideArrows: false
+            , rightToLeft: false
+            , classPrefix: 'm-'
+            , classNames: {
+                outer: 'scooch'
+                , inner: 'scooch-inner'
+                , item: 'item'
+                , center: 'center'
+                , touch: 'has-touch'
+                , dragging: 'dragging'
+                , active: 'active'
+                , inactive: 'inactive'
+                , fluid: 'fluid'
             }
-           , has = $.support;
+        };
+        var has = $.support;
 
         // Constructor
         var Scooch = function(element, options) {
@@ -264,11 +270,11 @@
                 return;
             }
 
-            var $current = this.$current
-              , $start = this.$start
-              , currentOffset = $current.prop('offsetLeft') + $current.prop('clientWidth') * this._alignment
-              , startOffset = $start.prop('offsetLeft') + $start.prop('clientWidth') * this._alignment
-              , x = Math.round(-(currentOffset - startOffset) + this._offsetDrag);
+            var $current = this.$current;
+            var $start = this.$start;
+            var currentOffset = $current.prop('offsetLeft') + $current.prop('clientWidth') * this._alignment;
+            var startOffset = $start.prop('offsetLeft') + $start.prop('clientWidth') * this._alignment;
+            var x = Math.round(-(currentOffset - startOffset) + this._offsetDrag);
 
             if ($current.prop('offsetParent')) {
                 Utils.translateX(this.$inner[0], x);
@@ -278,21 +284,21 @@
         };
 
         Scooch.prototype.bind = function() {
-            var abs = Math.abs
-                , dragging = false
-                , canceled = false
-                , dragRadius = this.options.dragRadius
-                , xy
-                , dx
-                , dy
-                , dragThresholdMet
-                , self = this
-                , $element = this.$element
-                , $inner = this.$inner
-                , opts = this.options
-                , lockLeft = false
-                , lockRight = false
-                , windowWidth = $(window).width();
+            var abs = Math.abs;
+            var dragging = false;
+            var canceled = false;
+            var dragRadius = this.options.dragRadius;
+            var xy;
+            var dx;
+            var dy;
+            var dragThresholdMet;
+            var self = this;
+            var $element = this.$element;
+            var $inner = this.$inner;
+            var opts = this.options;
+            var lockLeft = false;
+            var lockRight = false;
+            var windowWidth = $(window).width();
 
             var start = function(e) {
                 if (!has.touch) e.preventDefault();
@@ -315,8 +321,8 @@
             var drag = function(e) {
                 if (!dragging || canceled) return;
 
-                var newXY = Utils.getCursorPosition(e)
-                  , dragLimit = self.$element.width();
+                var newXY = Utils.getCursorPosition(e);
+                var dragLimit = self.$element.width();
                 dx = xy.x - newXY.x;
                 dy = xy.y - newXY.y;
 
@@ -365,7 +371,6 @@
                     self._offsetDrag = 0;
                     self.update();
                 }
-
             };
 
             var click = function(e) {
@@ -381,8 +386,8 @@
 
             $element.on('click', '[data-m-slide]', function(e) {
                 e.preventDefault();
-                var action = $(this).attr('data-m-slide')
-                  , index = parseInt(action, 10);
+                var action = $(this).attr('data-m-slide');
+                var index = parseInt(action, 10);
 
                 if (isNaN(index)) {
                     self[action]();
@@ -417,8 +422,9 @@
                 // the carousel sliding, as it updates its position.
                 // Animation will be enabled automatically when you're swiping.
                 // Don't update Carousel on window height change
-                if (windowWidth === $(window).width())
+                if (windowWidth === $(window).width()) {
                     return;
+                }
 
                 self._disableAnimation();
                 windowWidth = $(window).width();
@@ -449,13 +455,13 @@
         };
 
         Scooch.prototype.move = function(newIndex, opts) {
-            var $element = this.$element
-                , $inner = this.$inner
-                , $items = this.$items
-                , $start = this.$start
-                , $current = this.$current
-                , length = this._length
-                , index = this._index;
+            var $element = this.$element;
+            var $inner = this.$inner;
+            var $items = this.$items;
+            var $start = this.$start;
+            var $current = this.$current;
+            var length = this._length;
+            var index = this._index;
 
             opts = $.extend({}, this.options, opts);
 
@@ -480,7 +486,6 @@
 
             // Trigger beforeSlide event
             $element.trigger('beforeSlide', [index, newIndex]);
-
 
             // Index must be decremented to convert between 1- and 0-based indexing.
             this.$current = $current = $items.eq(newIndex - 1);
@@ -515,7 +520,6 @@
     /**
         jQuery interface to set up a scooch carousel
 
-
         @param {String} [action] Action to perform. When no action is passed, the carousel is simply initialized.
         @param {Object} [options] Options passed to the action.
     */
@@ -532,9 +536,8 @@
         options = Array.prototype.slice.apply(arguments);
 
         this.each(function() {
-            var $this = $(this)
-              , scooch = this._scooch;
-
+            var $this = $(this);
+            var scooch = this._scooch;
 
             if (!scooch) {
                 scooch = new Scooch(this, initOptions);
