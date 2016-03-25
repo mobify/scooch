@@ -1,4 +1,10 @@
 module.exports = function(grunt) {
+    // JS eslint targets
+    var lint = {
+        targets: [
+            'src/**/*.js'
+        ]
+    };
 
     // Project configuration.
     grunt.initConfig({
@@ -78,6 +84,22 @@ module.exports = function(grunt) {
                     passwordVar: 'GITHUB_TOKEN'
                 }
             }
+        },
+        eslint: {
+            prod: {
+                src: lint.targets,
+                options: {
+                    reset: true,
+                    config: require.resolve('mobify-code-style/javascript/.eslintrc-prod')
+                }
+            },
+            dev: {
+                src: lint.targets,
+                options: {
+                    reset: true,
+                    config: require.resolve('mobify-code-style/javascript/.eslintrc')
+                }
+            }
         }
     });
 
@@ -86,6 +108,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-css');
+    grunt.loadNpmTasks('grunt-eslint');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-zip');
     grunt.loadNpmTasks('grunt-s3');
@@ -93,8 +116,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-release');
 
     // Default task(s).
+    grunt.registerTask('lint', ['eslint:prod']);
     grunt.registerTask('serve', ['connect', 'watch']);
-    grunt.registerTask('build', ['uglify', 'cssmin', 'zip']);
+    grunt.registerTask('build', ['lint', 'uglify', 'cssmin', 'zip']);
     grunt.registerTask('publish', ['build', 'release', 's3'])
     grunt.registerTask('default', 'build')
 

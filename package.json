@@ -12,10 +12,12 @@
     "grunt-contrib-uglify": "0.1.2",
     "grunt-contrib-watch": "0.5.3",
     "grunt-css": "0.5.4",
+    "grunt-eslint": "17.3.2",
     "grunt-release": "0.7.0",
     "grunt-s3": "0.1.0",
     "grunt-shell": "0.2.2",
-    "grunt-zip": "0.4.2"
+    "grunt-zip": "0.4.2",
+    "mobify-code-style": "^2.4.2"
   },
   "repository": {
     "type": "git",
