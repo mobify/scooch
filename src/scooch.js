@@ -281,7 +281,7 @@
                 if (typeof this.options.autoplay.cancelOnInteraction === 'boolean' &&
                     this.options.autoplay.cancelOnInteraction
                 ) {
-                    this.$element.on('touchstart click mousedown', function() {
+                    this.$element.on('touchstart click mouseover', function() {
                         window.clearInterval(self.timer);
 
                         // Restore autoHideArrows option
