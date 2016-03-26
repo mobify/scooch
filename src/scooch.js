@@ -142,23 +142,23 @@
 
     var Scooch = (function($, Utils) {
         var defaults = {
-            dragRadius: 10
-            , moveRadius: 20
-            , animate: true
-            , autoHideArrows: false
-            , rightToLeft: false
-            , infinite: false
-            , classPrefix: 'm-'
-            , classNames: {
-                outer: 'scooch'
-                , inner: 'scooch-inner'
-                , item: 'item'
-                , center: 'center'
-                , touch: 'has-touch'
-                , dragging: 'dragging'
-                , active: 'active'
-                , inactive: 'inactive'
-                , fluid: 'fluid'
+            dragRadius: 10,
+            moveRadius: 20,
+            animate: true,
+            autoHideArrows: false,
+            rightToLeft: false,
+            infinite: false,
+            classPrefix: 'm-',
+            classNames: {
+                outer: 'scooch',
+                inner: 'scooch-inner',
+                item: 'item',
+                center: 'center',
+                touch: 'has-touch',
+                dragging: 'dragging',
+                active: 'active',
+                inactive: 'inactive',
+                fluid: 'fluid'
             }
         };
         var has = $.support;
