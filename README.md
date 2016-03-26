@@ -72,25 +72,40 @@ viewport:
 Constructs the carousel with options.
 
     $('.m-scooch').scooch({
-          dragRadius: 10
-        , moveRadius: 20
-        , animate: true
-        , autoHideArrows: false
-        , rightToLeft: false
-        , infinite: false
-        , classPrefix: "m-"
-        , classNames: {
-            outer: "scooch"
-          , inner: "scooch-inner"
-          , item: "item"
-          , center: "center"
-          , touch: "has-touch"
-          , dragging: "dragging"
-          , active: "active"
-          , inactive: "inactive"
-          , fluid: "fluid"
+          dragRadius: 10,
+          moveRadius: 20,
+          animate: true,
+          autoHideArrows: false,
+          rightToLeft: false,
+          infinite: false,
+          classPrefix: "m-",
+          classNames: {
+            outer: "scooch",
+            inner: "scooch-inner",
+            item: "item",
+            center: "center",
+            touch: "has-touch",
+            dragging: "dragging",
+            active: "active",
+            inactive: "inactive",
+            fluid: "fluid"
         }
     });
+
+### Options
+
+The `options` object passed to Scooch during construction can configure its behaviour in the following ways:
+
+| Option          |  Behaviour                                                          |
+|-----------------|---------------------------------------------------------------------|
+| dragRadius      | The size of the 'deadspace' when dragging before Scooch begins following cursor/finger |
+| moveRadius      | The size of the 'deadspace' that must be exceeded before Scooch will move between items |
+| animate         | Whether or not Scooch should animate the move between items         |
+| autoHideArrows  | Whether or not Scooch should apply the inactive class to its previous and next controls (indicated by `[data-m-slide=prev]` and `[data-m-slide=next]`) when at its "bounds" |
+| rightToLeft     | Whether or not Scooch should treat "next" as left and "previous" as right |
+| infinite        | Whether or not Scooch should loop on itself                         |
+| classPrefix     | What all Scooch's classes will be prefixed by                       |
+| classNames      | What Scooch should reference as its class names                     |
 
 ### .scooch('next')
 
