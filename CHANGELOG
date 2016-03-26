@@ -1,4 +1,5 @@
 1.0.0:
+    - Add `autoplay` option for automatic looping through carousels
     - Add `infinite` option for looping carousels
     - Publish to NPM
     - De-emphasize Zepto in favor of jQuery
