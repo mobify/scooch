@@ -47,8 +47,8 @@
             @return {String} Detected CSS Property Name
         */
         exports.getProperty = function(name) {
-            var prefixes = ['Webkit', 'Moz', 'O', 'ms', '']
-              , testStyle = document.createElement('div').style;
+            var prefixes = ['Webkit', 'Moz', 'O', 'ms', ''];
+            var testStyle = document.createElement('div').style;
 
             for (var i = 0; i < prefixes.length; ++i) {
                 if (testStyle[prefixes[i] + name] !== undefined) {
@@ -61,12 +61,12 @@
         };
 
         $.extend(has, {
-            'transform': !!(exports.getProperty('Transform'))
+            'transform': !!(exports.getProperty('Transform')),
 
             // Usage of transform3d on *android* would cause problems for input fields:
             // - https://coderwall.com/p/d5lmba
             // - http://static.trygve-lie.com/bugs/android_input/
-          , 'transform3d': !!(window.WebKitCSSMatrix && 'm11' in new window.WebKitCSSMatrix() && !/android\s+[1-2]/i.test(ua))
+            'transform3d': !!(window.WebKitCSSMatrix && 'm11' in new window.WebKitCSSMatrix() && !/android\s+[1-2]/i.test(ua))
         });
 
         // translateX(element, delta)
