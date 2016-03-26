@@ -69,7 +69,7 @@ viewport:
 
 ### .scooch(options)
 
-Constructs the carousel with options.
+Constructs the carousel with specific options. Defaults are shown here.
 
     $('.m-scooch').scooch({
           dragRadius: 10,
@@ -78,6 +78,7 @@ Constructs the carousel with options.
           autoHideArrows: false,
           rightToLeft: false,
           infinite: false,
+          autoplay: false,
           classPrefix: "m-",
           classNames: {
             outer: "scooch",
@@ -104,6 +105,7 @@ The `options` object passed to Scooch during construction can configure its beha
 | autoHideArrows  | Whether or not Scooch should apply the inactive class to its previous and next controls (indicated by `[data-m-slide=prev]` and `[data-m-slide=next]`) when at its "bounds" |
 | rightToLeft     | Whether or not Scooch should treat "next" as left and "previous" as right |
 | infinite        | Whether or not Scooch should loop on itself                         |
+| autoplay: {interval: Number, cancelOnInteraction: Boolean} | Autoplay through the Scooch, advancing items every `interval` milliseconds. `cancelOnInteraction` sets whether or not the autoplay terminates once a user interacts with it. Autoplaying Scooches will always appear to loop as if they are infinite until user interaction, at which point they resume the behaviour specified by their options |
 | classPrefix     | What all Scooch's classes will be prefixed by                       |
 | classNames      | What Scooch should reference as its class names                     |
 
