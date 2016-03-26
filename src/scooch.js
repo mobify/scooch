@@ -148,6 +148,7 @@
             autoHideArrows: false,
             rightToLeft: false,
             infinite: false,
+            autoplay: false,
             classPrefix: 'm-',
             classNames: {
                 outer: 'scooch',
@@ -171,6 +172,9 @@
             if (this.options.infinite) {
                 // Make infinite
                 this.initLoop();
+            }
+            if (typeof this.options.autoplay === 'object') {
+                this.initAutoplay();
             }
             this.initStartElement();
 
@@ -251,6 +255,46 @@
                 self.initStartElement();
                 self.start();
             });
+        };
+
+        Scooch.prototype.initAutoplay = function() {
+            // Using modulus to determine the next correct index. Always use the current
+            // index and length in this calculation as the values can change.
+            var self = this; // bind reference to this for later
+            var moveScooch = function() {
+                // scooch's index starts at 1, so increment after the modulus calculation.
+                var newIndex = (self._index % self._length) + 1;
+
+                self.move(newIndex);
+            };
+
+            if (this.options.autoplay.interval &&
+                typeof this.options.autoplay.interval === 'number' &&
+                this.options.autoplay.interval > 1
+            ) {
+                // Always appear to be infinite until user interaction (if applicable)
+                var previousAutoHideOption = self.options.autoHideArrows;
+                self.options.autoHideArrows = false;
+
+                self.timer = window.setInterval(moveScooch, this.options.autoplay.interval);
+
+                if (typeof this.options.autoplay.cancelOnInteraction === 'boolean' &&
+                    this.options.autoplay.cancelOnInteraction
+                ) {
+                    this.$element.on('touchstart click mousedown', function() {
+                        window.clearInterval(self.timer);
+
+                        // Restore autoHideArrows option
+                        self.options.autoHideArrows = previousAutoHideOption;
+                        if (previousAutoHideOption) {
+                            self.hideArrows(self._index); // Refresh arrow states
+                        }
+                    });
+                } else {
+                    // If no chance to cancel autoplay, this scooch will be infinite
+                    self.initLoop();
+                }
+            }
         };
 
         Scooch.prototype.initOffsets = function() {
@@ -347,6 +391,19 @@
             }
 
             this._needsUpdate = false;
+        };
+
+        Scooch.prototype.hideArrows = function(nextSlide) {
+            this.$element.find('[data-m-slide=prev]').removeClass(this._getClass('inactive'));
+            this.$element.find('[data-m-slide=next]').removeClass(this._getClass('inactive'));
+
+            if (nextSlide === 1) {
+                this.$element.find('[data-m-slide=prev]').addClass(this._getClass('inactive'));
+            }
+
+            if (nextSlide === this._length) {
+                this.$element.find('[data-m-slide=next]').addClass(this._getClass('inactive'));
+            }
         };
 
         Scooch.prototype.bind = function() {
@@ -470,16 +527,7 @@
                 self.$element.find('[data-m-slide=\'' + nextSlide + '\']').addClass(self._getClass('active'));
 
                 if (opts.autoHideArrows) { // Hide prev/next arrows when at bounds
-                    self.$element.find('[data-m-slide=prev]').removeClass(self._getClass('inactive'));
-                    self.$element.find('[data-m-slide=next]').removeClass(self._getClass('inactive'));
-
-                    if (nextSlide === 1) {
-                        self.$element.find('[data-m-slide=prev]').addClass(self._getClass('inactive'));
-                    }
-
-                    if (nextSlide === self._length) {
-                        self.$element.find('[data-m-slide=next]').addClass(self._getClass('inactive'));
-                    }
+                    self.hideArrows(nextSlide);
                 }
             });
 
