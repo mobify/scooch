@@ -39,4 +39,7 @@
     "url": "https://github.com/mobify/scooch/issues"
   },
   "homepage": "https://github.com/mobify/scooch#readme"
+  "scripts": {
+    "publish": "grunt publish && npm publish",
+  }
 }
