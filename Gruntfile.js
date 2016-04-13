@@ -57,20 +57,6 @@ module.exports = function(grunt) {
         zip: {
             'build/scooch.zip': ['src/scooch.js', 'src/scooch.css', 'src/scooch-style.css']
         },
-        s3: {
-            key: '<%= localConfig.aws.key %>',
-            secret: '<%= localConfig.aws.secret %>',
-            bucket: '<%= localConfig.aws.bucket %>',
-            access: 'public-read',
-            headers: { 'Cache-Control': 'max-age=1200' },
-            upload: [
-                { // build
-                    src: 'build/*',
-                    dest: 'modules/scooch/<%= pkg.version %>/',
-                    rel: 'build'
-                }
-            ]
-        },
         eslint: {
             prod: {
                 src: lint.targets,
@@ -104,7 +90,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-open');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-zip');
-    grunt.loadNpmTasks('grunt-s3');
     grunt.loadNpmTasks('grunt-clean');
 
     // Default task(s).
@@ -112,6 +97,5 @@ module.exports = function(grunt) {
     grunt.registerTask('lint', ['eslint:prod']);
     grunt.registerTask('serve', ['connect', 'watch']);
     grunt.registerTask('build', ['lint', 'uglify', 'cssmin', 'zip']);
-    grunt.registerTask('publish', ['build', 's3']);
     grunt.registerTask('default', 'build');
 };
