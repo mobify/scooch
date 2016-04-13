@@ -1,7 +1,0 @@
-{
-    "aws": {
-        "key": ["<AWS Key>"],
-        "secret": ["<AWS secret>"],
-        "bucket": "<S3 Bucket Name>"
-    }
-}
