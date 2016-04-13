@@ -15,4 +15,4 @@ Take this checklist and paste it into your release PR. Ensure steps are followed
 - [ ] Publish a new GitHub [release](https://github.com/mobify/adaptivejs/releases) from the new tag.
 - [ ] Merge `master` into `develop`.
 - [ ] Update your local: `git pull`.
-- [ ] Release on S3 and npm: `grunt publish && npm publish`
+- [ ] Release on S3 and npm: `npm run publish`
