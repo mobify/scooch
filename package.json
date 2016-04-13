@@ -40,6 +40,6 @@
   },
   "homepage": "https://github.com/mobify/scooch#readme",
   "scripts": {
-    "publish": "grunt publish && npm publish"
+    "release": "grunt publish && npm publish"
   }
 }
