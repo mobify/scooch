@@ -16,8 +16,6 @@ module.exports = function(grunt) {
                 return {};
             }
         })(),
-        releaseName: '<%= pkg.name %>-<%= pkg.version %>',
-        releaseMessage: '<%= pkg.name %> release <%= pkg.version %>',
         clean: {
             buildProducts: 'build/'
         },
@@ -73,21 +71,6 @@ module.exports = function(grunt) {
                 }
             ]
         },
-        release: {
-            options: {
-                folder: '.',
-                npm: false,
-                bump: false,
-                add: false,
-                commit: false,
-                file: 'bower.json',
-                github: {
-                    repo: 'mobify/scooch',
-                    usernameVar: 'GITHUB_USERNAME',
-                    passwordVar: 'GITHUB_TOKEN'
-                }
-            }
-        },
         eslint: {
             prod: {
                 src: lint.targets,
@@ -123,13 +106,12 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-zip');
     grunt.loadNpmTasks('grunt-s3');
     grunt.loadNpmTasks('grunt-clean');
-    grunt.loadNpmTasks('grunt-release');
 
     // Default task(s).
     grunt.registerTask('examples', ['build', 'connect:server', 'open:examples', 'watch']);
     grunt.registerTask('lint', ['eslint:prod']);
     grunt.registerTask('serve', ['connect', 'watch']);
     grunt.registerTask('build', ['lint', 'uglify', 'cssmin', 'zip']);
-    grunt.registerTask('publish', ['build', 'release', 's3']);
+    grunt.registerTask('publish', ['build', 's3']);
     grunt.registerTask('default', 'build');
 };
