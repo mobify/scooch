@@ -1,3 +1,6 @@
+1.0.1:
+    - Add .npmignore
+    - Remove S3 publishing steps
 1.0.0:
     - Add `autoplay` option for automatic looping through carousels
     - Add `infinite` option for looping carousels
