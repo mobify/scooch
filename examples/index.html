@@ -3,8 +3,8 @@
     <head>
         <title>Examples of Scooch in action</title>
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-        <link rel="stylesheet" href="src/scooch.css">
-        <link rel="stylesheet" href="src/scooch-style.css">
+        <link rel="stylesheet" href="../src/scooch.css">
+        <link rel="stylesheet" href="../src/scooch-style.css">
         <style>
             /* styling for this page */
             .m-scooch {
@@ -23,6 +23,11 @@
                 width: 100%;
                 max-width: 100%;
                 height: auto;
+            }
+
+            .m-inactive {
+                opacity: 0.1;
+                cursor: not-allowed;
             }
 
             .m-scooch-example-5 .m-caption {
@@ -401,10 +406,92 @@
             </div>
         </div>
 
+        <h2>Infinite</h2>
+        <p>Carousel with infinite items (repeated).</p>
+        <div class="m-scooch m-fluid m-scooch-photos" id="m-scooch-infinite">
+          <div class="m-scooch-inner">
+            <div class="m-item">
+                <img src="http://lorempixel.com/300/300/animals/1">
+            </div>
+            <div class="m-item">
+                <img src="http://lorempixel.com/300/300/animals/2">
+            </div>
+            <div class="m-item">
+                <img src="http://lorempixel.com/300/300/animals/3">
+            </div>
+          </div>
+          <div class="m-scooch-controls">
+            <a href="#" data-m-slide="prev">&lsaquo; Previous</a>
+            <a href="#" data-m-slide="next">Next &rsaquo;</a>
+          </div>
+        </div>
+
+        <h2>Autoplay</h2>
+        <p>Carousel with infinite items that autoplays every 3 seconds until interacted with.</p>
+        <div class="m-scooch m-fluid m-scooch-photos" id="m-scooch-infinite-autoplay">
+          <div class="m-scooch-inner">
+            <div class="m-item">
+                <img src="http://lorempixel.com/300/300/animals/1">
+            </div>
+            <div class="m-item">
+                <img src="http://lorempixel.com/300/300/animals/2">
+            </div>
+            <div class="m-item">
+                <img src="http://lorempixel.com/300/300/animals/3">
+            </div>
+          </div>
+          <div class="m-scooch-controls">
+            <a href="#" data-m-slide="prev">&lsaquo; Previous</a>
+            <a href="#" data-m-slide="next">Next &rsaquo;</a>
+          </div>
+        </div>
+
+        <p>Finite carousel with hiding arrows that autoplays every 3 seconds until interacted with.</p>
+        <div class="m-scooch m-fluid m-scooch-photos" id="m-scooch-finite-autoplay">
+          <div class="m-scooch-inner">
+            <div class="m-item">
+                <img src="http://lorempixel.com/300/300/animals/4">
+            </div>
+            <div class="m-item">
+                <img src="http://lorempixel.com/300/300/animals/5">
+            </div>
+            <div class="m-item">
+                <img src="http://lorempixel.com/300/300/animals/6">
+            </div>
+          </div>
+          <div class="m-scooch-controls">
+            <a href="#" data-m-slide="prev">&lsaquo; Previous</a>
+            <a href="#" data-m-slide="next">Next &rsaquo;</a>
+          </div>
+        </div>
+
+        <p>Finite carousel with hiding arrows that autoplays every 3 seconds forever (will always appear infinite).</p>
+        <div class="m-scooch m-fluid m-scooch-photos" id="m-scooch-always-autoplay">
+          <div class="m-scooch-inner">
+            <div class="m-item">
+                <img src="http://lorempixel.com/300/300/animals/7">
+            </div>
+            <div class="m-item">
+                <img src="http://lorempixel.com/300/300/animals/8">
+            </div>
+            <div class="m-item">
+                <img src="http://lorempixel.com/300/300/animals/9">
+            </div>
+          </div>
+          <div class="m-scooch-controls">
+            <a href="#" data-m-slide="prev">&lsaquo; Previous</a>
+            <a href="#" data-m-slide="next">Next &rsaquo;</a>
+          </div>
+        </div>
+
         <!-- <script src="http://zeptojs.com/zepto.js"></script> -->
         <script src="http://code.jquery.com/jquery-1.10.1.js"></script>
 
-        <script src="src/scooch.js"></script>
+        <script src="../src/scooch.js"></script>
+        <script>$('#m-scooch-infinite').scooch({infinite:true});</script>
+        <script>$('#m-scooch-infinite-autoplay').scooch({infinite:true, autoplay: {interval: 3000, cancelOnInteraction: true}});</script>
+        <script>$('#m-scooch-finite-autoplay').scooch({autoHideArrows: true, autoplay: {interval: 3000, cancelOnInteraction: true}});</script>
+        <script>$('#m-scooch-always-autoplay').scooch({autoHideArrows: true, autoplay: {interval: 3000, cancelOnInteraction: false}});</script>
         <script>$('#m-scooch-hide-arrows').scooch({autoHideArrows:true});</script>
         <script>$('#m-scooch-no-animate').scooch({animate:false});</script>
         <script>$('.m-scooch').scooch();</script>
