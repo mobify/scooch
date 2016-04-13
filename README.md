@@ -2,8 +2,29 @@
 
 A mobile-first content and image carousel.
 
+[![NPM](https://nodei.co/npm/scooch.png?downloads=true)](https://nodei.co/npm/scooch/)
 [![Code Climate](https://codeclimate.com/github/mobify/scooch/badges/gpa.svg)](https://codeclimate.com/github/mobify/scooch)
 [![Bower version](https://badge.fury.io/bo/scooch.svg)](http://badge.fury.io/bo/scooch)
+
+## Demo
+
+You can find a simple demo on [the Documentation page](http://mobify.github.io/scooch/). More demos can be found inside the `examples` folder in the repo. Run `grunt examples` to see them in Chrome (mobile device emulation is recommended).
+
+## Requirements
+
+* [jQuery](http://jquery.com/)
+
+### Zepto Support
+
+Scooch supports Zepto up until v0.6.1 but is not actively developed for it. You should be able to use Scooch directly with Zepto. While we don't actively support Zepto for Scooch, we welcome any and all issues and PRs to help us make it work.
+
+## Installation
+
+Scooch can be installed using NPM:
+
+```
+npm install scooch
+```
 
 ## Usage
 
@@ -36,8 +57,8 @@ A mobile-first content and image carousel.
       </div>
     </div>
 
-    <!-- include zepto.js or jquery.js -->
-    <script src="zepto.js"></script>
+    <!-- include jquery.js -->
+    <script src="jquery.js"></script>
     <!-- include scooch.js -->
     <script src="scooch.js"></script>
     <!-- construct the carousel -->
@@ -65,37 +86,55 @@ viewport:
 
 ### .scooch(options)
 
-Constructs the carousel with options.
+Constructs the carousel with specific options. Defaults are shown here.
 
     $('.m-scooch').scooch({
-          dragRadius: 10
-        , moveRadius: 20
-        , animate: true
-        , autoHideArrows: false
-        , rightToLeft: false
-        , classPrefix: "m-"
-        , classNames: {
-            outer: "scooch"
-          , inner: "scooch-inner"
-          , item: "item"
-          , center: "center"
-          , touch: "has-touch"
-          , dragging: "dragging"
-          , active: "active"
-          , inactive: "inactive"
-          , fluid: "fluid"
+          dragRadius: 10,
+          moveRadius: 20,
+          animate: true,
+          autoHideArrows: false,
+          rightToLeft: false,
+          infinite: false,
+          autoplay: false,
+          classPrefix: "m-",
+          classNames: {
+            outer: "scooch",
+            inner: "scooch-inner",
+            item: "item",
+            center: "center",
+            touch: "has-touch",
+            dragging: "dragging",
+            active: "active",
+            inactive: "inactive",
+            fluid: "fluid"
         }
     });
 
+### Options
+
+The `options` object passed to Scooch during construction can configure its behaviour in the following ways:
+
+| Option          |  Behaviour                                                          |
+|-----------------|---------------------------------------------------------------------|
+| dragRadius      | The size of the 'deadspace' when dragging before Scooch begins following cursor/finger |
+| moveRadius      | The size of the 'deadspace' that must be exceeded before Scooch will move between items |
+| animate         | Whether or not Scooch should animate the move between items         |
+| autoHideArrows  | Whether or not Scooch should apply the inactive class to its previous and next controls (indicated by `[data-m-slide=prev]` and `[data-m-slide=next]`) when at its "bounds" |
+| rightToLeft     | Whether or not Scooch should treat "next" as left and "previous" as right |
+| infinite        | Whether or not Scooch should loop on itself                         |
+| autoplay: {interval: Number, cancelOnInteraction: Boolean} | Autoplay through the Scooch, advancing items every `interval` milliseconds. `cancelOnInteraction` sets whether or not the autoplay terminates once a user interacts with it. Autoplaying Scooches will always appear to loop as if they are infinite until user interaction, at which point they resume the behaviour specified by their options |
+| classPrefix     | What all Scooch's classes will be prefixed by                       |
+| classNames      | What Scooch should reference as its class names                     |
+
 ### .scooch('next')
 
-Moves the carousel one item to the right.
+Moves the carousel one item to the right (or left if `rightToLeft` option is enabled).
 
     $('.m-scooch').scooch('next');
 
 ### .scooch('prev')
 
-Moves the carousel one item to the left.
+Moves the carousel one item to the left (or right if `rightToLeft` option is enabled).
 
     $('.m-scooch').scooch('prev');
 
@@ -177,15 +216,20 @@ The following desktop browsers have degraded support:
 | Internet Explorer | 8.0,9.0 |
 | Firefox           | 3.5,3.6 |
 
-## Building
+## Building a distribution
 ### Requirements
-* [node.js 0.8.x/npm](http://nodejs.org/download/)
+* [Node.js v4.x LTS + NPM v2.x](https://nodejs.org/en/download/) (Mobify recommends [NVM](https://github.com/creationix/nvm) for installing Node + NPM)
+* [Grunt](http://gruntjs.com/)
+    * Install with `npm install -g grunt-cli`
 
 ### Steps
-1. `npm install -g grunt-cli`
-2. `npm install`
-3. `grunt`
+1. `npm install`
+1. `grunt build`
 
 The build directory will be populated with minified versions of the css and
 javascript files and a .zip of the original source files (for distribution and
 use with whatever build system you might use).
+
+## License
+
+_MIT License. Scooch is Copyright © 2016 Mobify. It is free software and may be redistributed under the terms specified in the LICENSE file._

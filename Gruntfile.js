@@ -1,19 +1,23 @@
 module.exports = function(grunt) {
+    // JS eslint targets
+    var lint = {
+        targets: [
+            'src/**/*.js'
+        ]
+    };
 
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        localConfig: (function(){
-                        try {
-                            return grunt.file.readJSON('localConfig.json');
-                        } catch(e) {
-                            return {};
-                        }
-                    })(),
-        releaseName: '<%= pkg.name %>-<%= pkg.version %>',
-        releaseMessage: '<%= pkg.name %> release <%= pkg.version %>',
+        localConfig: (function() {
+            try {
+                return grunt.file.readJSON('localConfig.json');
+            } catch (e) {
+                return {};
+            }
+        })(),
         clean: {
-            buildProducts: "build/"
+            buildProducts: 'build/'
         },
         connect: {
             server: {
@@ -25,7 +29,10 @@ module.exports = function(grunt) {
             }
         },
         watch: {
-            files: ["src/**/*"],
+            files: [
+                'src/**/*',
+                'examples/**/*'
+            ],
             tasks: ['build']
         },
         uglify: {
@@ -48,35 +55,42 @@ module.exports = function(grunt) {
             }
         },
         zip: {
-            "build/scooch.zip": ["src/scooch.js", "src/scooch.css", "src/scooch-style.css"]
+            'build/scooch.zip': ['src/scooch.js', 'src/scooch.css', 'src/scooch-style.css']
         },
         s3: {
             key: '<%= localConfig.aws.key %>',
             secret: '<%= localConfig.aws.secret %>',
             bucket: '<%= localConfig.aws.bucket %>',
-            access: "public-read",
-            headers: { "Cache-Control": "max-age=1200" },
+            access: 'public-read',
+            headers: { 'Cache-Control': 'max-age=1200' },
             upload: [
                 { // build
-                    src: "build/*",
-                    dest: "modules/scooch/<%= pkg.version %>/",
-                    rel: "build"
+                    src: 'build/*',
+                    dest: 'modules/scooch/<%= pkg.version %>/',
+                    rel: 'build'
                 }
             ]
         },
-        release: {
-            options: {
-                folder: '.',
-                npm: false,
-                bump: false,
-                add: false,
-                commit: false,
-                file: 'bower.json',
-                github: {
-                    repo: 'mobify/scooch',
-                    usernameVar: 'GITHUB_USERNAME',
-                    passwordVar: 'GITHUB_TOKEN'
+        eslint: {
+            prod: {
+                src: lint.targets,
+                options: {
+                    reset: true,
+                    config: require.resolve('mobify-code-style/javascript/.eslintrc-prod')
                 }
+            },
+            dev: {
+                src: lint.targets,
+                options: {
+                    reset: true,
+                    config: require.resolve('mobify-code-style/javascript/.eslintrc')
+                }
+            }
+        },
+        open: {
+            examples: {
+                path: 'http://localhost:3000/examples',
+                app: 'Google Chrome'
             }
         }
     });
@@ -86,16 +100,18 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-css');
+    grunt.loadNpmTasks('grunt-eslint');
+    grunt.loadNpmTasks('grunt-open');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-zip');
     grunt.loadNpmTasks('grunt-s3');
     grunt.loadNpmTasks('grunt-clean');
-    grunt.loadNpmTasks('grunt-release');
 
     // Default task(s).
+    grunt.registerTask('examples', ['build', 'connect:server', 'open:examples', 'watch']);
+    grunt.registerTask('lint', ['eslint:prod']);
     grunt.registerTask('serve', ['connect', 'watch']);
-    grunt.registerTask('build', ['uglify', 'cssmin', 'zip']);
-    grunt.registerTask('publish', ['build', 'release', 's3'])
-    grunt.registerTask('default', 'build')
-
+    grunt.registerTask('build', ['lint', 'uglify', 'cssmin', 'zip']);
+    grunt.registerTask('publish', ['build', 's3']);
+    grunt.registerTask('default', 'build');
 };

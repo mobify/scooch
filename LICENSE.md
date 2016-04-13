@@ -1,4 +1,4 @@
-Copyright 2013 Mobify Research and Development Inc.
+Copyright 2016 Mobify Research and Development Inc.
 
 Licensed under the MIT License
 
