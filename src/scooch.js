@@ -347,6 +347,7 @@
             /* Call when number of items has changed (e.g. with AJAX) */
             this.$items = this.$inner.children( '.' + this._getClass('item'));
             this._length = this.$items.length;
+            this._lockRight = this.$items.length;
             this.start();
         };
 
