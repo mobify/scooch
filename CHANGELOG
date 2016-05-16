@@ -1,3 +1,5 @@
+1.0.1:
+    - Fix to refresh method ensuring right lock is set properly
 1.0.0:
     - Add `autoplay` option for automatic looping through carousels
     - Add `infinite` option for looping carousels

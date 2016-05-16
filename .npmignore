@@ -1,0 +1,12 @@
+node_modules/
+/examples
+.git/
+.github/
+
+.gitignore
+npm-debug.log
+localConfig.json
+Gruntfile.js
+circle.yml
+localConfig.example.json
+RELEASE.md

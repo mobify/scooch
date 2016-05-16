@@ -1,6 +1,6 @@
 {
   "name": "scooch",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A mobile-first JavaScript-driven content and image carousel",
   "license": "MIT",
   "main": "build/scooch.min.js",
@@ -38,8 +38,5 @@
   "bugs": {
     "url": "https://github.com/mobify/scooch/issues"
   },
-  "homepage": "https://github.com/mobify/scooch#readme",
-  "scripts": {
-    "release": "grunt publish && npm publish"
-  }
+  "homepage": "https://github.com/mobify/scooch#readme"
 }
